@@ -14,9 +14,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path
+# from game.views import *
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('matchmaking/', views.matchmaking, name='matchmaking'),
+# ]
+
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('game.urls')),  # Include the URLs for your game app here
+    # path('', include('game.routing')),  # Include the URLs for your game app here
 ]
