@@ -12,7 +12,6 @@
           <Routes>
             <Route path='/' element={<Lobby />}/>
             <Route path='/Threegame' element={<ThreeGame />}/>
-            <Route path='/Threegame' element={<ThreeGame />}/>
             {/* <Route path='/Matchmaking' element={<Matchmaking />}/> */}
           </Routes>
        </div>
