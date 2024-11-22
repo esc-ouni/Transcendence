@@ -17,14 +17,3 @@ body
     left: 0;
     outline: none;
 }
-
-.yy{
-    display: grid;
-    /* align-items: center; */
-    /* place-items: center; */
-    text-align: center;
-    /* margin-left: auto; */
-    /* margin-right: auto; */
-    /* padding-left: auto; */
-    /* padding-right: auto; */
-  }

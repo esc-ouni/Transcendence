@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import GUI from 'lil-gui';
-import * as cannon from 'cannon-es';
+import * as cannon from 'cannon';
 import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import stats from 'stats.js'
 
-import './style.css'
+import './ThreeScene.css'
 
 
 
@@ -33,9 +33,10 @@ const ThreeGame = () => {
     
     const gui = new GUI()
     
-    // const canvas = document.querySelector('canvas.webgl')
-    const canvas = canvasRef.current;
-    
+    const canvas = document.querySelector('canvas.webgl')
+    // canvas = canvasRef.current;
+    canvasRef.current = canvas;
+
     const scene = new THREE.Scene()
     
     const floor = new THREE.Mesh(
@@ -620,59 +621,21 @@ const ThreeGame = () => {
     };
   }, []);
 
-  return (
-    <div>
-      <canvas ref={canvasRef} className="webgl" />
-    </div>
-  );
+  {/* <div id="loading-screen">
+    <div id="loading-spinner"></div>
+  </div> */}
+    return (
+      <>
+      {<div className="three-scene">
+        <canvas ref={canvasRef} className="webgl" />
+      </div> }
+      {<div className="blurring-layer" />}
+      {<div className="ui-overlay">
+         <button className="overlay-button">PLAY NOW</button>
+         <button className="overlay-button">CUSTOMIZE</button>
+       </div> }
+    </>
+    )
 };
 
 export default ThreeGame;
-
-
-
-
-
-
-
-
-// import React, { useRef, useEffect, useState } from 'react';
-// // ... other imports
-
-// const ThreeScene = () => {
-//   const mountRef = useRef(null);
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     // ... scene setup code
-
-//     // Loading Manager
-//     const loadingManager = new THREE.LoadingManager();
-
-//     loadingManager.onLoad = () => {
-//       setIsLoading(false); // Update loading state
-//     };
-
-//     // ... rest of the code
-
-//   }, []);
-
-//   return (
-//     <div>
-//       {/* Conditional Rendering of Loading Screen */}
-//       {isLoading && (
-//         <div
-//           id="loading-screen"
-//           style={{
-//             // ... styles
-//           }}
-//         >
-//           <h1 style={{ color: '#fff' }}>Loading...</h1>
-//         </div>
-//       )}
-
-//       {/* Three.js Scene Mount Point */}
-//       <div ref={mountRef} style={{ width: '100%', height: '100vh' }} />
-//     </div>
-//   );
-// };
