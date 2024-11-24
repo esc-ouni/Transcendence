@@ -7,7 +7,7 @@ const [inputMessage, setInputMessage] = useState("");
 const [read_socket, setSocket] = useState(null);
 
 useEffect(() => {
-  const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
+  const socket = new WebSocket('ws://e1r5p7:8000/ws/server-endpoint-socket/');
 
   // Handle connection open
   socket.onopen = () => {
