@@ -1,83 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const WebSocketComponent = () => {
-const [messages, setMessages] = useState([]);
 const [connectionStatus, setConnectionStatus] = useState("Disconnected");
 const [inputMessage, setInputMessage] = useState("");
-const [read_socket, setSocket] = useState(null);
+const [ready_socket, setSocket] = useState(null);
 
 useEffect(() => {
-  const socket = new WebSocket('ws://e1r5p7:8000/ws/server-endpoint-socket/');
+  const socket = new WebSocket('ws://10.11.6.7:8000/ws/server-endpoint-socket/');
 
-  // Handle connection open
   socket.onopen = () => {
-    console.log("==> Fen ajmi !");
+    console.log("=> WebSocket Connected", socket);
     setConnectionStatus("Connected");
     setSocket(socket);
   };
-
-  // Handle messages received
+  
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log("==> Aralya :", data);
-    setMessages((prev) => [...prev, data]);
+
+    if (data['type'] === 'server_response')
+      console.log("=> Message received:", data['message']);
+
   };
 
-  // Handle errors
   socket.onerror = (error) => {
-    console.error('WebSocket error:', error);
+    console.error('=> error:', error);
   };
 
-  // Handle connection close
   socket.onclose = () => {
-    console.log("==> Thla ajmi !");
+    console.log("=> WebSocket Disconnected");
     setConnectionStatus("Disconnected");
   };
-
-  // Cleanup on unmount
+  
   return () => {
+    console.log("=> Closing WebSocket On useEffect return !");
     socket.close();
   };
 }, []);
 
 const sendMessage = () => {
-  if (read_socket && read_socket.readyState === WebSocket.OPEN) {
+  if (ready_socket && ready_socket.readyState === WebSocket.OPEN) {
     const messageData = {
-      type: 'user_message',
+      type: 'Websocket_message',
       message: inputMessage,
     };
 
-    read_socket.send(JSON.stringify(messageData));
-    console.log("==> hak ajmi :", messageData);
-    // Clear the input message
+    ready_socket.send(JSON.stringify(messageData));
+
     setInputMessage('');
   } else {
-    console.log("WebSocket is not open");
     alert("Socket not ready!");
   }
 };
 
 return (
-  <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+  <div style={{padding: "20px", 
+               fontFamily: "Arial, sans-serif"}}>
     <h1>WebSocket Client</h1>
     <p>Status: <strong>{connectionStatus}</strong></p>
 
     <div>
-      <h3>Messages:</h3>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>{JSON.stringify(msg)}</li>
-        ))}
-      </ul>
-    </div>
-
-    <div>
-      <h3>Send a Message</h3>
       <input
         type="text"
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
-        placeholder="Type a message"
       />
       <button onClick={sendMessage}>Send</button>
     </div>

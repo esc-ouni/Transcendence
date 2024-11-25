@@ -1,26 +1,34 @@
 from channels.generic.websocket import WebsocketConsumer
 import json
 
+
 class ApiConsumer(WebsocketConsumer):
-  def connect(self):
-      self.accept()
-      print("==>", "Fen ajmi !")
+    connected_users = 0
+    my_id = 0
 
-      self.send(json.dumps({
-          'type': 'connection_established',
-          'state': 'a3zab',
-          'message': 'ki rak b9it assadi9'
-      }))
-      print("==>", "hak ajmi :")
+    def connect(self):
+        self.accept()
+        ApiConsumer.connected_users += 1
+        self.my_id = ApiConsumer.connected_users
+        print("=>", f"Client {self.my_id} Connected !")
 
-  def receive(self, text_data):
-      print("==>", "Aralya  :", text_data)
-      data = json.loads(text_data)
-      response = {
-          'type': 'server_response',
-          'message': f"Received your message: {data.get('message')}"
-      }
-      self.send(json.dumps(response))
+        self.send(json.dumps({
+            'type': 'connection_established',
+            'message': f'ki rak b9it assadi9, nta hwa {self.my_id} '
+        }))
 
-  def disconnect(self, close_code):
-      print("==>", "Thla ajmi !")
+    def receive(self, text_data):
+        data = json.loads(text_data)
+
+        if (data['type'] == "Websocket_message"):
+            print("=>", f"Client {self.my_id}  :", data['message'])
+
+            response = {
+                'type': 'server_response',
+                'message': f"<Server received ur message : {data['message']}>"
+            }
+            self.send(json.dumps(response))
+
+    def disconnect(self, close_code):
+        print("=>", f"Client {self.my_id}  DisConnected !")
+        ApiConsumer.connected_users -= 1

@@ -17,3 +17,12 @@ body
     left: 0;
     outline: none;
 }
+
+
+.yy {
+    /* display: flex;
+    flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
