@@ -5,7 +5,6 @@ import GUI from 'lil-gui'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js'
 
-import stats from 'stats.js'
 import './ThreeScene.css'
 
 const ThreeGame = () => {
@@ -20,9 +19,9 @@ const ThreeGame = () => {
 
 
 
-        const stat = new stats()
-        stat.showPanel(0)
-        document.body.appendChild(stat.dom)
+        // const stat = new stats()
+        // stat.showPanel(0)
+        // document.body.appendChild(stat.dom)
 
         const gui = new GUI()
 
@@ -529,7 +528,7 @@ const ThreeGame = () => {
             checkCollision();
 
             topControls.update()
-            stat.update()
+            // stat.update()
             
             renderer.render(scene, camera)
 
@@ -543,8 +542,7 @@ const ThreeGame = () => {
   
     return (
         <>
-        {/* <h1>Hello !</h1> */}
-        <canvas ref={canvasRef}></canvas>
+            <canvas ref={canvasRef}></canvas>
         </>
     )
 };
