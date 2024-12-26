@@ -5,10 +5,15 @@ import GUI from 'lil-gui'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js'
 
-import './ThreeScene.css'
+import gsap from 'gsap'; 
+import LoadingScreen from './LoadingScreen';
 
-const ThreeGame = () => {
+import './RemoteScene.css'
+
+const RemoteGame = () => {
     const canvasRef = useRef(null);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -23,9 +28,25 @@ const ThreeGame = () => {
         // stat.showPanel(0)
         // document.body.appendChild(stat.dom)
 
+        const loadingManager = new THREE.LoadingManager();
+
+        loadingManager.onLoad = () => {
+            // If you want a fade-out effect with GSAP:
+            gsap.to('#loading-screen', {
+              opacity: 0,
+              duration: 1,
+              onComplete: () => {
+                // Hide the screen entirely
+                setLoading(false);
+              }
+            });
+          };
+
         const gui = new GUI()
 
-        const canvas = canvasRef.current
+        let canvas = null;
+        if (canvasRef.current != null)
+            canvas = canvasRef.current
 
         const scene = new THREE.Scene()
 
@@ -71,7 +92,7 @@ const ThreeGame = () => {
             })
             
             const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-            camera.position.set(-15, 4, 0)
+            camera.position.set(-22, 6, 0)
             scene.add(camera)
 
         const topControls = new OrbitControls(camera, canvas)
@@ -86,7 +107,7 @@ const ThreeGame = () => {
         renderer.setSize(sizes.width, sizes.height)
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-        const GLTFLoaderr = new GLTFLoader(); 
+        const GLTFLoaderr = new GLTFLoader(loadingManager); 
         GLTFLoaderr.load('/models/chinese_tea_table_4k.gltf/tabla_v2.gltf', function (gltf){
             const model = gltf.scene;
             model.scale.set(1.5, 1.5, 1.5)
@@ -137,7 +158,7 @@ const ThreeGame = () => {
             hit_sound.play();
         }
 
-        const TextureLoader = new THREE.TextureLoader();
+        const TextureLoader = new THREE.TextureLoader(loadingManager);
         const Texture = TextureLoader.load("/textures/Models/ball.jpeg");
 
         let Objects  = [];
@@ -282,7 +303,7 @@ const ThreeGame = () => {
         )
 
         // enviroment map
-        const rgbeLoader = new RGBELoader();
+        const rgbeLoader = new RGBELoader(loadingManager);
         rgbeLoader.load('/models/neon_photostudio_2k.hdr', (enviroment_map) => {
             enviroment_map.mapping = THREE.EquirectangularReflectionMapping
             scene.background  = enviroment_map;
@@ -431,8 +452,8 @@ const ThreeGame = () => {
             deltaTime = clock.getDelta();
 
             angle += 0.005;
-            // camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
-            // camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
+            camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
+            camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
             // camera.position.y += deltaTime/10 * 9;
 
             
@@ -542,9 +563,10 @@ const ThreeGame = () => {
   
     return (
         <>
+            <LoadingScreen show={loading} />
             <canvas ref={canvasRef}></canvas>
         </>
     )
 };
 
-export default ThreeGame;
+export default RemoteGame;
