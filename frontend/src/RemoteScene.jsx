@@ -61,10 +61,10 @@ const RemoteGame = () => {
         floor.receiveShadow = true
         floor.rotation.x = - Math.PI * 0.5
         floor.material.side = THREE.DoubleSide;
-
+        
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.14)
         scene.add(ambientLight)
-
+        
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
         directionalLight.castShadow = true
         directionalLight.shadow.mapSize.set(1024, 1024)
@@ -75,38 +75,39 @@ const RemoteGame = () => {
         directionalLight.shadow.camera.bottom = - 20
         directionalLight.position.set(5, 5, 5)
         scene.add(directionalLight)
-
+        
         const sizes = {
             width: window.innerWidth,
             height: window.innerHeight
         }
-
-        window.addEventListener('resize', () =>
-            {
-                sizes.width = window.innerWidth
-                sizes.height = window.innerHeight
-                camera.aspect = sizes.width / sizes.height
-                camera.updateProjectionMatrix()
-                renderer.setSize(sizes.width, sizes.height)
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-            })
-            
-            const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-            camera.position.set(-22, 6, 0)
-            scene.add(camera)
-
+        
+        //event listeners
+        const handleResize = () => {
+            sizes.width = window.innerWidth
+            sizes.height = window.innerHeight
+            camera.aspect = sizes.width / sizes.height
+            camera.updateProjectionMatrix()
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        };
+        
+        window.addEventListener('resize', handleResize)
+        
+        const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+        camera.position.set(-22, 6, 0)
+        scene.add(camera)
+        
         const topControls = new OrbitControls(camera, canvas)
         topControls.enableDamping = true
-
+        
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas
         })
-        
         renderer.shadowMap.enabled = true
         renderer.shadowMap.type = THREE.PCFSoftShadowMap
         renderer.setSize(sizes.width, sizes.height)
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+        
         const GLTFLoaderr = new GLTFLoader(loadingManager); 
         GLTFLoaderr.load('/models/chinese_tea_table_4k.gltf/tabla_v2.gltf', function (gltf){
             const model = gltf.scene;
@@ -123,10 +124,10 @@ const RemoteGame = () => {
             })
             scene.add(model);
         })
-
+        
         let paddle = null;
         let paddleAi = null;
-
+        
         GLTFLoaderr.load('/models/chinese_tea_table_4k.gltf/paddle_test.gltf', function (gltf){
             const model = gltf.scene;
             paddle = model;
@@ -141,44 +142,44 @@ const RemoteGame = () => {
                     // node.material.wireframe = true;
                 }
             })
-
+        
             paddleAi = paddle.clone();
             paddleAi.position.z = -10;
             paddleAi.rotation.set(0, 0, 0);
-
+        
             scene.add(paddle);
             scene.add(paddleAi);
         })
-
+        
         const hit_sound = new Audio("/sounds/ping_pong.mp3");
-
+        
         const Pong_Ball_colide = (impact) => {
             hit_sound.volume = Math.min(impact, 1);
             hit_sound.currentTime = 0;
             hit_sound.play();
         }
-
+        
         const TextureLoader = new THREE.TextureLoader(loadingManager);
         const Texture = TextureLoader.load("/textures/Models/ball.jpeg");
-
+        
         let Objects  = [];
-
+        
         const STDGeometry = new THREE.SphereGeometry(0.1, 32, 32);
         const STDMaterial = new THREE.MeshStandardMaterial;
         STDMaterial.metalness = 0.1;
         STDMaterial.roughness = 0.1;
         STDMaterial.map       = Texture;
-
-
+        
+        
         function applyForce(obj, Velocity){
             obj.velocity.copy(Velocity)
         }
-
+        
         const createSphere = (position, px, py, pz) => {
             const sphere = new THREE.Mesh(
                 STDGeometry,
                 STDMaterial)
-
+        
                 sphere.castShadow = true
                 sphere.position.copy(position);
                 
@@ -190,43 +191,43 @@ const RemoteGame = () => {
                     velocity: new THREE.Vector3(1, 1, 1), // Initial velocity
                     mass: 1
                 });
-
+        
                 // serve 
                 Objects[Objects.length - 1].velocity.set(BallCreator.serve_x, BallCreator.serve_y, BallCreator.serve_z); 
-
+        
             New_ball_launched = true;
         }
-
+        
         const BallCreator = {
             serve_x: 0,
             serve_y: -4.65,
             serve_z: 26.5,
-
+        
             hit_x  : 0,
             hit_y  : -4.65,
             hit_z  : 26.5,
-
+        
             BALL_SPEED:35,
-
+        
             cameraFixed: false 
         }
-
-
+        
+        
         BallCreator.serve_x = 0;
         BallCreator.serve_y = -1.4;
         BallCreator.serve_z = 9.5;
-
+        
         BallCreator.hit_x   = 0;
         BallCreator.hit_y   = 1.8;
         BallCreator.hit_z   = 16;
-
+        
         BallCreator.reset = () => {
             for (const object of Objects){
                 scene.remove(object.sphere);
             }
             Objects.splice(0, Objects.length)
         }
-
+        
         BallCreator.createBall = () => {
             let x = (Math.random() - 0.5) * 4
             let y = 4.92;
@@ -234,74 +235,79 @@ const RemoteGame = () => {
             
             createSphere(new THREE.Vector3(paddle.position.x, y, -paddle.position.z), BallCreator.serve_x, BallCreator.serve_y, BallCreator.serve_z)
         }
-
+        
         gui.add(BallCreator, 'createBall')
         gui.add(BallCreator, 'reset')
-
+        
         gui.add(BallCreator, 'serve_x',  -20,  70).step(0.05)
         gui.add(BallCreator, 'serve_y',  -20,  70).step(0.05)
         gui.add(BallCreator, 'serve_z',  -20,  70).step(0.05)
-
+        
         gui.add(BallCreator, 'hit_x', -20,  70).step(0.05)
         gui.add(BallCreator, 'hit_y', -20,  70).step(0.05)
         gui.add(BallCreator, 'hit_z', -20,  70).step(0.05)
-
+        
         gui.add(BallCreator, 'BALL_SPEED', 0,  70).step(0.05)
-
+        
         //Table 
         const geometry       = new THREE.BoxGeometry( 1, 1, 1 ); 
         const material       = new THREE.MeshBasicMaterial( {color: 0xffffff} );
         material.transparent = true; 
         const Table          = new THREE.Mesh( geometry, material ); 
-
+        
         Table.position.x = -0.01;
         Table.position.y = 4.15;
         Table.position.z = -0.06;
-
+        
         Table.scale.set(8.28, 0.3, 18.51)
-
+        
         //Net
         const Net = new THREE.Mesh( geometry, material ); 
         Net.position.x = 0;
         Net.position.y = 4.66;
         Net.position.z = -0.02;
         Net.scale.set(10.29, 1, 0.05)
-
+        
         // mouse event listener
-
+        
         let mouseDirection = 0;
         let prevMouseX = 0;
-
-        const mouse = new THREE.Vector2();
-        window.addEventListener('mousemove', function (info) {
+        
+        
+        //event listeners
+        
+        const handleMouseMove = (info) => {
             mouse.x = (info.clientX/window.innerWidth)*2-1;
             mouse.y = -((info.clientY/window.innerHeight)*2-1);
             
             mouseDirection = mouse.x > prevMouseX ? 1 : -1;
             prevMouseX = mouse.x;
-        }
-        )
-
-        document.addEventListener(
-            "keydown",
-            (event) => {
+        };
+        
+        const handleKeyDown = (event) => {
             const keyName = event.key;
-
-            if (keyName === "r"){
-                BallCreator.createBall()
-            }
-            if (keyName === "t"){
-                BallCreator.reset()
-            }
-            if (keyName === "v"){
-                BallCreator.cameraFixed = true;
-            }
-            if (keyName === "b"){
-                BallCreator.cameraFixed = false;
-            }
-        }
-        )
-
+          
+              if (keyName === "r"){
+                  BallCreator.createBall()
+              }
+              if (keyName === "t"){
+                  BallCreator.reset()
+              }
+              if (keyName === "v"){
+                  BallCreator.cameraFixed = true;
+              }
+              if (keyName === "b"){
+                  BallCreator.cameraFixed = false;
+              }
+        };
+        //
+        
+        
+        const mouse = new THREE.Vector2();
+        window.addEventListener('mousemove', handleMouseMove)
+        
+        document.addEventListener("keydown", handleKeyDown)
+        
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);
         rgbeLoader.load('/models/neon_photostudio_2k.hdr', (enviroment_map) => {
@@ -313,25 +319,25 @@ const RemoteGame = () => {
             scene.environmentIntensity = 0.01; 
             scene.backgroundIntensity  = 0.007;
         })
-
+        
         const BallBoundingBox     = new THREE.Box3();
         const PaddleBoundingBox   = new THREE.Box3();
         const PaddleBoundingAiBox = new THREE.Box3();
         const TableBoundingBox    = new THREE.Box3();
         const NetBoundingBox      = new THREE.Box3();
-
+        
         const PaddleBoxHelper   = new THREE.Box3Helper(PaddleBoundingBox, 0xff0000);
         const PaddleAiBoxHelper = new THREE.Box3Helper(PaddleBoundingAiBox, 0xff0000);
         const BallBoxHelper     = new THREE.Box3Helper(BallBoundingBox, 0xff0000);
         const TableBoxHelper    = new THREE.Box3Helper(TableBoundingBox, 0xff0000);
         const NetHelper         = new THREE.Box3Helper(NetBoundingBox, 0xff0000);
-
+        
         // scene.add(PaddleBoxHelper);
         // scene.add(PaddleAiBoxHelper);
         // scene.add(BallBoxHelper);
         // scene.add(TableBoxHelper);
         // scene.add(NetHelper);
-
+        
         function checkCollision() {
             if (Objects.length){
                 // Update bounding boxes with the current positions of the models
@@ -341,16 +347,16 @@ const RemoteGame = () => {
                 NetBoundingBox.setFromObject(Net)
                 TableBoundingBox.setFromObject(Table)
                 
-                if (PaddleBoundingBox.intersectsBox(BallBoundingBox)) {
+                if (PaddleBoundingBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z > 0) {
                     
-
+        
                     // console.log(PaddleBoundingBox.distanceToPoint(paddleAi.position));
                     // console.log('paddle and ball!');
                     // let intensity = 3 - (Math.abs(Objects[Objects.length - 1].sphere.position.x) * 2/5);                       
                     // let forceX = (intensity * mouseDirection)
-
+        
                     // console.log(forceX > 0 ? "right" : "left");
-
+        
                     //for push Sumilation
                     // gsap.to(paddle.rotation, {
                     //     x: paddle.rotation.x - 0.5,
@@ -360,16 +366,16 @@ const RemoteGame = () => {
                     // Pong_Ball_colide(0.54);
                     
                     Objects[Objects.length - 1].velocity.set( BallCreator.hit_x,        
-                                                            BallCreator.hit_y,        
-                                                            -BallCreator.BALL_SPEED
+                                                              BallCreator.hit_y,        
+                                                              -BallCreator.BALL_SPEED
                     )
                 }
-                else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox)){
+                else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
                     
                     // console.log('paddleAi and ball!');                        
                     // let intensity = Math.max( Math.min((5.5 / Math.abs(paddle.position.x)), 0), 3);                       
                     // let forceX = (intensity * mouseDirection)
-
+        
                     // console.log(forceX > 0 ? "right" : "left");
                     
                     //for push Sumilation
@@ -381,8 +387,8 @@ const RemoteGame = () => {
                     // Pong_Ball_colide(0.54);
                     
                     Objects[Objects.length - 1].velocity.set( BallCreator.hit_x,        
-                                                            BallCreator.hit_y,        
-                                                            BallCreator.BALL_SPEED
+                                                              BallCreator.hit_y,        
+                                                              BallCreator.BALL_SPEED
                     )
                 }
                 
@@ -390,14 +396,14 @@ const RemoteGame = () => {
                     // console.log('ball collided with the Net!');
                     // Objects[Objects.length - 1].sphereBody.velocity.z = -(Objects[Objects.length - 1].sphereBody.velocity.z) * 0.5; //Good !
                     // Good just need to get the best velocity values
-
+        
                     // const normalVelocity = Objects[Objects.length - 1].velocity.dot(new THREE.Vector3(0, 0, 1)); // Extract velocity along the normal
                     // Objects[Objects.length - 1].velocity.z = ((Objects[Objects.length - 1].velocity.y) > 0 ? 1 : -1 ) * restitution;
-
+        
                     // // Apply friction to X and Y velocity components
                     // Objects[Objects.length - 1].velocity.x *= friction;
                     // Objects[Objects.length - 1].velocity.y *= friction;
-
+        
                     // // Prevent sinking into the net by repositioning the ball
                     // const ballDepth = BallBoundingBox.max.z - BallBoundingBox.min.z;
                     // if (Objects[Objects.length - 1].sphere.position.z > NetBoundingBox.max.z) {
@@ -414,48 +420,48 @@ const RemoteGame = () => {
                     // Apply friction to X and Z velocity components
                     Objects[Objects.length - 1].velocity.x *= friction;
                     Objects[Objects.length - 1].velocity.z *= friction;
-
+        
                     // Reverse the Y velocity for bounce and apply restitution
                     Objects[Objects.length - 1].velocity.y *= -restitution;
-
+        
                     // Prevent sinking into the table by repositioning the ball
                     const ballHeight = BallBoundingBox.max.y - BallBoundingBox.min.y;
                     Objects[Objects.length - 1].sphere.position.y = TableBoundingBox.max.y + ballHeight / 2; // Place the ball on the table
                 }
             }
         }
-
+        
         scene.add(new THREE.GridHelper( 50, 50 ))
         // scene.add(new THREE.AxesHelper( 50 ))
-
+        
         gui.add(BallCreator, 'cameraFixed');
-
+        
         //Scoring System
         let PlayerScore = 0;
         let AiScore     = 0;
         let New_ball_launched = false;
-
+        
         function updateScoreboard() {
             scoreBoard.innerText = `Player : ${PlayerScore} - AI_bot : ${AiScore}`;
         }
-
+        
         //  Animate
         const clock = new THREE.Clock()
         let   deltaTime    = 0;
-
+        
         let   angle = 0; // Start angle for rotation
-        const radius = 18; // Distance from the center of the object
+        const radius = 22; // Distance from the center of the object
         const target = new THREE.Vector3(0, 0, 0);
-
+        
         const tick = () =>
         {
             deltaTime = clock.getDelta();
-
+        
             angle += 0.005;
             camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
             camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
-            // camera.position.y += deltaTime/10 * 9;
-
+            // camera.position.y += deltaTime/10 * 9;e
+        
             
             for (const obj of Objects) {        
                 // Apply Gravity
@@ -465,7 +471,7 @@ const RemoteGame = () => {
                 obj.sphere.position.x += obj.velocity.x * deltaTime;
                 obj.sphere.position.y += obj.velocity.y * deltaTime;
                 obj.sphere.position.z += obj.velocity.z * deltaTime;
-
+        
             }
             
             if (Objects.length && paddleAi){
@@ -495,7 +501,7 @@ const RemoteGame = () => {
             }
             
             if (BallCreator.cameraFixed){
-
+        
                 camera.position.x = 0;
                 camera.position.y = 7.8;
                 camera.position.z = 12.8;
@@ -524,7 +530,7 @@ const RemoteGame = () => {
                 //         ease: "power2.inOut",
                 //     });
                 // }
-
+        
                 // if (paddleAi.position.x > 0){
                 //     gsap.to(paddleAi.rotation, {
                 //         x: 2.81,
@@ -545,19 +551,39 @@ const RemoteGame = () => {
                 // }
                 
             }
-
+        
             checkCollision();
-
+        
             topControls.update()
             // stat.update()
             
             renderer.render(scene, camera)
-
+        
             renderer.setAnimationLoop(tick);
         }
-
+        
         tick()
 ////=>////
+
+        return() => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('keydown', handleKeyDown);
+
+            while (scene.children.length > 0) {
+                const child = scene.children[0];
+                scene.remove(child);
+            }
+
+            renderer.dispose();
+
+            gui.destroy();
+
+            topControls.dispose();
+
+            hit_sound.pause();
+            hit_sound.src = "";
+        };
 
     }, []);
   
