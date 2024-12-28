@@ -1,9 +1,9 @@
    // src/App.jsx
   //  import React from 'react';
    import { Routes, Route } from 'react-router-dom';
-   import RemoteGame from './RemoteScene.jsx';
-   import WebSocketComponent from './Matchmaking.jsx';
-   import Lobby from './Lobby.jsx';
+   import RemoteGame from './game/RemoteScene.jsx';
+   import WebSocketComponent from './game/Matchmaking.jsx';
+   import Lobby from './pages/Lobby.jsx';
   //  import './style.css';
 
    function App() {

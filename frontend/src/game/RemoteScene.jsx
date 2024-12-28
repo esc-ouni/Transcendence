@@ -6,7 +6,7 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js'
 
 import gsap from 'gsap'; 
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../components/LoadingScreen';
 
 import './RemoteScene.css'
 
