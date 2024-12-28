@@ -8,10 +8,18 @@ import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js'
 import gsap from 'gsap'; 
 import LoadingScreen from '../components/LoadingScreen';
 
+import Hud from '../components/Hud'
+
 import './RemoteScene.css'
+
+import Scoreboard from '../components/Scoreboard';
 
 const RemoteGame = () => {
     const canvasRef = useRef(null);
+
+  
+    const [playerScore, setPlayerScore] = useState(0);
+    const [aiScore, setAiScore] = useState(0);
 
     const [loading, setLoading] = useState(true);
 
@@ -437,13 +445,7 @@ const RemoteGame = () => {
         gui.add(BallCreator, 'cameraFixed');
         
         //Scoring System
-        let PlayerScore = 0;
-        let AiScore     = 0;
         let New_ball_launched = false;
-        
-        function updateScoreboard() {
-            scoreBoard.innerText = `Player : ${PlayerScore} - AI_bot : ${AiScore}`;
-        }
         
         //  Animate
         const clock = new THREE.Clock()
@@ -481,23 +483,16 @@ const RemoteGame = () => {
                 //Scoring System
                 if (New_ball_launched){
                     if (Objects[Objects.length - 1].sphere.position.z > (paddle.position.z + 1)) {
-                        AiScore += 1;
+                        // aiScore += 1;
                         New_ball_launched = false;
-                        updateScoreboard()
+                        setAiScore((aiScore) => aiScore + 1)
                     } else if (Objects[Objects.length - 1].sphere.position.z < (paddleAi.position.z - 1)) {
-                        PlayerScore += 1;
+                        // playerScore += 1;
                         New_ball_launched = false;
-                        updateScoreboard()
+                        setPlayerScore((playerScore) => playerScore + 1)
                     }
                 }
             
-                if (PlayerScore === 7 || AiScore === 7) {
-                    updateScoreboard()
-                    alert(`${PlayerScore === 7 ? 'Player' : 'Ai'} Wins!`);
-                    PlayerScore = 0;
-                    AiScore = 0;
-                    updateScoreboard()
-                }
             }
             
             if (BallCreator.cameraFixed){
@@ -587,10 +582,20 @@ const RemoteGame = () => {
 
     }, []);
   
+    useEffect(() => {
+        if (playerScore === 7 || aiScore === 7) {
+          alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
+          setPlayerScore(0);
+          setAiScore(0);
+        }
+      }, [playerScore, aiScore]);
+
     return (
         <>
             <LoadingScreen show={loading} />
             <canvas ref={canvasRef}></canvas>
+            <Hud/>
+            <Scoreboard playerScore={playerScore} aiScore={aiScore}/>
         </>
     )
 };
