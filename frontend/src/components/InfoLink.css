@@ -1,0 +1,36 @@
+.info-container {
+    position: absolute;
+    left: 60px;
+    bottom: 60px;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* so it looks clickable if needed */
+  }
+  
+  /* The icon can have a border or some styling if desired */
+  .info-icon {
+    width: 40px;      /* adjust size as needed */
+    height: 40px;
+    border-radius: 50%;       /* if the icon is a circle */
+    border: 1px solid #ffffff; /* for a white ring around it, if you want */
+    object-fit: cover;         /* keep it circular if the file is square */
+    opacity: 0.7;
+  }
+  
+  /* The text is hidden by default */
+  .info-text {
+    margin-left: 10px; /* space between icon and text */
+    color: #888;       /* grey text color, as in your screenshot */
+    opacity: 0;        /* start invisible */
+    transition: opacity 0.2s ease-in-out; /* animate fade-in/out */
+  }
+  
+  /* Reveal text on hover */
+  .info-container:hover .info-text {
+    opacity: 1;
+  }
+  
+  .info-container:hover .info-icon {
+    opacity: 1;
+  }
+  

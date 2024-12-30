@@ -29,6 +29,9 @@
   
   .frame .START-GAME {
     font-family: "Inter", Helvetica;
+    /* font-family:  'Slope Opera', sans-serif; */
+    /* font-family: 'Robot World'; */
+    font-style: italic;
     font-size: 28px;
     font-weight: 600;
     height: 34px;

@@ -1,4 +1,5 @@
 import { Frame } from '../components/Frame';
+import InfoLink from '../components/InfoLink';
 import PingPongBack from '../components/PingPongBack';
 import RemoteGame from '../game/RemoteScene';
 import './style.css'
@@ -60,6 +61,10 @@ function Lobby(){
                     hovered_icon='/bottouns/hovered_ai.svg'
                     onClick={() => {navigate('/Matchmaking')}}
                 />
+            </div>
+
+            <div>
+                <InfoLink />
             </div>
         </>
     )
