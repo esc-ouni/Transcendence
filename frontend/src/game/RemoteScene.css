@@ -8,7 +8,7 @@
     outline: none;
 }
 
-button {
+/* button {
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
@@ -29,7 +29,6 @@ outline: 4px auto -webkit-focus-ring-color;
 }
 
 .ui-overlay {
-  /* border: 2px solid; */
   position: fixed;
   bottom: 20px; 
   right: 20px; 
@@ -43,7 +42,7 @@ outline: 4px auto -webkit-focus-ring-color;
 .overlay-button {
   width: 440px;
   height: 70px;
-  margin-bottom: 15px; /* Adds space between buttons */
+  margin-bottom: 15px; 
   padding: 10px 20px;
   font-size: 40px;
   cursor: pointer;
@@ -56,7 +55,9 @@ outline: 4px auto -webkit-focus-ring-color;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
+} */
+
+
 
 
 #loading-screen {
@@ -186,5 +187,17 @@ outline: 4px auto -webkit-focus-ring-color;
   /* Right section */
   .section-right {
     margin-right: 20px;
+  }
+  
+  .blur-wrapper {
+    /* This blurs all child elements */
+    filter: blur(6px);
+  
+    /* If you need to fill the page */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
   }
   

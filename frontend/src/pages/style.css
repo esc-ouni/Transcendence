@@ -19,15 +19,135 @@ body
 }
 
 
+/* e.g., in style.css or another stylesheet */
 .yy {
-    /* display: flex;
-    flex-direction: column; */
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+    
+    /* Optional: if you want them vertically stacked with some spacing: */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 
+.text-wrapper {
+    text-align: center;
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    height: 33px;
+    /* left: 0; */
+    letter-spacing: 0;
+    line-height: normal;
+    /* position: absolute; */
+    /* top: 0; */
+}
 
+  /* Container pinned top-left of the screen */
+.lktaba {
+    position: absolute;
+    top: 30px;         /* adjust spacing from top */
+    left: 30px;        /* adjust spacing from left */
+    color: #fff;       /* white text */
+    max-width: 600px;  /* limit paragraph width if you like */
+    font-family: "Arial", sans-serif; /* or "Inter", etc. */
+  }
+
+  .lktaba1 {
+    /* position: absolute;*/
+    top: 30px;         /*adjust spacing from top */
+    left: 90px;        /* adjust spacing from left */
+    color: #fff;       /* white text */
+    max-width: 900px;  /* limit paragraph width if you like */
+    /* font-family: "Arial", sans-serif;  */
+
+  
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 48px;
+    font-weight: 600;
+    height: 120px;
+    /* left: 0; */
+    letter-spacing: 0;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+  }
+
+  .lktaba2 {
+    /* position: absolute;*/
+    top: 30px;         /*adjust spacing from top */
+    left: 90px;        /* adjust spacing from left */
+    margin-left: 30px;
+    color: #fff;       /* white text */
+    max-width: 900px;  /* limit paragraph width if you like */
+    /* font-family: "Arial", sans-serif;  */
+    
+    
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    height: 50px;
+    /* left: 0; */
+    letter-spacing: 0;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+}
+
+.lktaba3 {
+    /* position: absolute;*/
+    margin-left: 30px;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+  }
+
+
+  /* Title + arrow row */
+  .title-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Back arrow image */
+  .back-arrow {
+    width: 40px;       /* size of the arrow */
+    height: 40px;      /* can let it auto-size, or fix both w/h */
+    margin-right: 12px; /* space between arrow and text */
+    cursor: pointer;   /* looks clickable */
+  }
+  
+  .back-arrow:hover {
+    opacity: 0.7;
+  }
+  
+
+  /* Main title (Ping Pong Game) */
+  .main-title {
+    font-size: 48px;
+    font-weight: 700;  /* bold */
+    margin: 0;         /* remove default H1 margin */
+  }
+  
+  /* Subheading (GAME DESCRIPTION :) */
+  .description-heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0 10px 0; /* top/bottom/left/right */
+  }
+  
+  /* Paragraph text */
+  .description-text {
+    font-size: 16px;
+    line-height: 1.6;      /* comfortable spacing */
+    margin: 0;             /* remove default <p> margin, or set as you like */
+  }
+  
 
 
