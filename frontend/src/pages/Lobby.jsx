@@ -51,14 +51,14 @@ function Lobby(){
                 />
                 <Frame
                     text="Multiplayer Game"
-                    default_icon='/bottouns/default_ai.svg'
-                    hovered_icon='/bottouns/hovered_ai.svg'
+                    default_icon='/bottouns/default_multiplayer.svg'
+                    hovered_icon='/bottouns/hovered_multiplayer.svg'
                     onClick={() => {navigate('/RemoteGame')}}
                 />
                 <Frame
                     text="Start Tournament"
-                    default_icon='/bottouns/default_ai.svg'
-                    hovered_icon='/bottouns/hovered_ai.svg'
+                    default_icon='/bottouns/default_tournament.svg'
+                    hovered_icon='/bottouns/hovered_tournament.svg'
                     onClick={() => {navigate('/Tournament')}}
                 />
             </div>
