@@ -1,0 +1,65 @@
+.frame {
+    height: 83px;
+    width: 429px;
+  }
+  
+  .frame .group {
+    height: 83px;
+    width: 431px;
+  }
+  
+  .frame .overlap-group {
+    border-radius: 19px;
+    height: 83px;
+    position: relative;
+    width: 429px;
+  }
+  
+  .frame .rectangle {
+    border: 1px solid;
+    border-color: #ffffff;
+    border-radius: 19px;
+    height: 83px;
+    left: 0;
+    opacity: 0.41;
+    position: absolute;
+    top: 0;
+    width: 429px;
+  }
+  
+  .frame .START-GAME {
+    font-family: "Inter", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    height: 34px;
+    left: 125px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 24px;
+  }
+  
+  .frame .artificial {
+    height: 44px;
+    left: 49px;
+    position: absolute;
+    top: 19px;
+    width: 47px;
+  }
+  
+  .frame .hover {
+    background-color: #ffffff;
+  }
+  
+  .frame .default {
+    background-color: #000000;
+  }
+  
+  .frame .property-1-hover {
+    color: #000000;
+  }
+  
+  .frame .property-1-default {
+    color: #e0dedc;
+  }
+  
