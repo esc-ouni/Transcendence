@@ -14,7 +14,7 @@
     border-radius: 50%;       /* if the icon is a circle */
     border: 1px solid #ffffff; /* for a white ring around it, if you want */
     object-fit: cover;         /* keep it circular if the file is square */
-    opacity: 0.7;
+    opacity: 0.5;
   }
   
   /* The text is hidden by default */

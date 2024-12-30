@@ -1,7 +1,7 @@
 import { Frame } from '../components/Frame';
 import InfoLink from '../components/InfoLink';
 import PingPongBack from '../components/PingPongBack';
-import RemoteGame from '../game/RemoteScene';
+// import RemoteGame from '../game/RemoteScene';
 import './style.css'
 import { useNavigate } from "react-router-dom";
 
@@ -38,16 +38,16 @@ function Lobby(){
             <button onClick={() => {navigate('/Matchmaking')}} > <em>Matchmaking</em></button> */}
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
-                    text="Start New Game"
+                    text="Play Online"
                     default_icon='/bottouns/default_offline.svg'
                     hovered_icon='/bottouns/hovered_offline.svg'
                     onClick={() => {navigate('/RemoteGame')}}
                 />
                 <Frame
-                    text="Start Tournament"
+                    text="Start New Game"
                     default_icon='/bottouns/default_offline.svg'
                     hovered_icon='/bottouns/hovered_offline.svg'
-                    onClick={() => {navigate('/RemoteGame')}}
+                    onClick={() => {navigate('/PlayLocally_1v1')}}
                 />
                 <Frame
                     text="Multiplayer Game"
@@ -56,7 +56,7 @@ function Lobby(){
                     onClick={() => {navigate('/RemoteGame')}}
                 />
                 <Frame
-                    text="Matchmaking"
+                    text="Start Tournament"
                     default_icon='/bottouns/default_ai.svg'
                     hovered_icon='/bottouns/hovered_ai.svg'
                     onClick={() => {navigate('/Matchmaking')}}
