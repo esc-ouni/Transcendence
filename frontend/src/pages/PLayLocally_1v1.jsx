@@ -3,9 +3,11 @@ import PlayerCard from "../components/PlayerCard";
 import "./GameOptions.css"; // any extra styling
 import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function PlayLocally_1v1() {
+  const navigate = useNavigate();
+
   const handleNameChangePlayer1 = (newName) => {
     console.log("Player 1 name changed to:", newName);
   };
@@ -54,7 +56,7 @@ export default function PlayLocally_1v1() {
                 text="Launch Game"
                 default_icon='/bottouns/default_offline.svg'
                 hovered_icon='/bottouns/hovered_offline.svg'
-                onClick={() => {Navigate('/LocalGame')}}
+                onClick={() => {navigate('/LocalGame')}}
                 // onClick={() => {alert('Hello !')}}
             />
         </div>
