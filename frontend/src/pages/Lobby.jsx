@@ -59,7 +59,7 @@ function Lobby(){
                     text="Start Tournament"
                     default_icon='/bottouns/default_ai.svg'
                     hovered_icon='/bottouns/hovered_ai.svg'
-                    onClick={() => {navigate('/Matchmaking')}}
+                    onClick={() => {navigate('/Tournament')}}
                 />
             </div>
 
