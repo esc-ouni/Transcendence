@@ -467,6 +467,7 @@ const PingPongBack = () => {
             camera.position.x = radius * Math.cos(angle) ;
             // camera.position.y = 0;  // keep the camera at y=0 if you want a "flat" orbit
             camera.position.z = radius * Math.sin(angle);
+            camera.position.y = (radius * (Math.abs(Math.sin(angle)) / 2)) + 5;
             
             for (const obj of Objects) {        
                 // Apply Gravity

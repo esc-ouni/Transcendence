@@ -462,7 +462,7 @@ const RemoteGame = () => {
             angle += 0.005;
             camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
             camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
-            // camera.position.y += deltaTime/10 * 9;e
+            // camera.position.y = 78;
         
             
             for (const obj of Objects) {        
