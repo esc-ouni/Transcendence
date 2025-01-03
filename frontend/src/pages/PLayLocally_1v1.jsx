@@ -1,65 +1,61 @@
-import React from "react";
-import PlayerCard from "../components/PlayerCard";
+// import React from "react";
 import "./GameOptions.css"; // any extra styling
 import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
 
-export default function PlayLocally_1v1() {
+import React, { useState } from 'react';
+import PlayerInput from '../components/PlayerInput';
+
+const PlayLocally_1v1 = () => {
+  const [player1Name, setPlayer1Name] = useState('Haskitwy');
+  const [player2Name, setPlayer2Name] = useState('Haskitwy');
   const navigate = useNavigate();
-
-  const handleNameChangePlayer1 = (newName) => {
-    console.log("Player 1 name changed to:", newName);
-  };
-
-  const handleNameChangePlayer2 = (newName) => {
-    console.log("Player 2 name changed to:", newName);
-  };
-
-  const handleAvatarClickPlayer1 = () => {
-    // e.g. open a modal to pick an avatar
-    alert("Change avatar for Player 1");
-  };
-
-  const handleAvatarClickPlayer2 = () => {
-    // e.g. open a modal to pick an avatar
-    alert("Change avatar for Player 2");
-  };
 
   return (
     <>
-        <PingPongBack/>
-        <div className="game-options-container">
-            <h2>GAME OPTIONS</h2>
-            <p>Tap on the name or avatar to change it.</p>
 
-            <div className="cards-row">
-                <PlayerCard
-                playerLabel="PLAYER 1"
-                defaultName=""
-                defaultAvatar="/bottouns/omar.jpg"
-                onNameChange={handleNameChangePlayer1}
-                onAvatarClick={handleAvatarClickPlayer1}
-                />
-
-                <PlayerCard
-                playerLabel="PLAYER 2"
-                defaultName=""
-                defaultAvatar="/bottouns/le7ya.jpg"
-                onNameChange={handleNameChangePlayer2}
-                onAvatarClick={handleAvatarClickPlayer2}
-                />
-            </div>
+      <div className="background-wrapper">
+        <PingPongBack />
+      </div>
+      <div className="game-options-container">
+        <div className="game-options-header">
+          <h1>GAME OPTIONS</h1>
+          <p>TAP ON THE NAME OR AVATAR TO CHANGE IT.</p>
         </div>
-        <div className="yy">
+        
+        <div className="players-container">
+          <PlayerInput
+            playerId={1}
+            initialName={player1Name}
+            avatarSrc="/bottouns/omar.jpg"
+            onNameChange={setPlayer1Name}
+            position='left'
+            />
+          
+          <PlayerInput
+            playerId={2}
+            initialName={player2Name}
+            avatarSrc="/bottouns/le7ya.jpg"
+            onNameChange={setPlayer2Name}
+            position='right'
+            />
+        </div>
+
+        <div className="buttona">
             <Frame
                 text="Launch Game"
                 default_icon='/bottouns/default_offline.svg'
                 hovered_icon='/bottouns/hovered_offline.svg'
                 onClick={() => {navigate('/LocalGame')}}
-                // onClick={() => {alert('Hello !')}}
             />
         </div>
+
+      </div>
     </>
   );
-}
+};
+
+
+
+export default PlayLocally_1v1;

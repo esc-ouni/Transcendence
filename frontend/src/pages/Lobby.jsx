@@ -39,8 +39,8 @@ function Lobby(){
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Online"
-                    default_icon='/bottouns/default_offline.svg'
-                    hovered_icon='/bottouns/hovered_offline.svg'
+                    default_icon='/bottouns/default_online.svg'
+                    hovered_icon='/bottouns/hovered_online.svg'
                     onClick={() => {navigate('/RemoteGame')}}
                 />
                 <Frame
