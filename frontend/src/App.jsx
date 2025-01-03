@@ -7,6 +7,8 @@ import Lobby from './pages/Lobby.jsx';
 import PlayLocally_1v1 from './pages/PLayLocally_1v1.jsx';
 import LocalGame from './game/LocalScene.jsx';
 import Tournament from './pages/Tournament.jsx';
+import MultiplayerGame from './pages/MultiplayerGame.jsx';
+import PreTournament from './pages/PreTournament.jsx';
 ;
   //  import './style.css';
 
@@ -20,6 +22,8 @@ import Tournament from './pages/Tournament.jsx';
           <Route path='/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
           <Route path='/LocalGame' element={<LocalGame />}/>
           <Route path='/Tournament' element={<Tournament />}/>
+          <Route path='/Multiplayer' element={<MultiplayerGame />}/>
+          <Route path='/PreTournament' element={<PreTournament />}/>
         </Routes>
       </div>
     );

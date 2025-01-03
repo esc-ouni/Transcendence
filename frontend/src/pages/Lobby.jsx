@@ -44,7 +44,7 @@ function Lobby(){
                     onClick={() => {navigate('/RemoteGame')}}
                 />
                 <Frame
-                    text="Start New Game"
+                    text="Play Locally"
                     default_icon='/bottouns/default_offline.svg'
                     hovered_icon='/bottouns/hovered_offline.svg'
                     onClick={() => {navigate('/PlayLocally_1v1')}}
@@ -53,13 +53,13 @@ function Lobby(){
                     text="Multiplayer Game"
                     default_icon='/bottouns/default_multiplayer.svg'
                     hovered_icon='/bottouns/hovered_multiplayer.svg'
-                    onClick={() => {navigate('/RemoteGame')}}
+                    onClick={() => {navigate('/Multiplayer')}}
                 />
                 <Frame
                     text="Start Tournament"
                     default_icon='/bottouns/default_tournament.svg'
                     hovered_icon='/bottouns/hovered_tournament.svg'
-                    onClick={() => {navigate('/Tournament')}}
+                    onClick={() => {navigate('/PreTournament')}}
                 />
             </div>
 
