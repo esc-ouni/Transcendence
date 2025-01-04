@@ -1,10 +1,5 @@
-@font-face {
-  font-family: 'SNES Italic';
-  src: url('/super-nintendo/font.ttf') format('truetype');
-}
 
-
-.background-wrapper {
+.background-wrapper-w {
   position: fixed;
   top: 0;
   left: 0;
@@ -14,7 +9,7 @@
   z-index: 1;
 }
 
-.game-options-container {
+.game-options-container-w {
   position: relative;
   z-index: 2;
   min-height: 100vh;
@@ -24,38 +19,15 @@
   color: white;
 }
 
-.game-options-header {
+.game-options-header-w {
   text-align: center;
-  margin-top: 80px;
+  margin-top: 140px;
 }
 
-.game-options-header h1 {
-  font-family: 'Press Start 2P', 'SNES', monospace;
-  font-size: 48px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-shadow: 2px 2px 0px #ff0000,
-               4px 4px 0px #000000;
-  margin-bottom: 20px;
-  animation: glowText 2s ease-in-out infinite alternate;
-}
-
-@keyframes glowText {
-  from {
-    text-shadow: 2px 2px 0px #ff0000,
-                 4px 4px 0px #000000;
-  }
-  to {
-    text-shadow: 2px 2px 10px #ff0000,
-                 4px 4px 0px #000000;
-  }
-}
-
-.players-container {
+.players-container-w {
   width: 80%;
   height: 400px;
-  margin: 40px auto;
+  margin: 150px auto;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   backdrop-filter: blur(10px);
@@ -64,22 +36,21 @@
   align-items: center;
 }
 
-.button-container {
-  cursor: pointer;
+.button-container-w {
   position: fixed;
-  bottom: 140px;
+  bottom: 200px;
   display: flex;
-  gap: 70px;
+  gap: 60px;
   justify-content: center;
   width: 100%;
 }
 
-.game-options-header h1 {
+.game-options-header-w h1 {
   font-family: 'SNES Italic', sans-serif;
   font-size: 48px;
-  text-transform: uppercase; 
-  /* color: #ffffff;
+  text-transform: uppercase;
+  color: #ffffff;
   text-shadow: 2px 2px 0px #ff0000,
                4px 4px 0px #000000;
-  margin-bottom: 20px; */ 
+  margin-bottom: 20px;
 }
