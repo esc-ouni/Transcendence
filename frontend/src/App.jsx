@@ -9,6 +9,7 @@ import LocalGame from './game/LocalScene.jsx';
 import Tournament from './pages/Tournament.jsx';
 import MultiplayerGame from './pages/MultiplayerGame.jsx';
 import PreTournament from './pages/PreTournament.jsx';
+import Winner from './pages/Winner.jsx';
 ;
   //  import './style.css';
 
@@ -24,6 +25,7 @@ import PreTournament from './pages/PreTournament.jsx';
           <Route path='/Tournament' element={<Tournament />}/>
           <Route path='/Multiplayer' element={<MultiplayerGame />}/>
           <Route path='/PreTournament' element={<PreTournament />}/>
+          <Route path='/Winner' element={<Winner />}/>
         </Routes>
       </div>
     );
