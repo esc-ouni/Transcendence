@@ -41,7 +41,7 @@ function Lobby(){
                     text="Play Online"
                     default_icon='/bottouns/default_online.svg'
                     hovered_icon='/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/RemoteGame')}}
+                    onClick={() => {navigate('/PreRemote')}}
                 />
                 <Frame
                     text="Play Locally"

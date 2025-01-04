@@ -10,6 +10,7 @@ import Tournament from './pages/Tournament.jsx';
 import MultiplayerGame from './pages/MultiplayerGame.jsx';
 import PreTournament from './pages/PreTournament.jsx';
 import Winner from './pages/Winner.jsx';
+import PreRemote from './pages/PreRemote.jsx';
 ;
   //  import './style.css';
 
@@ -25,6 +26,7 @@ import Winner from './pages/Winner.jsx';
           <Route path='/Tournament' element={<Tournament />}/>
           <Route path='/Multiplayer' element={<MultiplayerGame />}/>
           <Route path='/PreTournament' element={<PreTournament />}/>
+          <Route path='/PreRemote' element={<PreRemote />}/>
           <Route path='/Winner' element={<Winner />}/>
         </Routes>
       </div>

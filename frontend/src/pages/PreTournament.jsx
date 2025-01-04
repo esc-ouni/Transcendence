@@ -1,5 +1,5 @@
 // import React from "react";
-import "./GameOptions.css"; // any extra styling
+import "./PreRemote"; // any extra styling
 import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
