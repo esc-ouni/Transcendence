@@ -6,7 +6,7 @@ const [inputMessage, setInputMessage] = useState("");
 const [ready_socket, setSocket] = useState(null);
 
 useEffect(() => {
-  const socket = new WebSocket('ws://10.11.6.7:8000/ws/server-endpoint-socket/');
+  const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
 
   socket.onopen = () => {
     console.log("=> WebSocket Connected", socket);

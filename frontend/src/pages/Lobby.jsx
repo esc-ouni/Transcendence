@@ -38,6 +38,12 @@ function Lobby(){
             <button onClick={() => {navigate('/Matchmaking')}} > <em>Matchmaking</em></button> */}
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
+                    text="Websockets"
+                    default_icon='/bottouns/default_online.svg'
+                    hovered_icon='/bottouns/hovered_online.svg'
+                    onClick={() => {navigate('/Matchmaking')}}
+                />
+                <Frame
                     text="Play Online"
                     default_icon='/bottouns/default_online.svg'
                     hovered_icon='/bottouns/hovered_online.svg'
