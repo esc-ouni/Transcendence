@@ -13,8 +13,10 @@ import Hud from '../components/Hud'
 import './RemoteScene.css'
 
 import Scoreboard from '../components/Scoreboard';
+import { useNavigate } from 'react-router-dom';
 
 const RemoteGame = () => {
+    const navigate = useNavigate();
     const canvasRef = useRef(null);
 
   
@@ -26,15 +28,11 @@ const RemoteGame = () => {
     useEffect(() => {
 
 ////=>////
+
+        // Physics properties (perfect values)
         const gravity     = -9.8;
         const friction    = 0.25;
         const restitution = 0.89;
-
-
-
-        // const stat = new stats()
-        // stat.showPanel(0)
-        // document.body.appendChild(stat.dom)
 
         const loadingManager = new THREE.LoadingManager();
 
@@ -55,9 +53,10 @@ const RemoteGame = () => {
         let canvas = null;
         if (canvasRef.current != null)
             canvas = canvasRef.current
-
+        
+        
         const scene = new THREE.Scene()
-
+        
         const floor = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30),
             new THREE.MeshStandardMaterial({
@@ -190,6 +189,7 @@ const RemoteGame = () => {
         
                 sphere.castShadow = true
                 sphere.position.copy(position);
+                sphere.position.x = ((Math.random() - 0.5) * 5);
                 
                 scene.add(sphere)
                 
@@ -215,19 +215,17 @@ const RemoteGame = () => {
             hit_y  : -4.65,
             hit_z  : 26.5,
         
-            BALL_SPEED:35,
-        
             cameraFixed: false 
         }
         
         
         BallCreator.serve_x = 0;
-        BallCreator.serve_y = -1.4;
-        BallCreator.serve_z = 9.5;
+        BallCreator.serve_y = 3.4;
+        BallCreator.serve_z = 22;
         
         BallCreator.hit_x   = 0;
-        BallCreator.hit_y   = 1.8;
-        BallCreator.hit_z   = 16;
+        BallCreator.hit_y   = 3.2;
+        BallCreator.hit_z   = 22;
         
         BallCreator.reset = () => {
             for (const object of Objects){
@@ -254,8 +252,6 @@ const RemoteGame = () => {
         gui.add(BallCreator, 'hit_x', -20,  70).step(0.05)
         gui.add(BallCreator, 'hit_y', -20,  70).step(0.05)
         gui.add(BallCreator, 'hit_z', -20,  70).step(0.05)
-        
-        gui.add(BallCreator, 'BALL_SPEED', 0,  70).step(0.05)
         
         //Table 
         const geometry       = new THREE.BoxGeometry( 1, 1, 1 ); 
@@ -358,45 +354,56 @@ const RemoteGame = () => {
                 if (PaddleBoundingBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z > 0) {
                     
         
-                    // console.log(PaddleBoundingBox.distanceToPoint(paddleAi.position));
                     // console.log('paddle and ball!');
-                    // let intensity = 3 - (Math.abs(Objects[Objects.length - 1].sphere.position.x) * 2/5);                       
-                    // let forceX = (intensity * mouseDirection)
+                    let intensity = Math.max((3 - (Math.abs(paddle.position.x))), 0);
+                    if ((paddle.position.x > 2) && (mouseDirection < 0)){
+                        intensity = (Math.abs(paddle.position.x) * 0.5) ;
+                    }
+                    if ((paddle.position.x < -2) && (mouseDirection > 0)){
+                        intensity = (Math.abs(paddle.position.x) * 0.5);
+                    }    
+                    let forceX = (intensity * mouseDirection)
         
                     // console.log(forceX > 0 ? "right" : "left");
         
                     //for push Sumilation
-                    // gsap.to(paddle.rotation, {
-                    //     x: paddle.rotation.x - 0.5,
-                    //     duration: 0.1,
-                    //     ease: "power3.out"
-                    // })
-                    // Pong_Ball_colide(0.54);
+                    gsap.to(paddle.rotation, {
+                        x: paddle.rotation.x - 0.5,
+                        duration: 0.1,
+                        ease: "power3.out"
+                    })
+                    Pong_Ball_colide(0.54);
                     
-                    Objects[Objects.length - 1].velocity.set( BallCreator.hit_x,        
+                    Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
                                                               BallCreator.hit_y,        
-                                                              -BallCreator.BALL_SPEED
+                                                              -BallCreator.hit_z
                     )
                 }
                 else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
                     
-                    // console.log('paddleAi and ball!');                        
-                    // let intensity = Math.max( Math.min((5.5 / Math.abs(paddle.position.x)), 0), 3);                       
-                    // let forceX = (intensity * mouseDirection)
-        
+                    // console.log('paddleAi and ball!');
+                    let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
+                    let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
+                    if ((paddleAi.position.x > 2) && (Aidecision < 0)){
+                        intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
+                    }
+                    if ((paddleAi.position.x < -2) && (Aidecision > 0)){
+                        intensity = (Math.abs(paddleAi.position.x) * 0.5);
+                    }    
+                    let forceX = (intensity * Aidecision)
                     // console.log(forceX > 0 ? "right" : "left");
                     
                     //for push Sumilation
-                    // gsap.to(paddleAi.rotation, {
-                    //     x: paddleAi.rotation.x + 0.5,
-                    //     duration: 0.1,
-                    //     ease: "power3.out"
-                    // })
-                    // Pong_Ball_colide(0.54);
+                    gsap.to(paddleAi.rotation, {
+                        x: paddleAi.rotation.x + 0.5,
+                        duration: 0.1,
+                        ease: "power3.out"
+                    })
+                    Pong_Ball_colide(0.54);
                     
-                    Objects[Objects.length - 1].velocity.set( BallCreator.hit_x,        
+                    Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
                                                               BallCreator.hit_y,        
-                                                              BallCreator.BALL_SPEED
+                                                              BallCreator.hit_z
                     )
                 }
                 
@@ -439,12 +446,14 @@ const RemoteGame = () => {
             }
         }
         
-        scene.add(new THREE.GridHelper( 50, 50 ))
+        // scene.add(new THREE.GridHelper( 50, 50 ))
         // scene.add(new THREE.AxesHelper( 50 ))
         
         gui.add(BallCreator, 'cameraFixed');
         
         //Scoring System
+        let PlayerScore = 0;
+        let AiScore     = 0;
         let New_ball_launched = false;
         
         //  Animate
@@ -452,7 +461,7 @@ const RemoteGame = () => {
         let   deltaTime    = 0;
         
         let   angle = 0; // Start angle for rotation
-        const radius = 22; // Distance from the center of the object
+        const radius = 20; // Distance from the center of the object
         const target = new THREE.Vector3(0, 0, 0);
         
         const tick = () =>
@@ -460,9 +469,10 @@ const RemoteGame = () => {
             deltaTime = clock.getDelta();
         
             angle += 0.005;
+        
             camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
             camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
-            // camera.position.y = 78;
+            camera.position.y = 9;
         
             
             for (const obj of Objects) {        
@@ -493,9 +503,17 @@ const RemoteGame = () => {
                     }
                 }
             
+                // if (PlayerScore === 7 || AiScore === 7) {
+                //     updateScoreboard()
+                //     alert(`${PlayerScore === 7 ? 'Player' : 'Ai'} Wins!`);
+                //     PlayerScore = 0;
+                //     AiScore = 0;
+                //     updateScoreboard()
+                // }
             }
             
             if (BallCreator.cameraFixed){
+                // console.log(paddle.position);
         
                 camera.position.x = 0;
                 camera.position.y = 7.8;
@@ -507,43 +525,43 @@ const RemoteGame = () => {
                 // paddle.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
                 paddle.position.y = (5.03 + (2 * mouse.y));
                 
-                // if (paddle.position.x >0){
-                //     gsap.to(paddle.rotation, {
-                //         x: 2.81,
-                //         y: 2.96,
-                //         z: 2.81,
-                //         duration: 0.095,
-                //         ease: "power2.inOut",
-                //     });
-                // }
-                // else{
-                //     gsap.to(paddle.rotation, {
-                //         x: 2.81,
-                //         y: 6.28,
-                //         z: 2.81,
-                //         duration: 0.095,
-                //         ease: "power2.inOut",
-                //     });
-                // }
+                if (paddle.position.x >0){
+                    gsap.to(paddle.rotation, {
+                        x: 2.81,
+                        y: 2.96,
+                        z: 2.81,
+                        duration: 0.095,
+                        ease: "power2.inOut",
+                    });
+                }
+                else{
+                    gsap.to(paddle.rotation, {
+                        x: 2.81,
+                        y: 6.28,
+                        z: 2.81,
+                        duration: 0.095,
+                        ease: "power2.inOut",
+                    });
+                }
         
-                // if (paddleAi.position.x > 0){
-                //     gsap.to(paddleAi.rotation, {
-                //         x: 2.81,
-                //         y: 2.96,
-                //         z: 2.81,
-                //         duration: 0.095,
-                //         ease: "power2.inOut",
-                //     });
-                // }
-                // else{
-                //     gsap.to(paddleAi.rotation, {
-                //         x: 2.81,
-                //         y: 6.28,
-                //         z: 2.81,
-                //         duration: 0.095,
-                //         ease: "power2.inOut",
-                //     });
-                // }
+                if (paddleAi.position.x > 0){
+                    gsap.to(paddleAi.rotation, {
+                        x: 2.81,
+                        y: 2.96,
+                        z: 2.81,
+                        duration: 0.095,
+                        ease: "power2.inOut",
+                    });
+                }
+                else{
+                    gsap.to(paddleAi.rotation, {
+                        x: 2.81,
+                        y: 6.28,
+                        z: 2.81,
+                        duration: 0.095,
+                        ease: "power2.inOut",
+                    });
+                }
                 
             }
         
@@ -583,11 +601,12 @@ const RemoteGame = () => {
     }, []);
   
     useEffect(() => {
-        if (playerScore === 7 || aiScore === 7) {
-          alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
-          setPlayerScore(0);
-          setAiScore(0);
-        }
+    if (playerScore === 7 || aiScore === 7) {
+        setPlayerScore(0);
+        setAiScore(0);
+        navigate('/Winner');
+        // alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
+    }
       }, [playerScore, aiScore]);
 
     return (
