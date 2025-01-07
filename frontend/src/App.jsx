@@ -11,24 +11,27 @@ import MultiplayerGame from './pages/MultiplayerGame.jsx';
 import PreTournament from './pages/PreTournament.jsx';
 import Winner from './pages/Winner.jsx';
 import PreRemote from './pages/PreRemote.jsx';
+import { MatchProvider } from './game/MatchContext.jsx';
 ;
   //  import './style.css';
 
   function App() {
     return (
       <div className="App">
-        <Routes>
-          <Route path='/' element={<Lobby />}/>
-          <Route path='/RemoteGame' element={<RemoteGame />}/>
-          <Route path='/Matchmaking' element={<WebSocketComponent />}/>
-          <Route path='/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
-          <Route path='/LocalGame' element={<LocalGame />}/>
-          <Route path='/Tournament' element={<Tournament />}/>
-          <Route path='/Multiplayer' element={<MultiplayerGame />}/>
-          <Route path='/PreTournament' element={<PreTournament />}/>
-          <Route path='/PreRemote' element={<PreRemote />}/>
-          <Route path='/Winner' element={<Winner />}/>
-        </Routes>
+        <MatchProvider>
+          <Routes>
+            <Route path='/' element={<Lobby />}/>
+            <Route path='/RemoteGame' element={<RemoteGame />}/>
+            <Route path='/Matchmaking' element={<WebSocketComponent />}/>
+            <Route path='/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
+            <Route path='/LocalGame' element={<LocalGame />}/>
+            <Route path='/Tournament' element={<Tournament />}/>
+            <Route path='/Multiplayer' element={<MultiplayerGame />}/>
+            <Route path='/PreTournament' element={<PreTournament />}/>
+            <Route path='/PreRemote' element={<PreRemote />}/>
+            <Route path='/Winner' element={<Winner />}/>
+          </Routes>
+        </MatchProvider>
       </div>
     );
   }

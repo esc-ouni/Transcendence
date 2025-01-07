@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useMatchContext } from './MatchContext';
+import { useNavigate } from 'react-router-dom';
 
 const WebSocketComponent = () => {
 const [connectionStatus, setConnectionStatus] = useState("Disconnected");
@@ -9,7 +11,12 @@ const [ready_socket, setSocket] = useState(null);
 const [Rroom_socket, setRSocket] = useState(null);
 const [my_id, setId] = useState(null);
 
+const { matchData, setMatchData } = useMatchContext();
+
+const navigate = useNavigate();
+
 useEffect(() => {
+
   const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
   
   socket.onopen = () => {
@@ -35,27 +42,15 @@ useEffect(() => {
       console.log("   => room_name   :", data['room_name']);
       console.log("   => my_id       :", data['my_id']);
       console.log("   => opponent_id :", data['opponent_id'],'\n');
-
-      setRoomname(data['room_name']);
-      if (!Rroom_socket){
-
-        let room_socket = new WebSocket('ws://localhost:8000/ws/ping-pong/room/bit_n3as/' + '/?user_id=' + data['my_id'])
-        // setRSocket(room_socket)
-        room_socket.onopen = () => {
-          console.log("=> Room WebSocket Connected", room_socket);
-          setRSocket(room_socket)
-        };
-        room_socket.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          
-            console.log("=> Type received :", data['type']);
-            
-            if (data['type'] === 'Game_State')
-              console.log("=> The brodcaster :", data['my_id']);
-              console.log("   => Says        :", data['message'], '\n');
-          }
-      }
       
+      setMatchData({
+        roomName: data['room_name'],
+        myId: data['my_id'],
+        opponentId: data['opponent_id'],
+      });
+
+      navigate('/RemoteGame');
+
     }
   };
 

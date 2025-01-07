@@ -27,7 +27,7 @@ const PreRemote = () => {
                   text="Find An Opponent"
                   default_icon='/bottouns/default_offline.svg'
                   hovered_icon='/bottouns/hovered_offline.svg'
-                  onClick={() => {navigate('/RemoteGame')}}
+                  onClick={() => {navigate('/Matchmaking')}}
               />
             </div>
           </div>

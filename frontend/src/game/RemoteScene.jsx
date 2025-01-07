@@ -14,11 +14,37 @@ import './RemoteScene.css'
 
 import Scoreboard from '../components/Scoreboard';
 import { useNavigate } from 'react-router-dom';
+import { useMatchContext } from './MatchContext';
 
 const RemoteGame = () => {
+    
+    // Remote LOgic
+    const { matchData } = useMatchContext();
+    
+    if (!matchData.roomName || !matchData.myId) return;
+    
+    // Connect to the game server using those values
+    const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+    
+    gameSocket.onopen = () => {
+        console.log("Connected to the game room:", matchData.roomName);
+    };
+    
+    gameSocket.onmessage = (event) => {{
+        const data = JSON.parse(event.data);
+        
+        console.log("=> Type received :", data['type']);
+        
+        if (data['type'] === 'Game_State')
+            console.log("=> The brodcaster :", data['my_id']);
+            console.log("   => Says        :", data['message'], '\n');
+        }
+    };
+    
+    // Remote LOgic
+        
     const navigate = useNavigate();
     const canvasRef = useRef(null);
-
   
     const [playerScore, setPlayerScore] = useState(0);
     const [aiScore, setAiScore] = useState(0);
@@ -26,6 +52,7 @@ const RemoteGame = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
 
 ////=>////
 
@@ -596,6 +623,7 @@ const RemoteGame = () => {
 
             hit_sound.pause();
             hit_sound.src = "";
+            gameSocket.close();
         };
 
     }, []);
