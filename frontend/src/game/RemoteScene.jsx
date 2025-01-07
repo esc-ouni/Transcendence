@@ -18,27 +18,50 @@ import { useMatchContext } from './MatchContext';
 
 const RemoteGame = () => {
     
+    let Aix = 0;
+    let Aiy = 0;
     // Remote LOgic
     const { matchData } = useMatchContext();
     
     if (!matchData.roomName || !matchData.myId) return;
     
     // Connect to the game server using those values
-    const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+    const gameSocket = new WebSocket(`ws://10.13.9.16:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
     
     gameSocket.onopen = () => {
         console.log("Connected to the game room:", matchData.roomName);
     };
     
-    gameSocket.onmessage = (event) => {{
+    gameSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         
         console.log("=> Type received :", data['type']);
         
-        if (data['type'] === 'Game_State')
+        if (data['type'] == 'Game_State'){
             console.log("=> The brodcaster :", data['my_id']);
             console.log("   => Says        :", data['message'], '\n');
         }
+        if (data['type'] == 'paddle_update'){
+            // console.log('paddle_update condition met');
+            // console.log("=> The brodcaster          :", data['my_id']);
+            // console.log("=> The opponent next cords :");
+            // console.log("   => mouse.x              :", data['paddle']['x']);
+            // console.log("   => mouse.y              :", data['paddle']['y'], '\n');
+            Aix = data['paddle']['x'];
+            Aiy = data['paddle']['y'];
+            // Aiy = 0, 0;
+        }
+
+        // const message = {
+        //     type: 'paddle_update',
+        //     my_id: matchData.myId,
+        //     paddle: {
+        //         x: mouse.x,
+        //         y: mouse.y,
+        //     }
+        // };
+
+
     };
     
     // Remote LOgic
@@ -490,17 +513,40 @@ const RemoteGame = () => {
         let   angle = 0; // Start angle for rotation
         const radius = 20; // Distance from the center of the object
         const target = new THREE.Vector3(0, 0, 0);
+
+////==>////
+        const sendPaddleUpdate = () => {
+            const message = {
+                type: 'paddle_update',
+                my_id: matchData.myId,
+                paddle: {
+                    x: mouse.x,
+                    y: mouse.y,
+                }
+            };
+            gameSocket.send(JSON.stringify(message));
+        };
+
+        let   accumulator = 0;
+        const targetInterval = 1/50; // ~0.0333 seconds = 33ms
+        ////==>////
         
         const tick = () =>
         {
+            if (paddleAi && paddle){
+                setTimeout(()=> {BallCreator.cameraFixed = true} , 3800)
+            }
+            
             deltaTime = clock.getDelta();
-        
+            
+            accumulator += deltaTime;
+            
             angle += 0.005;
-        
+            
             camera.position.x += deltaTime/10 * (target.x + radius * Math.cos(angle));
             camera.position.z += deltaTime/10 * (target.z + radius * Math.sin(angle));
             camera.position.y = 9;
-        
+            
             
             for (const obj of Objects) {        
                 // Apply Gravity
@@ -510,7 +556,7 @@ const RemoteGame = () => {
                 obj.sphere.position.x += obj.velocity.x * deltaTime;
                 obj.sphere.position.y += obj.velocity.y * deltaTime;
                 obj.sphere.position.z += obj.velocity.z * deltaTime;
-        
+                
             }
             
             if (Objects.length && paddleAi){
@@ -529,18 +575,23 @@ const RemoteGame = () => {
                         setPlayerScore((playerScore) => playerScore + 1)
                     }
                 }
-            
+                
                 // if (PlayerScore === 7 || AiScore === 7) {
-                //     updateScoreboard()
-                //     alert(`${PlayerScore === 7 ? 'Player' : 'Ai'} Wins!`);
-                //     PlayerScore = 0;
-                //     AiScore = 0;
-                //     updateScoreboard()
-                // }
-            }
-            
-            if (BallCreator.cameraFixed){
-                // console.log(paddle.position);
+                    //     updateScoreboard()
+                    //     alert(`${PlayerScore === 7 ? 'Player' : 'Ai'} Wins!`);
+                    //     PlayerScore = 0;
+                    //     AiScore = 0;
+                    //     updateScoreboard()
+                    // }
+                }
+                
+                if (BallCreator.cameraFixed){
+                    if (accumulator >= targetInterval) {
+                        // console.log('Updater triggered !');
+                        sendPaddleUpdate();  // your function that does socket.send(...)
+                        accumulator -= targetInterval;
+                    }
+                    // console.log(paddle.position);
         
                 camera.position.x = 0;
                 camera.position.y = 7.8;
@@ -551,6 +602,10 @@ const RemoteGame = () => {
                 paddle.position.x = (5.5 * mouse.x);
                 // paddle.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
                 paddle.position.y = (5.03 + (2 * mouse.y));
+
+                paddleAi.position.x = (5.5 * Aix);
+                // paddleAi.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
+                paddleAi.position.y = (5.03 + (2 * Aiy));
                 
                 if (paddle.position.x >0){
                     gsap.to(paddle.rotation, {
@@ -626,7 +681,7 @@ const RemoteGame = () => {
             gameSocket.close();
         };
 
-    }, []);
+    }, [matchData.roomName]);
   
     useEffect(() => {
     if (playerScore === 7 || aiScore === 7) {
