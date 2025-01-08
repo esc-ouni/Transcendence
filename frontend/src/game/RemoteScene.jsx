@@ -26,8 +26,8 @@ const RemoteGame = () => {
     if (!matchData.roomName || !matchData.myId) return;
     
     // Connect to the game server using those values
-    // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-    const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+    const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+    // const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
     
     // Remote LOgic
     
