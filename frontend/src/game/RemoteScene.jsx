@@ -19,16 +19,12 @@ import { useMatchContext } from './MatchContext';
 const RemoteGame = () => {
     
     
-    
     // Remote LOgic
     const { matchData } = useMatchContext();
     
     if (!matchData.roomName || !matchData.myId) return;
-    
-    // Connect to the game server using those values
-    const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-    // const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-    
+
+
     // Remote LOgic
     
     const navigate = useNavigate();
@@ -38,26 +34,39 @@ const RemoteGame = () => {
     const [aiScore, setAiScore] = useState(0);
     
     const [loading, setLoading] = useState(true);
+
+
+    let Aix        = 0;
+    let Aiy        = 0;
+    let ball_count = 0;
+    let ball_x     = 0;
+    let ball_y     = 0;
+    let ball_z     = 0;
+    let ball_vx    = 0;
+    let ball_vy    = 0;
+    let ball_vz    = 0;
+    let Objects  = [];
+    
+
     
     useEffect(() => {
         
-        let Aix        = 0;
-        let Aiy        = 0;
-        let ball_count = 0;
-        let ball_x     = 0;
-        let ball_y     = 0;
-        let ball_z     = 0;
-        let ball_vx    = 0;
-        let ball_vy    = 0;
-        let ball_vz    = 0;
-
-        let Objects  = [];
-
-
+        // Connect to the game server using those values
+        // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        
         gameSocket.onopen = () => {
             console.log("Connected to the game room:", matchData.roomName);
         };
-        
+  
+        const scene = new THREE.Scene();
+
+//
+        const kgeometry = new THREE.SphereGeometry( 0.10, 32, 16 ); 
+        const kmaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); 
+        const sphere = new THREE.Mesh( kgeometry, kmaterial ); scene.add( sphere );
+//
+
         gameSocket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             
@@ -74,54 +83,54 @@ const RemoteGame = () => {
                 // console.log("   => mouse.x              :", data['paddle']['x']);
                 // console.log("   => mouse.y              :", data['paddle']['y']);
                 // console.log("   => ball_count           :", data['ball']['c']);
-
+    
                 // console.log("   => ball_x               :", data['ball']['x']);
                 // console.log("   => ball_y               :", data['ball']['y']);
                 // console.log("   => ball_z               :", data['ball']['z']);
-
+    
                 // console.log("   => ball_vx               :", data['ball']['vx']);
                 // console.log("   => ball_vy               :", data['ball']['vy']);
                 // console.log("   => ball_vz               :", data['ball']['vz']);
                 
-                Aix        = - data['paddle']['x'];
+                Aix        = data['paddle']['x'];
                 Aiy        = data['paddle']['y'];
     
-                // ball_count = data['ball']['c'];
+                ball_count = data['ball']['c'];
     
-                // ball_x     = data['ball']['x'];
-                // ball_y     = data['ball']['y'];
-                // ball_z     = data['ball']['z'];
+                ball_x     = data['ball']['x'];
+                ball_y     = data['ball']['y'];
+                ball_z     = data['ball']['z'];
     
-                // ball_vx    = data['ball']['vx'];
-                // ball_vy    = data['ball']['vy'];
-                // ball_vz    = data['ball']['vz'];
-    
-    
-                // if(ball_count > Objects.length){
-                //     createSphere(new THREE.Vector3(ball_x, ball_y, ball_z), ball_vx, ball_vy, -ball_vz);
+                ball_vx    = data['ball']['vx'];
+                ball_vy    = data['ball']['vy'];
+                ball_vz    = data['ball']['vz'];
 
-
+                // if(Objects.length &&  (ball_count > Objects.length)){
+                // if(Objects.length){
+                    // console.log('ball created here !')
+                    // Objects[Objects.length - 1].sphere.position(ball_x, ball_y, ball_z);
+                    // sphere.position.set(ball_x, ball_y, ball_z)
+                sphere.position.x = -ball_x;
+                sphere.position.y = ball_y;
+                sphere.position.z = -ball_z;
+                // }
                 //     // PPP
-                //     // BallCreator.createBall();
+                //     // createSphere(new THREE.Vector3(ball_x, ball_y, ball_z), ball_vx, ball_vy, ball_vz);
+                //     BallCreator.createBall();
                 //     // createSphere(position, px, py, pz);
-                //     // Objects[Objects.length - 1]?.sphere?.position?.x = ball_x ?? 0;
-                //     // Objects[Objects.length - 1]?.sphere?.position?.y = ball_y ?? 0;
-                //     // Objects[Objects.length - 1]?.sphere?.position?.z = ball_z ?? 0;
+                //     Objects[Objects.length - 1]?.sphere?.position?.x = ball_x ?? 0;
+                //     Objects[Objects.length - 1]?.sphere?.position?.y = ball_y ?? 0;
+                //     Objects[Objects.length - 1]?.sphere?.position?.z = ball_z ?? 0;
                     
-                //     // Objects[Objects.length - 1]?.velocity?.x = ball_vx ?? 0; 
-                //     // Objects[Objects.length - 1]?.velocity?.y = ball_vy ?? 0;      
-                //     // Objects[Objects.length - 1]?.velocity?.z = ball_vz ?? 0;      
+                //     Objects[Objects.length - 1]?.velocity?.x = ball_vx ?? 0; 
+                //     Objects[Objects.length - 1]?.velocity?.y = ball_vy ?? 0;      
+                //     Objects[Objects.length - 1]?.velocity?.z = ball_vz ?? 0;      
                 // };
-    
-    
 
-    
             };
     
     
-        };
-        
-
+        };        
         ////=>////
 
         // Physics properties (perfect values)
@@ -150,7 +159,7 @@ const RemoteGame = () => {
             canvas = canvasRef.current
         
         
-        const scene = new THREE.Scene()
+        // const scene = new THREE.Scene()
         
         const floor = new THREE.Mesh(
             new THREE.PlaneGeometry(30, 30),
@@ -290,7 +299,7 @@ const RemoteGame = () => {
                 // BallCreator.reset()
                 Objects.push({
                     sphere: sphere,
-                    velocity: new THREE.Vector3(px, py, pz), // Initial velocity
+                    velocity: new THREE.Vector3(1, 1, 1), // Initial velocity
                     mass: 1
                 });
         
@@ -568,24 +577,24 @@ const RemoteGame = () => {
                     x: mouse.x,
                     y: mouse.y,      
                 },
-                // ball: {
-                //     c:  Objects.length,
+                ball: {
+                    c:  Objects.length,
                     
-                //     x:  Objects[Objects.length - 1]?.sphere?.position?.x,
-                //     y:  Objects[Objects.length - 1]?.sphere?.position?.y,
-                //     z:  Objects[Objects.length - 1]?.sphere?.position?.z,
+                    x:  Objects[Objects.length - 1]?.sphere?.position?.x,
+                    y:  Objects[Objects.length - 1]?.sphere?.position?.y,
+                    z:  Objects[Objects.length - 1]?.sphere?.position?.z,
 
-                //     vx: Objects[Objects.length - 1]?.velocity?.x,
-                //     vy: Objects[Objects.length - 1]?.velocity?.y,
-                //     vz: Objects[Objects.length - 1]?.velocity?.z,
-                // }
+                    vx: Objects[Objects.length - 1]?.velocity?.x,
+                    vy: Objects[Objects.length - 1]?.velocity?.y,
+                    vz: Objects[Objects.length - 1]?.velocity?.z,
+                }
             };
-            if (Objects.length)
+            if (gameSocket.readyState === 1)
                 gameSocket.send(JSON.stringify(message));
         };
 
         let   accumulator = 0;
-        const targetInterval = 1/40; // ~0.0333 seconds = 33ms
+        const targetInterval = 1/30; // ~0.0333 seconds = 33ms
         ////==>////
         
         const tick = () =>
@@ -617,8 +626,8 @@ const RemoteGame = () => {
             }
             
             if (Objects.length && paddleAi){
-                paddleAi.position.x = Objects[Objects.length - 1].sphere.position.x; 
-                paddleAi.position.y = Objects[Objects.length - 1].sphere.position.y - 0.4;
+                // paddleAi.position.x = Objects[Objects.length - 1].sphere.position.x; 
+                // paddleAi.position.y = Objects[Objects.length - 1].sphere.position.y - 0.4;
                 
                 //Scoring System
                 if (New_ball_launched){
@@ -648,7 +657,6 @@ const RemoteGame = () => {
                         sendPaddleUpdate();  // your function that does socket.send(...)
                         accumulator -= targetInterval;
                     }
-                    // console.log(paddle.position);
         
                 camera.position.x = 0;
                 camera.position.y = 7.8;
@@ -660,9 +668,9 @@ const RemoteGame = () => {
                 // paddle.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
                 paddle.position.y = (5.03 + (2 * mouse.y));
 
-                paddleAi.position.x = (5.5 * (Aix));
+                paddleAi.position.x = (5.5 * (-Aix));
                 // paddleAi.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
-                paddleAi.position.y = (5.03 + (2 * (Aiy)));
+                paddleAi.position.y = (5.03 + (2 * Aiy));
                 
                 if (paddle.position.x >0){
                     gsap.to(paddle.rotation, {
@@ -744,7 +752,7 @@ const RemoteGame = () => {
     if (playerScore === 7 || aiScore === 7) {
         setPlayerScore(0);
         setAiScore(0);
-        // navigate('/Winner');
+        navigate('/Winner');
         // alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
     }
       }, [playerScore, aiScore]);

@@ -23,3 +23,31 @@ export function MatchProvider({ children }) {
 export function useMatchContext() {
   return useContext(MatchContext);
 }
+
+
+
+
+
+///
+// import React, { createContext, useContext } from 'react';
+// import { useWebSocket } from './useWebSocket';
+
+// const WebSocketContext = createContext(null);
+
+// export const WebSocketProvider = ({ children, url }) => {
+//   const webSocketValue = useWebSocket(url);
+
+//   return (
+//     <WebSocketContext.Provider value={webSocketValue}>
+//       {children}
+//     </WebSocketContext.Provider>
+//   );
+// };
+
+// export const useWebSocketContext = () => {
+//   const context = useContext(WebSocketContext);
+//   if (!context) {
+//     throw new Error('useWebSocketContext must be used within a WebSocketProvider');
+//   }
+//   return context;
+// };

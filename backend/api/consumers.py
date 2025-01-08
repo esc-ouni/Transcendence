@@ -15,7 +15,7 @@ class ApiConsumer(WebsocketConsumer):
 
         Gconnected_users.append((self.my_id, self))
 
-        print("=>", f"Client {self.my_id} Connected !. (Total users {len(Gconnected_users)})")
+        # print("=>", f"Client {self.my_id} Connected !. (Total users {len(Gconnected_users)})")
         # print("=>", Gconnected_users)
 
         self.send(json.dumps({
@@ -52,7 +52,7 @@ class ApiConsumer(WebsocketConsumer):
         data = json.loads(text_data)
 
         if (data['type'] == "Websocket_message"):
-            print("=>", f"Client {self.my_id}  :", data['message'])
+            # print("=>", f"Client {self.my_id}  :", data['message'])
 
             response = {
                 'type': 'server_response',
@@ -81,12 +81,12 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
         # print("  => Url :", self.scope["query_string"].decode(), '\n')
 
         # if self.scope["user"].is_authenticated:
-        #     print("=> Authenticated user:", self.scope["user"].username)
+            # print("=> Authenticated user:", self.scope["user"].username)
         # else:
-        #     print("=> Anonymous user")
+            # print("=> Anonymous user")
 
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        print("=>", "Room created :", self.room_name)
+        # print("=>", "Room created :", self.room_name)
 
         # Create a group name, e.g. "game_room_<room_name>"
         self.room_group_name = f"game_room_{self.room_name}"
