@@ -18,66 +18,111 @@ import { useMatchContext } from './MatchContext';
 
 const RemoteGame = () => {
     
-    let Aix = 0;
-    let Aiy = 0;
+    
+    
     // Remote LOgic
     const { matchData } = useMatchContext();
     
     if (!matchData.roomName || !matchData.myId) return;
     
     // Connect to the game server using those values
-    const gameSocket = new WebSocket(`ws://10.13.9.16:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-    
-    gameSocket.onopen = () => {
-        console.log("Connected to the game room:", matchData.roomName);
-    };
-    
-    gameSocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        
-        console.log("=> Type received :", data['type']);
-        
-        if (data['type'] == 'Game_State'){
-            console.log("=> The brodcaster :", data['my_id']);
-            console.log("   => Says        :", data['message'], '\n');
-        }
-        if (data['type'] == 'paddle_update'){
-            // console.log('paddle_update condition met');
-            // console.log("=> The brodcaster          :", data['my_id']);
-            // console.log("=> The opponent next cords :");
-            // console.log("   => mouse.x              :", data['paddle']['x']);
-            // console.log("   => mouse.y              :", data['paddle']['y'], '\n');
-            Aix = data['paddle']['x'];
-            Aiy = data['paddle']['y'];
-            // Aiy = 0, 0;
-        }
-
-        // const message = {
-        //     type: 'paddle_update',
-        //     my_id: matchData.myId,
-        //     paddle: {
-        //         x: mouse.x,
-        //         y: mouse.y,
-        //     }
-        // };
-
-
-    };
+    // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+    const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
     
     // Remote LOgic
-        
+    
     const navigate = useNavigate();
     const canvasRef = useRef(null);
-  
+    
     const [playerScore, setPlayerScore] = useState(0);
     const [aiScore, setAiScore] = useState(0);
-
+    
     const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
+        
+        let Aix        = 0;
+        let Aiy        = 0;
+        let ball_count = 0;
+        let ball_x     = 0;
+        let ball_y     = 0;
+        let ball_z     = 0;
+        let ball_vx    = 0;
+        let ball_vy    = 0;
+        let ball_vz    = 0;
+
+        let Objects  = [];
 
 
-////=>////
+        gameSocket.onopen = () => {
+            console.log("Connected to the game room:", matchData.roomName);
+        };
+        
+        gameSocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+            // console.log("=> Type received :", data['type']);
+            
+            if (data['type'] == 'Game_State'){
+                console.log("=> The brodcaster :", data['my_id']);
+                console.log("   => Says        :", data['message'], '\n');
+            }
+            if (data['type'] == 'paddle_update'){
+                // console.log('paddle_update condition met');
+                // console.log("=> The brodcaster          :", data['my_id']);
+                // console.log("=> The opponent next cords :");
+                // console.log("   => mouse.x              :", data['paddle']['x']);
+                // console.log("   => mouse.y              :", data['paddle']['y']);
+                // console.log("   => ball_count           :", data['ball']['c']);
+
+                // console.log("   => ball_x               :", data['ball']['x']);
+                // console.log("   => ball_y               :", data['ball']['y']);
+                // console.log("   => ball_z               :", data['ball']['z']);
+
+                // console.log("   => ball_vx               :", data['ball']['vx']);
+                // console.log("   => ball_vy               :", data['ball']['vy']);
+                // console.log("   => ball_vz               :", data['ball']['vz']);
+                
+                Aix        = - data['paddle']['x'];
+                Aiy        = data['paddle']['y'];
+    
+                // ball_count = data['ball']['c'];
+    
+                // ball_x     = data['ball']['x'];
+                // ball_y     = data['ball']['y'];
+                // ball_z     = data['ball']['z'];
+    
+                // ball_vx    = data['ball']['vx'];
+                // ball_vy    = data['ball']['vy'];
+                // ball_vz    = data['ball']['vz'];
+    
+    
+                // if(ball_count > Objects.length){
+                //     createSphere(new THREE.Vector3(ball_x, ball_y, ball_z), ball_vx, ball_vy, -ball_vz);
+
+
+                //     // PPP
+                //     // BallCreator.createBall();
+                //     // createSphere(position, px, py, pz);
+                //     // Objects[Objects.length - 1]?.sphere?.position?.x = ball_x ?? 0;
+                //     // Objects[Objects.length - 1]?.sphere?.position?.y = ball_y ?? 0;
+                //     // Objects[Objects.length - 1]?.sphere?.position?.z = ball_z ?? 0;
+                    
+                //     // Objects[Objects.length - 1]?.velocity?.x = ball_vx ?? 0; 
+                //     // Objects[Objects.length - 1]?.velocity?.y = ball_vy ?? 0;      
+                //     // Objects[Objects.length - 1]?.velocity?.z = ball_vz ?? 0;      
+                // };
+    
+    
+
+    
+            };
+    
+    
+        };
+        
+
+        ////=>////
 
         // Physics properties (perfect values)
         const gravity     = -9.8;
@@ -219,7 +264,6 @@ const RemoteGame = () => {
         const TextureLoader = new THREE.TextureLoader(loadingManager);
         const Texture = TextureLoader.load("/textures/Models/ball.jpeg");
         
-        let Objects  = [];
         
         const STDGeometry = new THREE.SphereGeometry(0.1, 32, 32);
         const STDMaterial = new THREE.MeshStandardMaterial;
@@ -243,10 +287,10 @@ const RemoteGame = () => {
                 
                 scene.add(sphere)
                 
-                BallCreator.reset()
+                // BallCreator.reset()
                 Objects.push({
                     sphere: sphere,
-                    velocity: new THREE.Vector3(1, 1, 1), // Initial velocity
+                    velocity: new THREE.Vector3(px, py, pz), // Initial velocity
                     mass: 1
                 });
         
@@ -516,19 +560,32 @@ const RemoteGame = () => {
 
 ////==>////
         const sendPaddleUpdate = () => {
+            // console.log("=======>", Objects.length);
             const message = {
                 type: 'paddle_update',
                 my_id: matchData.myId,
                 paddle: {
                     x: mouse.x,
-                    y: mouse.y,
-                }
+                    y: mouse.y,      
+                },
+                // ball: {
+                //     c:  Objects.length,
+                    
+                //     x:  Objects[Objects.length - 1]?.sphere?.position?.x,
+                //     y:  Objects[Objects.length - 1]?.sphere?.position?.y,
+                //     z:  Objects[Objects.length - 1]?.sphere?.position?.z,
+
+                //     vx: Objects[Objects.length - 1]?.velocity?.x,
+                //     vy: Objects[Objects.length - 1]?.velocity?.y,
+                //     vz: Objects[Objects.length - 1]?.velocity?.z,
+                // }
             };
-            gameSocket.send(JSON.stringify(message));
+            if (Objects.length)
+                gameSocket.send(JSON.stringify(message));
         };
 
         let   accumulator = 0;
-        const targetInterval = 1/50; // ~0.0333 seconds = 33ms
+        const targetInterval = 1/40; // ~0.0333 seconds = 33ms
         ////==>////
         
         const tick = () =>
@@ -603,9 +660,9 @@ const RemoteGame = () => {
                 // paddle.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
                 paddle.position.y = (5.03 + (2 * mouse.y));
 
-                paddleAi.position.x = (5.5 * Aix);
+                paddleAi.position.x = (5.5 * (Aix));
                 // paddleAi.position.z = (11 - Math.abs((2 * mouse.x))); // edge effect
-                paddleAi.position.y = (5.03 + (2 * Aiy));
+                paddleAi.position.y = (5.03 + (2 * (Aiy)));
                 
                 if (paddle.position.x >0){
                     gsap.to(paddle.rotation, {
@@ -687,7 +744,7 @@ const RemoteGame = () => {
     if (playerScore === 7 || aiScore === 7) {
         setPlayerScore(0);
         setAiScore(0);
-        navigate('/Winner');
+        // navigate('/Winner');
         // alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
     }
       }, [playerScore, aiScore]);
