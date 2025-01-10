@@ -44,12 +44,16 @@ const RemoteGame = () => {
     let ball_z     = 0;
     let Objects  = [];
 
+    let OppmouseDirection;
+
+    let state = false;
+
     
     useEffect(() => {
         
         // Connect to the game server using those values
-        const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-        // const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        const gameSocket = new WebSocket(`ws://10.13.11.8:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
         
         gameSocket.onopen = () => {
             console.log("Connected to the game room:", matchData.roomName);
@@ -74,15 +78,23 @@ const RemoteGame = () => {
             }
             if (data['type'] == 'paddle_update'){
                 
-                Aix        = data['paddle']['x'];
-                Aiy        = data['paddle']['y'];
+                Aix               = data['paddle']['x'];
+                Aiy               = data['paddle']['y'];
     
-                ball_count = data['ball']['c'];
+                ball_count        = data['ball']['c'];
     
-                ball_x     = data['ball']['x'];
-                ball_y     = data['ball']['y'];
-                ball_z     = data['ball']['z'];
+                ball_x            = data['ball']['x'];
+                ball_y            = data['ball']['y'];
+                ball_z            = data['ball']['z'];
+
+                state             = data['ball']['state'];
+                OppmouseDirection = data['ball']['mousedirection'];
     
+
+                if (state === true && (Objects.length && Objects[Objects.length - 1].created_by_me === false)){
+                    navigate('/Winner');
+                    // navigate()
+                }
 
                 if(ball_count > Objects.length){
                     console.log('ball should be created here !')
@@ -457,16 +469,25 @@ const RemoteGame = () => {
                 else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
                     
                     // console.log('paddleAi and ball!');
-                    let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
+                    // let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
+                    // let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
+                    // if ((paddleAi.position.x > 2) && (OppmouseDirection < 0)){
+                    //     intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
+                    // }
+                    // if ((paddleAi.position.x < -2) && (OppmouseDirection > 0)){
+                    //     intensity = (Math.abs(paddleAi.position.x) * 0.5);
+                    // }    
+                    // let forceX = (intensity * OppmouseDirection)
+                    // console.log(forceX > 0 ? "right" : "left");
+
                     let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
-                    if ((paddleAi.position.x > 2) && (Aidecision < 0)){
+                    if ((paddleAi.position.x > 2) && (OppmouseDirection > 0)){
                         intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
                     }
-                    if ((paddleAi.position.x < -2) && (Aidecision > 0)){
+                    if ((paddleAi.position.x < -2) && (OppmouseDirection < 0)){
                         intensity = (Math.abs(paddleAi.position.x) * 0.5);
                     }    
-                    let forceX = (intensity * Aidecision)
-                    // console.log(forceX > 0 ? "right" : "left");
+                    let forceX = -(intensity * OppmouseDirection)
                     
                     //for push Sumilation
                     gsap.to(paddleAi.rotation, {
@@ -540,7 +561,7 @@ const RemoteGame = () => {
         const target = new THREE.Vector3(0, 0, 0);
 
 ////==>////
-        const sendPaddleUpdate = () => {
+        const sendPaddleUpdate = (end_state) => {
             // console.log("=======>", Objects.length);
             const message = {
                 type: 'paddle_update',
@@ -556,7 +577,10 @@ const RemoteGame = () => {
                     y:  Objects[Objects.length - 1]?.sphere?.position?.y,
                     z:  Objects[Objects.length - 1]?.sphere?.position?.z,
 
-                    status: Objects[Objects.length - 1]?.created_by_me ?? false
+                    mousedirection: mouseDirection,
+
+                    status: Objects[Objects.length - 1]?.created_by_me ?? false,
+                    state : end_state
                 }
             };
             if (gameSocket.readyState === 1)
@@ -588,19 +612,19 @@ const RemoteGame = () => {
             if (accumulator >= targetInterval) {
                 // console.log('Updater triggered !');
                 // if (O)
-                sendPaddleUpdate();  // your function that does socket.send(...)
+                sendPaddleUpdate(false);  // your function that does socket.send(...)
                 accumulator -= targetInterval;
             }
-            for (const obj of Objects) {        
+            for (const obj of Objects) {
                 // Apply Gravity
-                if (obj.created_by_me === true){
+                // if (obj.created_by_me === true){
                     obj.velocity.y += gravity * deltaTime;
                     
                     // Update position
                     obj.sphere.position.x += obj.velocity.x * deltaTime;
                     obj.sphere.position.y += obj.velocity.y * deltaTime;
                     obj.sphere.position.z += obj.velocity.z * deltaTime;       
-                }
+                // }
             }
             
             if (Objects.length && paddleAi){
@@ -612,10 +636,16 @@ const RemoteGame = () => {
                     if (Objects[Objects.length - 1].sphere.position.z > (paddle.position.z + 1)) {
                         // aiScore += 1;
                         New_ball_launched = false;
+                        if (aiScore === 6){
+                            sendPaddleUpdate(true);
+                        }
                         setAiScore((aiScore) => aiScore + 1)
                     } else if (Objects[Objects.length - 1].sphere.position.z < (paddleAi.position.z - 1)) {
                         // playerScore += 1;
                         New_ball_launched = false;
+                        if (playerScore === 6){
+                            sendPaddleUpdate(true);
+                        }
                         setPlayerScore((playerScore) => playerScore + 1)
                     }
                 }
@@ -723,6 +753,7 @@ const RemoteGame = () => {
   
     useEffect(() => {
     if (playerScore === 7 || aiScore === 7) {
+        // sendPaddleUpdate(true);
         setPlayerScore(0);
         setAiScore(0);
         navigate('/Winner');

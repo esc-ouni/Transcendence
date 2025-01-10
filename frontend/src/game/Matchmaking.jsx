@@ -17,8 +17,8 @@ const navigate = useNavigate();
 
 useEffect(() => {
 
-  const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
-  // const socket = new WebSocket('ws://10.13.5.4:8000/ws/server-endpoint-socket/');
+  // const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
+  const socket = new WebSocket('ws://10.13.11.8:8000/ws/server-endpoint-socket/');
   
   socket.onopen = () => {
     console.log("=> WebSocket Connected", socket);
