@@ -42,18 +42,14 @@ const RemoteGame = () => {
     let ball_x     = 0;
     let ball_y     = 0;
     let ball_z     = 0;
-    let ball_vx    = 0;
-    let ball_vy    = 0;
-    let ball_vz    = 0;
     let Objects  = [];
-    
 
     
     useEffect(() => {
         
         // Connect to the game server using those values
-        // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-        const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        // const gameSocket = new WebSocket(`ws://10.13.5.4:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
         
         gameSocket.onopen = () => {
             console.log("Connected to the game room:", matchData.roomName);
@@ -77,20 +73,6 @@ const RemoteGame = () => {
                 console.log("   => Says        :", data['message'], '\n');
             }
             if (data['type'] == 'paddle_update'){
-                // console.log('paddle_update condition met');
-                // console.log("=> The brodcaster          :", data['my_id']);
-                // console.log("=> The opponent next cords :");
-                // console.log("   => mouse.x              :", data['paddle']['x']);
-                // console.log("   => mouse.y              :", data['paddle']['y']);
-                // console.log("   => ball_count           :", data['ball']['c']);
-    
-                // console.log("   => ball_x               :", data['ball']['x']);
-                // console.log("   => ball_y               :", data['ball']['y']);
-                // console.log("   => ball_z               :", data['ball']['z']);
-    
-                // console.log("   => ball_vx               :", data['ball']['vx']);
-                // console.log("   => ball_vy               :", data['ball']['vy']);
-                // console.log("   => ball_vz               :", data['ball']['vz']);
                 
                 Aix        = data['paddle']['x'];
                 Aiy        = data['paddle']['y'];
@@ -101,31 +83,20 @@ const RemoteGame = () => {
                 ball_y     = data['ball']['y'];
                 ball_z     = data['ball']['z'];
     
-                ball_vx    = data['ball']['vx'];
-                ball_vy    = data['ball']['vy'];
-                ball_vz    = data['ball']['vz'];
 
-                // if(Objects.length &&  (ball_count > Objects.length)){
-                // if(Objects.length){
-                    // console.log('ball created here !')
-                    // Objects[Objects.length - 1].sphere.position(ball_x, ball_y, ball_z);
-                    // sphere.position.set(ball_x, ball_y, ball_z)
-                sphere.position.x = -ball_x;
-                sphere.position.y = ball_y;
-                sphere.position.z = -ball_z;
-                // }
-                //     // PPP
-                //     // createSphere(new THREE.Vector3(ball_x, ball_y, ball_z), ball_vx, ball_vy, ball_vz);
-                //     BallCreator.createBall();
-                //     // createSphere(position, px, py, pz);
-                //     Objects[Objects.length - 1]?.sphere?.position?.x = ball_x ?? 0;
-                //     Objects[Objects.length - 1]?.sphere?.position?.y = ball_y ?? 0;
-                //     Objects[Objects.length - 1]?.sphere?.position?.z = ball_z ?? 0;
-                    
-                //     Objects[Objects.length - 1]?.velocity?.x = ball_vx ?? 0; 
-                //     Objects[Objects.length - 1]?.velocity?.y = ball_vy ?? 0;      
-                //     Objects[Objects.length - 1]?.velocity?.z = ball_vz ?? 0;      
-                // };
+                if(ball_count > Objects.length){
+                    console.log('ball should be created here !')
+                    createSphere(new THREE.Vector3(ball_x, ball_y, ball_y), false);
+                }
+                if(Objects.length && Objects[Objects.length - 1].created_by_me === false){
+                    Objects[Objects.length - 1].sphere.position.x = -ball_x;
+                    Objects[Objects.length - 1].sphere.position.y = ball_y;
+                    Objects[Objects.length - 1].sphere.position.z = -ball_z;
+                }
+
+                // sphere.position.x = -ball_x;
+                // sphere.position.y = ball_y;
+                // sphere.position.z = -ball_z;
 
             };
     
@@ -285,7 +256,7 @@ const RemoteGame = () => {
             obj.velocity.copy(Velocity)
         }
         
-        const createSphere = (position, px, py, pz) => {
+        const createSphere = (position, status) => {
             const sphere = new THREE.Mesh(
                 STDGeometry,
                 STDMaterial)
@@ -300,7 +271,8 @@ const RemoteGame = () => {
                 Objects.push({
                     sphere: sphere,
                     velocity: new THREE.Vector3(1, 1, 1), // Initial velocity
-                    mass: 1
+                    mass: 1,
+                    created_by_me: status
                 });
         
                 // serve 
@@ -342,7 +314,7 @@ const RemoteGame = () => {
             let y = 4.92;
             let z = -10.1;
             
-            createSphere(new THREE.Vector3(paddle.position.x, y, -paddle.position.z), BallCreator.serve_x, BallCreator.serve_y, BallCreator.serve_z)
+            createSphere(new THREE.Vector3(paddle.position.x, y, -paddle.position.z), true)
         }
         
         gui.add(BallCreator, 'createBall')
@@ -584,9 +556,7 @@ const RemoteGame = () => {
                     y:  Objects[Objects.length - 1]?.sphere?.position?.y,
                     z:  Objects[Objects.length - 1]?.sphere?.position?.z,
 
-                    vx: Objects[Objects.length - 1]?.velocity?.x,
-                    vy: Objects[Objects.length - 1]?.velocity?.y,
-                    vz: Objects[Objects.length - 1]?.velocity?.z,
+                    status: Objects[Objects.length - 1]?.created_by_me ?? false
                 }
             };
             if (gameSocket.readyState === 1)
@@ -594,7 +564,7 @@ const RemoteGame = () => {
         };
 
         let   accumulator = 0;
-        const targetInterval = 1/30; // ~0.0333 seconds = 33ms
+        const targetInterval = 1/60; // ~0.0333 seconds = 33ms
         ////==>////
         
         const tick = () =>
@@ -614,15 +584,23 @@ const RemoteGame = () => {
             camera.position.y = 9;
             
             
+        if (BallCreator.cameraFixed){
+            if (accumulator >= targetInterval) {
+                // console.log('Updater triggered !');
+                // if (O)
+                sendPaddleUpdate();  // your function that does socket.send(...)
+                accumulator -= targetInterval;
+            }
             for (const obj of Objects) {        
                 // Apply Gravity
-                obj.velocity.y += gravity * deltaTime;
-                
-                // Update position
-                obj.sphere.position.x += obj.velocity.x * deltaTime;
-                obj.sphere.position.y += obj.velocity.y * deltaTime;
-                obj.sphere.position.z += obj.velocity.z * deltaTime;
-                
+                if (obj.created_by_me === true){
+                    obj.velocity.y += gravity * deltaTime;
+                    
+                    // Update position
+                    obj.sphere.position.x += obj.velocity.x * deltaTime;
+                    obj.sphere.position.y += obj.velocity.y * deltaTime;
+                    obj.sphere.position.z += obj.velocity.z * deltaTime;       
+                }
             }
             
             if (Objects.length && paddleAi){
@@ -651,12 +629,6 @@ const RemoteGame = () => {
                     // }
                 }
                 
-                if (BallCreator.cameraFixed){
-                    if (accumulator >= targetInterval) {
-                        // console.log('Updater triggered !');
-                        sendPaddleUpdate();  // your function that does socket.send(...)
-                        accumulator -= targetInterval;
-                    }
         
                 camera.position.x = 0;
                 camera.position.y = 7.8;
@@ -711,8 +683,9 @@ const RemoteGame = () => {
                 }
                 
             }
-        
+            // if (Objects.length && (Objects[Objects.length - 1].created_by_me === true)){
             checkCollision();
+            // }
         
             topControls.update()
             // stat.update()
