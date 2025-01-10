@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
-import * as cannon from 'cannon'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js'
 
@@ -29,6 +28,9 @@ const LocalGame = () => {
     useEffect(() => {
 
 ////=>////
+        const gravity     = -9.8;
+        const friction    = 0.25;
+        const restitution = 0.89;
 
         const loadingManager = new THREE.LoadingManager();
 
@@ -86,9 +88,8 @@ const LocalGame = () => {
         
         let Cameras = []
         let New_ball_launched = false;
-        
-        window.addEventListener('resize', () =>
-        {
+
+        const handleResize = () =>  {
             sizes.width = window.innerWidth
             sizes.height = window.innerHeight
             topCamera.aspect = sizes.width / (sizes.height / 2)
@@ -97,7 +98,9 @@ const LocalGame = () => {
             bottomCamera.updateProjectionMatrix()
             renderer.setSize(sizes.width, sizes.height)
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-        })
+        };
+        
+        window.addEventListener('resize', handleResize)
         
         const topCamera = new THREE.PerspectiveCamera(75, sizes.width / (sizes.height / 2), 0.1, 100)
         topCamera.position.set(-15, 4, 0)
@@ -189,133 +192,57 @@ const LocalGame = () => {
         STDMaterial.roughness = 0.1;
         STDMaterial.map       = Texture;
         
-        const sphereShape = new cannon.Sphere(0.1);
         
-        const createSphere = (position, px, py, pz) => {
+        const createSphere = (position, status) => {
             const sphere = new THREE.Mesh(
                 STDGeometry,
                 STDMaterial)
+        
                 sphere.castShadow = true
                 sphere.position.copy(position);
+                sphere.position.x = ((Math.random() - 0.5) * 5);
                 
                 scene.add(sphere)
                 
-                const sphereBody  = new cannon.Body({
-                    mass: 0.0027,
-                    shape: sphereShape,
-                    material: plasticMaterial,
-                    linearDamping: 0.05,
-                    angularDamping:0.05
+                // BallCreator.reset()
+                Objects.push({
+                    sphere: sphere,
+                    velocity: new THREE.Vector3(1, 1, 1), // Initial velocity
+                    mass: 1,
                 });
-            
-                sphereBody.addEventListener('collide', () => {Pong_Ball_colide(0.5)});
-                sphereBody.position.copy(sphere.position);
         
-                sphereBody.torque.setZero()
-                sphereBody.velocity.setZero();
-                sphereBody.angularVelocity.setZero()
-                sphereBody.applyForce(new cannon.Vec3(0, 0.5, 3), sphereBody.position)
-                PhysicWorld.addBody(sphereBody);
-            ball = sphere;
-            Objects.push({sphere, sphereBody})
+                // serve 
+                Objects[Objects.length - 1].velocity.set(BallCreator.serve_x, BallCreator.serve_y, BallCreator.serve_z); 
+        
             New_ball_launched = true;
         }
         
-        const PhysicWorld = new cannon.World();
-        
-        PhysicWorld.allowSleep = true;
-        PhysicWorld.broadphase = new cannon.SAPBroadphase(PhysicWorld);
-        
-        PhysicWorld.gravity.set(0, -8.92, 0);
-        
-        const concreteMaterial = new cannon.Material('concrete');
-        const plasticMaterial  = new cannon.Material('plastic');
-        const PaddleMaterial   = new cannon.Material('paddle');
-        const TableMaterial    = new cannon.Material('table');
-        const NetMaterial      = new cannon.Material('net');
-        
-        const ContactMaterial = new cannon.ContactMaterial(
-            plasticMaterial,
-            concreteMaterial,
-            {
-                friction: 0.7,   
-                restitution: 0.5
-            }
-        );
-        
-        const BallContactMaterial = new cannon.ContactMaterial(
-            plasticMaterial,
-            plasticMaterial,
-            {
-                friction: 0.2,   
-                restitution: 0.9, 
-            }
-        );
-        
-        const BallTableMaterial = new cannon.ContactMaterial(
-            plasticMaterial,
-            TableMaterial,
-            {
-                friction: 0.3,   
-                restitution: 0.9
-            }
-        );
-        
-        const BallNetMaterial = new cannon.ContactMaterial(
-            plasticMaterial,
-            NetMaterial,
-            {
-                friction: 0.1,   
-                restitution: 0.2
-            }
-        );
-        
-        const PaddleBallContact = new cannon.ContactMaterial(
-            plasticMaterial,
-            PaddleMaterial,
-            {
-                friction: 0.5,   
-                restitution: 0.7
-            }
-        );
-        
-        PhysicWorld.addContactMaterial(BallTableMaterial) // ball table
-        PhysicWorld.addContactMaterial(ContactMaterial) // floor
-        PhysicWorld.addContactMaterial(PaddleBallContact)
-        // PhysicWorld.addContactMaterial(BallContactMaterial)
-        // PhysicWorld.addContactMaterial(BallNetMaterial)
-        
-        const planeShape = new cannon.Plane();
-        const planeBody  = new cannon.Body({
-            mass: 0,
-            position: new cannon.Vec3().copy(floor.position),
-            shape: planeShape,
-            material:concreteMaterial,
-            linearDamping: 0.05, // Simulate air resistance
-            angularDamping:0.05 // Simulate rotational resistance
-        })
-        planeBody.quaternion.setFromAxisAngle(
-            new cannon.Vec3(-1, 0, 0),
-            Math.PI * 0.5
-        )
-        
-        planeBody.position.y = -0.137;
-        
-        PhysicWorld.addBody(planeBody);
         
         const BallCreator = {
-            px: 0,
-            py: 0.5,
-            pz: 2 ,
-            cameraFixed: false,
-            PADDLE_SPEED: 0.02
+            PADDLE_SPEED: 0.04,
+            serve_x: 0,
+            serve_y: -4.65,
+            serve_z: 26.5,
+        
+            hit_x  : 0,
+            hit_y  : -4.65,
+            hit_z  : 26.5,
+        
+            cameraFixed: false 
         }
+        
+        
+        BallCreator.serve_x = 0;
+        BallCreator.serve_y = 3.4;
+        BallCreator.serve_z = 22;
+        
+        BallCreator.hit_x   = 0;
+        BallCreator.hit_y   = 3.2;
+        BallCreator.hit_z   = 22;
+    
         
         BallCreator.reset = () => {
             for (const object of Objects){
-                object.sphereBody.removeEventListener('collide', Pong_Ball_colide);
-                PhysicWorld.removeBody(object.sphereBody);
-                
                 scene.remove(object.sphere);
             }
             Objects.splice(0, Objects.length)
@@ -323,10 +250,10 @@ const LocalGame = () => {
         
         BallCreator.createBall = () => {
             let x = (Math.random() - 0.5) * 4
-            let y = 5.0387;
-            let z = -8;
+            let y = 4.92;
+            let z = -10.1;
             
-            createSphere(new THREE.Vector3(x, y, z), BallCreator.px, BallCreator.py, BallCreator.pz)
+            createSphere(new THREE.Vector3(paddle.position.x, y, -paddle.position.z), true)
         }
         
         gui.add(BallCreator, 'createBall')
@@ -344,22 +271,6 @@ const LocalGame = () => {
         
         Table.scale.set(8.28, 0.3, 18.51)
         
-        //Table Physic
-        const TableShape = new cannon.Box(new cannon.Vec3(Table.scale.x / 2, Table.scale.y / 2, Table.scale.z / 2));
-        const TableBody  = new cannon.Body({
-            mass: 0,
-            position: new cannon.Vec3().copy(Table.position),
-            shape: TableShape,
-            material:TableMaterial,
-            quaternion:Table.quaternion,
-            linearDamping: 0.05, // Simulate air resistance
-            angularDamping:0.05 // Simulate rotational resistance
-        })
-        TableBody.position.x = Table.position.x;
-        TableBody.position.y = Table.position.y;
-        TableBody.position.z = Table.position.z;
-        PhysicWorld.addBody(TableBody);
-        
         //Net
         const Net = new THREE.Mesh( geometry, material ); 
         Net.position.x = 0;
@@ -367,16 +278,21 @@ const LocalGame = () => {
         Net.position.z = -0.02;
         Net.scale.set(10.29, 1, 0.05)
         
-        // const cannonDebugger = new CannonDebugger(scene, PhysicWorld, {
-        //     color: 0xff0000, // Optional: Color of the debug visuals
-        // });
-        
+
+        let mouseDirection = 0;
+        let prevMouseX = 0;
+
+        const handleMouseMove = (info) => {
+            mouse.x = (info.clientX/window.innerWidth)*2-1;
+            mouse.y = -((info.clientY/window.innerHeight)*2-1);
+            
+            mouseDirection = mouse.x > prevMouseX ? 1 : -1;
+            prevMouseX = mouse.x;
+        };
+
         // mouse event listener
         const mouse = new THREE.Vector2();
-            window.addEventListener('mousemove', function (info) {
-                mouse.x = (info.clientX/window.innerWidth)*2-1;
-                mouse.y = -((info.clientY/window.innerHeight)*2-1);
-            }
+            window.addEventListener('mousemove', handleMouseMove
         )
         
         // keyboard event listener
@@ -388,49 +304,53 @@ const LocalGame = () => {
             {a:0},
         ]
         
-        document.addEventListener(
-            "keydown",
-            (event) => {
-              const keyName = event.key;
-              console.log(keyName);
+
+        const handleKeyDown = (event) => {
+            const keyName = event.key;
+          
+              if ( keyName === "w") {
+                  Chained_Keys.w = 1;
+              }
+              if (keyName === "s"){
+                  Chained_Keys.s = 1;
+              }
+              if (keyName === "d"){
+                  Chained_Keys.d = 1;
+              }
+              if (keyName === "a"){
+                  Chained_Keys.a = 1;
+              }
+              if (keyName === "r"){
+                  BallCreator.createBall()
+              }}
+        ;
         
-            if ( keyName === "w") {
-                Chained_Keys.w = 1;
+        
+        const handleKeyUp = (event) => {
+            const keyName = event.key;
+      
+          if ( keyName === "w") {
+              Chained_Keys.w = 0;
             }
             if (keyName === "s"){
-                Chained_Keys.s = 1;
+              Chained_Keys.s = 0;
             }
-            if (keyName === "d"){
-                Chained_Keys.d = 1;
+          if (keyName === "d"){
+              Chained_Keys.d = 0;
             }
             if (keyName === "a"){
-                Chained_Keys.a = 1;
-            }
-            if (keyName === "r"){
-                BallCreator.createBall()
-            }}
-        )
-        
+              Chained_Keys.a = 0;
+          }}
+          
+
         document.addEventListener(
             "keyup",
-            (event) => {
-              const keyName = event.key;
-        
-            if ( keyName === "w") {
-                Chained_Keys.w = 0;
-            }
-            if (keyName === "s"){
-                Chained_Keys.s = 0;
-            }
-            if (keyName === "d"){
-                Chained_Keys.d = 0;
-            }
-            if (keyName === "a"){
-                Chained_Keys.a = 0;
-            }}
+            handleKeyUp
         )
         
         
+        document.addEventListener("keydown", handleKeyDown)
+        document.addEventListener("keyup", handleKeyUp)
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);
         rgbeLoader.load('/models/neon_photostudio_2k.hdr', (enviroment_map) => {
@@ -443,80 +363,127 @@ const LocalGame = () => {
             scene.backgroundIntensity  = 0.007;
         })
         
-        const paddleBoundingBox   = new THREE.Box3();
-        const paddleBoundingAiBox = new THREE.Box3();
-        const ballBoundingBox     = new THREE.Box3();
+        const BallBoundingBox     = new THREE.Box3();
+        const PaddleBoundingBox   = new THREE.Box3();
+        const PaddleBoundingAiBox = new THREE.Box3();
+        const TableBoundingBox    = new THREE.Box3();
         const NetBoundingBox      = new THREE.Box3();
         
-        const paddleBoxHelper1 = new THREE.Box3Helper(paddleBoundingBox, 0xff0000);
-        const paddleBoxHelper2 = new THREE.Box3Helper(paddleBoundingAiBox, 0xff0000);
-        const paddleBoxHelper3 = new THREE.Box3Helper(ballBoundingBox, 0xff0000);
-        const NetHelper3       = new THREE.Box3Helper(NetBoundingBox, 0xff0000);
+        const PaddleBoxHelper   = new THREE.Box3Helper(PaddleBoundingBox, 0xff0000);
+        const PaddleAiBoxHelper = new THREE.Box3Helper(PaddleBoundingAiBox, 0xff0000);
+        const BallBoxHelper     = new THREE.Box3Helper(BallBoundingBox, 0xff0000);
+        const TableBoxHelper    = new THREE.Box3Helper(TableBoundingBox, 0xff0000);
+        const NetHelper         = new THREE.Box3Helper(NetBoundingBox, 0xff0000);
         
         // scene.add(paddleBoxHelper1);
         // scene.add(paddleBoxHelper2);
         // scene.add(paddleBoxHelper3);
         // scene.add(NetHelper3);
         
-        function checkCollision() {
-            if (Objects.length){
-                // Update bounding boxes with the current positions of the models
-                paddleBoundingBox.setFromObject(paddle);
-                paddleBoundingAiBox.setFromObject(paddleAi);
-                ballBoundingBox.setFromObject(Objects[Objects.length - 1].sphere);
-                NetBoundingBox.setFromObject(Net)
+//
+    function checkCollision() {
+        if (Objects.length){
+            // Update bounding boxes with the current positions of the models
+            PaddleBoundingBox.setFromObject(paddle);
+            PaddleBoundingAiBox.setFromObject(paddleAi);
+            BallBoundingBox.setFromObject(Objects[Objects.length - 1].sphere);
+            NetBoundingBox.setFromObject(Net)
+            TableBoundingBox.setFromObject(Table)
+            
+            if (PaddleBoundingBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z > 0) {
                 
-                if (paddleBoundingBox.intersectsBox(ballBoundingBox)) {
-                    console.log('paddle and ball!');
-                    
-                    const hitDirection = paddle.position.x > 0  ? -1 : 1;
-                    let forceX = (0.3 * hitDirection)// + (Math.random() - 0.5);
-        
-                    //for push Sumilation
-                    gsap.to(paddle.rotation, {
-                        x: paddle.rotation.x - 0.5,
-                        y: paddle.rotation.y + (hitDirection * 0.3),
-                        z: paddle.rotation.z + (hitDirection * 0.3),
-                        duration: 0.1,
-                        ease: "power3.out"
-                    })
-                    Pong_Ball_colide(0.7);
-                    
-                    Objects[Objects.length - 1].sphereBody.torque.setZero();
-                    Objects[Objects.length - 1].sphereBody.velocity.setZero();
-                    Objects[Objects.length - 1].sphereBody.angularVelocity.setZero()
-                    Objects[Objects.length - 1].sphereBody.applyForce(new cannon.Vec3(forceX, 0.55, -3.4), Objects[Objects.length - 1].sphereBody.position)
-                        
-                    }
-                    else if (paddleBoundingAiBox.intersectsBox(ballBoundingBox)){
-                    console.log('paddleAi and ball!');
-                    
-                    const hitDirection = paddleAi.position.x > 0  ? -1 : 1;
-                    let forceX = (0.3 * hitDirection) + (Math.random() - 0.5);
-                    
-                    //for push Sumilation
-                    gsap.to(paddle.rotation, {
-                        x: paddle.rotation.x + 0.5,
-                        y: paddle.rotation.y + (hitDirection * 0.3),
-                        z: paddle.rotation.z + (hitDirection * 0.3),
-                        duration: 0.1,
-                        ease: "power3.out"
-                    })
-                    Pong_Ball_colide(0.7);
-                    
-                    Objects[Objects.length - 1].sphereBody.torque.setZero();
-                    Objects[Objects.length - 1].sphereBody.velocity.setZero();
-                    Objects[Objects.length - 1].sphereBody.angularVelocity.setZero()
-                    Objects[Objects.length - 1].sphereBody.applyForce(new cannon.Vec3(forceX, 0.55, 3.4), Objects[Objects.length - 1].sphereBody.position)
-                    
+
+                // console.log('paddle and ball!');
+                let intensity = Math.max((3 - (Math.abs(paddle.position.x))), 0);
+                if ((paddle.position.x > 2) && (mouseDirection < 0)){
+                    intensity = (Math.abs(paddle.position.x) * 0.5) ;
                 }
-                else if (NetBoundingBox.intersectsBox(ballBoundingBox)) {
-                    console.log('ball collided with the Net!');
-                    // Objects[Objects.length - 1].sphereBody.velocity.z = -(Objects[Objects.length - 1].sphereBody.velocity.z) * 0.5; //Good !
-                    // Good just need to get the best velocity values
+                if ((paddle.position.x < -2) && (mouseDirection > 0)){
+                    intensity = (Math.abs(paddle.position.x) * 0.5);
+                }    
+                let forceX = (intensity * mouseDirection)
+
+                // console.log(forceX > 0 ? "right" : "left");
+
+                //for push Sumilation
+                gsap.to(paddle.rotation, {
+                    x: paddle.rotation.x - 0.5,
+                    duration: 0.1,
+                    ease: "power3.out"
+                })
+                Pong_Ball_colide(0.54);
+                
+                Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
+                                                        BallCreator.hit_y,        
+                                                        -BallCreator.hit_z
+                )
+            }
+            else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
+                
+                // console.log('paddleAi and ball!');
+                // let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
+                let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
+                if ((paddleAi.position.x > 2) && (mouseDirection > 0)){
+                    intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
                 }
+                if ((paddleAi.position.x < -2) && (mouseDirection < 0)){
+                    intensity = (Math.abs(paddleAi.position.x) * 0.5);
+                }    
+                let forceX = -(intensity * mouseDirection)
+
+                //for push Sumilation
+                gsap.to(paddleAi.rotation, {
+                    x: paddleAi.rotation.x + 0.5,
+                    duration: 0.1,
+                    ease: "power3.out"
+                })
+                Pong_Ball_colide(0.54);
+                
+                Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
+                                                        BallCreator.hit_y,        
+                                                        BallCreator.hit_z
+                )
+            }
+            
+            else if (NetBoundingBox.intersectsBox(BallBoundingBox)) {
+                // console.log('ball collided with the Net!');
+                // Objects[Objects.length - 1].sphereBody.velocity.z = -(Objects[Objects.length - 1].sphereBody.velocity.z) * 0.5; //Good !
+                // Good just need to get the best velocity values
+
+                // const normalVelocity = Objects[Objects.length - 1].velocity.dot(new THREE.Vector3(0, 0, 1)); // Extract velocity along the normal
+                // Objects[Objects.length - 1].velocity.z = ((Objects[Objects.length - 1].velocity.y) > 0 ? 1 : -1 ) * restitution;
+
+                // // Apply friction to X and Y velocity components
+                // Objects[Objects.length - 1].velocity.x *= friction;
+                // Objects[Objects.length - 1].velocity.y *= friction;
+
+                // // Prevent sinking into the net by repositioning the ball
+                // const ballDepth = BallBoundingBox.max.z - BallBoundingBox.min.z;
+                // if (Objects[Objects.length - 1].sphere.position.z > NetBoundingBox.max.z) {
+                //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.max.z + ballDepth / 2; // Ball is on one side of the net
+                // } else {
+                //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.min.z - ballDepth / 2; // Ball is on the other side of the net
+                // }
+            }
+            else if (TableBoundingBox.intersectsBox(BallBoundingBox)) {
+                // console.log('ball collided with the Table!');
+                // Collision with the table (restitution + friction) tobeadded
+                Pong_Ball_colide(0.85);
+                
+                // Apply friction to X and Z velocity components
+                Objects[Objects.length - 1].velocity.x *= friction;
+                Objects[Objects.length - 1].velocity.z *= friction;
+
+                // Reverse the Y velocity for bounce and apply restitution
+                Objects[Objects.length - 1].velocity.y *= -restitution;
+
+                // Prevent sinking into the table by repositioning the ball
+                const ballHeight = BallBoundingBox.max.y - BallBoundingBox.min.y;
+                Objects[Objects.length - 1].sphere.position.y = TableBoundingBox.max.y + ballHeight / 2; // Place the ball on the table
             }
         }
+    }
+//
         
         // scene.add(new THREE.GridHelper( 50, 50 ))
         // scene.add(new THREE.AxesHelper(15))
@@ -535,14 +502,9 @@ const LocalGame = () => {
             const deltaTime = elapsedTime - previousTime
             previousTime = elapsedTime
             
-            PhysicWorld.step(1/60, deltaTime, 3)
             
-            TableBody.position.x = Table.position.x;
-            TableBody.position.y = Table.position.y;
-            TableBody.position.z = Table.position.z;
-            
-            floor.position.copy(planeBody.position);
-            floor.quaternion.copy(planeBody.quaternion);
+            // floor.position.copy(planeBody.position);
+            // floor.quaternion.copy(planeBody.quaternion);
         
             Cameras[0].position.y += 0.02;
             Cameras[0].position.z -= 0.02;
@@ -552,12 +514,14 @@ const LocalGame = () => {
             Cameras[1].position.z -= 0.02;
             Cameras[1].position.x += 0.02;
         
-            Table.position.copy(TableBody.position);
-            Table.quaternion.copy(TableBody.quaternion);
             
             for (const object of Objects){
-                object.sphere.position.copy(object.sphereBody.position);
-                object.sphere.quaternion.copy(object.sphereBody.quaternion);
+                object.velocity.y += gravity * deltaTime;
+                
+                // Update position
+                object.sphere.position.x += object.velocity.x * deltaTime;
+                object.sphere.position.y += object.velocity.y * deltaTime;
+                object.sphere.position.z += object.velocity.z * deltaTime;       
 
                 //Scoring System
                 if (New_ball_launched){
@@ -689,9 +653,10 @@ const LocalGame = () => {
 ////=>////
 
         return() => {
-            // window.removeEventListener('resize', handleResize);
-            // window.removeEventListener('mousemove', handleMouseMove);
-            // document.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
             renderer.dispose();
 
             gui.destroy();

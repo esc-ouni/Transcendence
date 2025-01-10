@@ -53,7 +53,7 @@ const RemoteGame = () => {
         
         // Connect to the game server using those values
         // const gameSocket = new WebSocket(`ws://localhost:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
-        const gameSocket = new WebSocket(`ws://10.13.11.8:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
+        const gameSocket = new WebSocket(`ws://10.13.9.18:8000/ws/ping-pong/room/${matchData.roomName}/?user_id=${matchData.myId}`);
         
         gameSocket.onopen = () => {
             console.log("Connected to the game room:", matchData.roomName);
@@ -391,13 +391,13 @@ const RemoteGame = () => {
                   BallCreator.cameraFixed = false;
               }
         };
+        document.addEventListener("keydown", handleKeyDown)
         //
         
         
         const mouse = new THREE.Vector2();
         window.addEventListener('mousemove', handleMouseMove)
         
-        document.addEventListener("keydown", handleKeyDown)
         
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);

@@ -60,7 +60,7 @@ const PreRemote = () => {
     
     // Create WebSocket connection
     // const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket/');
-    const socket = new WebSocket('ws://10.13.11.8:8000/ws/server-endpoint-socket/');
+    const socket = new WebSocket('ws://10.13.9.18:8000/ws/server-endpoint-socket/');
     
     socket.onopen = () => {
       console.log("Matchmaking WebSocket Connected");
