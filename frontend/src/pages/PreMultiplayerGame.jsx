@@ -85,7 +85,7 @@ import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
 import PlayerInput from '../components/PlayerInput';
 
-const MultiplayerGame = () => {
+const PreMultiplayerGame = () => {
   const [blueTeamPlayers, setBlueTeamPlayers] = useState({
     player1: 'Haskitwy',
     player3: 'Haskitwy'
@@ -154,7 +154,7 @@ const MultiplayerGame = () => {
             text="Launch The Game"
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
-            onClick={() => {navigate('/LocalGame')}}
+            onClick={() => {navigate('/Multiplayer')}}
           />
         </div>
       </div>
@@ -162,4 +162,4 @@ const MultiplayerGame = () => {
   );
 };
 
-export default MultiplayerGame;
+export default PreMultiplayerGame;

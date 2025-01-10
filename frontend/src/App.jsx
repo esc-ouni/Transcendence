@@ -7,11 +7,12 @@ import Lobby from './pages/Lobby.jsx';
 import PlayLocally_1v1 from './pages/PLayLocally_1v1.jsx';
 import LocalGame from './game/LocalScene.jsx';
 import Tournament from './pages/Tournament.jsx';
-import MultiplayerGame from './pages/MultiplayerGame.jsx';
 import PreTournament from './pages/PreTournament.jsx';
 import Winner from './pages/Winner.jsx';
 import PreRemote from './pages/PreRemote.jsx';
 import { MatchProvider } from './game/MatchContext.jsx';
+import PreMultiplayerGame from './pages/PreMultiplayerGame.jsx';
+import MultiplayerGame from './game/Multiplayer.jsx';
 ;
   //  import './style.css';
 
@@ -26,6 +27,7 @@ import { MatchProvider } from './game/MatchContext.jsx';
             <Route path='/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
             <Route path='/LocalGame' element={<LocalGame />}/>
             <Route path='/Tournament' element={<Tournament />}/>
+            <Route path='/PreMultiplayer' element={<PreMultiplayerGame />}/>
             <Route path='/Multiplayer' element={<MultiplayerGame />}/>
             <Route path='/PreTournament' element={<PreTournament />}/>
             <Route path='/PreRemote' element={<PreRemote />}/>

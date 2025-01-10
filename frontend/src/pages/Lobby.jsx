@@ -59,7 +59,7 @@ function Lobby(){
                     text="Multiplayer Game"
                     default_icon='/bottouns/default_multiplayer.svg'
                     hovered_icon='/bottouns/hovered_multiplayer.svg'
-                    onClick={() => {navigate('/Multiplayer')}}
+                    onClick={() => {navigate('/PreMultiplayer')}}
                 />
                 <Frame
                     text="Start Tournament"
