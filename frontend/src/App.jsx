@@ -13,8 +13,6 @@ import PreRemote from './pages/PreRemote.jsx';
 import { MatchProvider } from './game/MatchContext.jsx';
 import PreMultiplayerGame from './pages/PreMultiplayerGame.jsx';
 import MultiplayerGame from './game/Multiplayer.jsx';
-;
-  //  import './style.css';
 
   function App() {
     return (
@@ -39,3 +37,4 @@ import MultiplayerGame from './game/Multiplayer.jsx';
   }
 
   export default App;
+

@@ -8,9 +8,29 @@ import React, { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
 
 const PreTournament = () => {
-  const [player1Name, setPlayer1Name] = useState('Haskitwy');
-  const [player2Name, setPlayer2Name] = useState('Haskitwy');
+  const [player1Name, setPlayer1Name] = useState('');
+  const [player2Name, setPlayer2Name] = useState('');
+  const [player3Name, setPlayer3Name] = useState('');
+  const [player4Name, setPlayer4Name] = useState('');
   const navigate = useNavigate();
+
+
+  const handleLaunch = () => {
+    // For demonstration, let's assume you actually have 4 distinct names:
+    // player1Name, player2Name, player3Name, player4Name.
+    // In your code snippet, you showed just two states, but let's generalize:
+    // localStorage can store an object of all 4 players.
+    const playersData = {
+      p1: player1Name,
+      p2: player2Name,
+      p3: player3Name,
+      p4: player4Name,
+    };
+
+    localStorage.setItem('tournamentPlayers', JSON.stringify(playersData));
+
+    navigate('/Tournament');
+  };
 
   return (
     <>
@@ -35,27 +55,27 @@ const PreTournament = () => {
                     />
                 
                 <PlayerInput
-                    playerId={3}
-                    initialName={player1Name}
+                    playerId={2}
+                    initialName={player2Name}
                     avatarSrc="/bottouns/omar.jpg"
-                    onNameChange={setPlayer1Name}
+                    onNameChange={setPlayer2Name}
                     position='left'
                     />
             </div>
             <div>
                 <PlayerInput
-                    playerId={2}
-                    initialName={player2Name}
+                    playerId={3}
+                    initialName={player3Name}
                     avatarSrc="/bottouns/le7ya.jpg"
-                    onNameChange={setPlayer2Name}
+                    onNameChange={setPlayer3Name}
                     position='right'
                     />
                 
                 <PlayerInput
                     playerId={4}
-                    initialName={player2Name}
+                    initialName={player4Name}
                     avatarSrc="/bottouns/le7ya.jpg"
-                    onNameChange={setPlayer2Name}
+                    onNameChange={setPlayer4Name}
                     position='right'
                     />
                 </div>
@@ -66,7 +86,7 @@ const PreTournament = () => {
                 text="Launch The Game"
                 default_icon='/bottouns/default_offline.svg'
                 hovered_icon='/bottouns/hovered_offline.svg'
-                onClick={() => {navigate('/LocalGame')}}
+                onClick={handleLaunch}
             />
         </div>
 

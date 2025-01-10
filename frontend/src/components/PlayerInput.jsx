@@ -6,7 +6,8 @@ const PlayerInput = ({
     playerId = 1,
     playerName = "",
     avatarSrc = "/path/to/avatar.png",
-    position = "left"
+    position = "left",
+    onNameChange
                       }) => {
   const [name, setName] = useState(playerName);
 

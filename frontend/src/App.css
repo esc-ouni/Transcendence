@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,90 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #2c2c2c;
+  color: #fefefe;
+}
+
+.App {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bracket {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.bracket-round {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.bracket-round h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.match-container {
+  background: #3a3a3a;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 0.5rem;
+}
+
+.players button {
+  background-color: transparent;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-weight: bold;
+}
+
+.players button:hover {
+  background-color: #444;
+}
+
+.players .winner {
+  border-color: #4caf50;
+  color: #4caf50;
+  font-weight: 900;
+}
+
+.vs {
+  margin: 0 0.5rem;
+}
+
+.winner-container {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1.1rem;
 }

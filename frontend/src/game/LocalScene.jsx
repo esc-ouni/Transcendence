@@ -680,8 +680,12 @@ const LocalGame = () => {
         if (playerScore === 7 || aiScore === 7) {
             setPlayerScore(0);
             setAiScore(0);
-            navigate("/Winner")
-            //   alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
+            // navigate("/Winner")
+            const finalScore = {
+                p1: playerScore,
+                p2: aiScore
+              };
+              navigate('/Tournament')
         }
       }, [playerScore, aiScore]);
 
