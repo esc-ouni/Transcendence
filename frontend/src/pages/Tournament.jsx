@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import PingPongBack from "../components/PingPongBack";
 import '../hsaktiwy_css/tournament.css'
 import HistoryCard from '../components/HistoryCard';
+import { Bracket } from 'react-brackets';
+
 
 function Tournament({ src }) {
   const navigate = useNavigate();
@@ -71,6 +73,46 @@ function Tournament({ src }) {
   // #region Update our LocalStorage item whenever it changes
   console.log("hmm ", Matches);
 
+
+  const rounds = [
+    {
+      title: 'Semi Finals',
+      seeds: [
+        {
+          id: 1,
+          date: new Date().toDateString(),
+          teams: [
+            { name: Matches.Semi_Final_1?.player1 || 'TBD' },
+            { name: Matches.Semi_Final_1?.player2 || 'TBD' },
+          ],
+        },
+        {
+          id: 2,
+          date: new Date().toDateString(),
+          teams: [
+            { name: Matches.Semi_Final_2?.player1 || 'TBD' },
+            { name: Matches.Semi_Final_2?.player2 || 'TBD' },
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Final',
+      seeds: [
+        {
+          id: 3,
+          date: new Date().toDateString(),
+          teams: [
+            { name: Matches.Final?.player1 || 'TBD' },
+            { name: Matches.Final?.player2 || 'TBD' },
+          ],
+        },
+      ],
+    },
+  ];
+  
+  /////
+
   return (
     <>
       <div className="background-wrapper-r">
@@ -82,29 +124,9 @@ function Tournament({ src }) {
 
           <div className='team width-full min-height-40'>
               <div className='ultra-space-between'>
-                {/* semi final 1*/}
-                  <div className='Challenger'>
-                    <div className='White center-column'>
-                      <p>{Matches['Semi_Final_1'].player1}</p>
-                      <div className='border-1-white width-full'></div>
-                      <p>{Matches['Semi_Final_1'].player2}</p>
-                    </div>
-                  </div>
-                  <div className='Challenger'>
-                    <div className='White center-column'>
-                      <p>{Matches['Final'].player1 ? Matches['Final'].player1: "..."}</p>
-                      <div className='border-1-white width-full'></div>
-                      <p>{Matches['Final'].player2 ? Matches['Final'].player2: "..."}</p>
-                      <h3 className='yellow'>FINALS <span className='red'>[khaliha Wla lah]</span></h3>
-                    </div>
-                  </div>
-                  <div className='Challenger'>
-                    <div className='White center-column'>
-                      <p>{Matches['Semi_Final_2'].player1}</p>
-                      <div className='border-1-white width-full'></div>
-                      <p>{Matches['Semi_Final_2'].player2}</p>
-                    </div>
-                  </div>
+                  <center>
+                    <Bracket rounds={rounds} />
+                  </center>
               </div>
           </div>
 
@@ -114,26 +136,26 @@ function Tournament({ src }) {
             {/* For each match, render a card */}
             <div className='Stocker'>
               {
-                  // #region HistoryCard
+                // #region HistoryCard
               }
               {/* For each match, render a card */}
               <h1 className='White' >MATCHES HISTORY</h1>
               {Matches_history.Semi_Final_1.winner ? <HistoryCard 
                 matchId="Semi_Final_1"
                 matchData={Matches_history.Semi_Final_1}
-              /> :<></>}
+                /> :<></>}
               {Matches_history.Semi_Final_2.winner ? <HistoryCard 
                 matchId="Semi_Final_2"
                 matchData={Matches_history.Semi_Final_2}
-              /> :<></>}
+                /> :<></>}
               {Matches_history.Final.winner ? <HistoryCard 
                 matchId="Final"
                 matchData={Matches_history.Final}
-              /> :<></>}
+                /> :<></>}
             </div>
             <div className="vertical-line"></div>
             {
-                  // #region  MatchCard 
+              // #region  MatchCard 
             }
             <div className='Stocker'>
               <h1 className='White'>MATCHES QUEUE</h1>
@@ -142,19 +164,19 @@ function Tournament({ src }) {
                 matchData={Matches.Semi_Final_1}
                 onReady={handleReady}
                 onStartMatch={handleStartMatch}
-              />
+                />
               <MatchCard 
                 matchId="Semi_Final_2"
                 matchData={Matches.Semi_Final_2}
                 onReady={handleReady}
                 onStartMatch={handleStartMatch}
-              />
+                />
               <MatchCard 
                 matchId="Final"
                 matchData={Matches.Final}
                 onReady={handleReady}
                 onStartMatch={handleStartMatch}
-              />
+                />
             </div>
           </div>
         </div>
@@ -166,3 +188,40 @@ function Tournament({ src }) {
 export default Tournament;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// {/* semi final 1*/}
+//   {/* <div className='Challenger'>
+//     <div className='White center-column'>
+//       <p>{Matches['Semi_Final_1'].player1}</p>
+//       <div className='border-1-white width-full'></div>
+//       <p>{Matches['Semi_Final_1'].player2}</p>
+//     </div>
+//     </div>
+//     <div className='Challenger'>
+//     <div className='White center-column'>
+//     <p>{Matches['Final'].player1 ? Matches['Final'].player1: "..."}</p>
+//     <div className='border-1-white width-full'></div>
+//     <p>{Matches['Final'].player2 ? Matches['Final'].player2: "..."}</p>
+//     <h3 className='yellow'>FINALS <span className='red'>[khaliha Wla lah]</span></h3>
+//     </div>
+//     </div>
+//     <div className='Challenger'>
+//     <div className='White center-column'>
+//     <p>{Matches['Semi_Final_2'].player1}</p>
+//     <div className='border-1-white width-full'></div>
+//       <p>{Matches['Semi_Final_2'].player2}</p>
+//       </div>
+//     </div> */}

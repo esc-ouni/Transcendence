@@ -709,8 +709,7 @@ const LocalGame = () => {
                 localStorage.setItem('Matches_data', JSON.stringify(Matches));
                 localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
               console.log(Matches, Matches_history, matchId);
-
-            //   navigate('/Tournament')
+              navigate('/Tournament')
         }
       }, [playerScore, aiScore]);
 
