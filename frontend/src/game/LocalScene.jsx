@@ -685,7 +685,32 @@ const LocalGame = () => {
                 p1: playerScore,
                 p2: aiScore
               };
-              navigate('/Tournament')
+              // #region Update the match history with the final score
+              // get the matchId, matches, matches, matches_history from localStorage
+              let Matches= JSON.parse(localStorage.getItem('Matches_data'));
+              const matchId = localStorage.getItem('matchId');
+              let Matches_history = JSON.parse(localStorage.getItem('Matches_history'));
+              // Update the score of the match
+              Matches_history[matchId].Score1 = playerScore;
+              Matches_history[matchId].Score2 = aiScore;
+              Matches_history[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+              // Update the winner of the match
+              Matches[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+              // Update the next match (Final)
+              if (matchId != 'Final') {
+                if (Matches['Final'].player1 === null) {
+                  Matches['Final'].player1 = Matches[matchId].winner;
+                }
+                else {
+                  Matches['Final'].player2 = Matches[matchId].winner;
+                }
+              }
+              // set the updated matches and matches_history to localStorage
+                localStorage.setItem('Matches_data', JSON.stringify(Matches));
+                localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
+              console.log(Matches, Matches_history, matchId);
+
+            //   navigate('/Tournament')
         }
       }, [playerScore, aiScore]);
 

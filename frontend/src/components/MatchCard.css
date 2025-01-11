@@ -1,6 +1,6 @@
 .match-card {
-    background: rgba(255, 255, 255, 0.1); /* slightly transparent white */
-    backdrop-filter: blur(8px);           /* the blur effect */
+   /* background: rgba(255, 255, 255, 0.1); *//* slightly transparent white */
+   /* backdrop-filter: blur(8px);           /* the blur effect */
     border-radius: 8px;
     padding: 16px;
     margin: 16px;
