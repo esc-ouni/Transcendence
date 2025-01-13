@@ -138,7 +138,7 @@ const ChessGameBack = () => {
         
         
         GLTFLoaderr.load(
-            '/chess-assets/models/chess_set_4k.gltf/chess_set_4k.gltf',
+            '/chess-assets/models/chess_set_2k.gltf/chess_set_2k.gltf',
             function ( gltf ) {
                 let item;
         
