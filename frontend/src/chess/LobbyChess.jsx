@@ -12,7 +12,7 @@ function ChessLobby(){
     return(
         <>
             <ChessGameBack/>
-            
+
             <div className="lktaba">
                 <div className="lktaba1">Chess Platform Game</div>
                 <div className="lktaba2">GAME DESCIEPTION :</div>
@@ -44,7 +44,7 @@ function ChessLobby(){
                     text="Play Online"
                     default_icon='/bottouns/default_online.svg'
                     hovered_icon='/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/ChessLocally')}}
+                    onClick={() => {navigate('/ChessPreRemote')}}
                 />
                 <Frame
                     text="Vs Ai"
