@@ -1,0 +1,53 @@
+
+.centerialze{
+  display: block;
+  align-items: center;
+  margin: auto auto;
+}
+
+ .game-options-container-r {
+  min-height: 100vh;
+  padding: 40px;
+  color: white;
+  position: relative;
+  z-index: 2;     
+
+}
+
+.game-options-header-r {
+  text-align: center;
+  margin-bottom: 300px;
+}
+
+.game-options-header-r h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.game-options-header-r p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.players-container-r {
+  /* top: 900px; */
+  display: flex;
+  /* filter: blur(6px); */
+  backdrop-filter: blur(12px);
+
+
+  align-items: center;
+  max-width: 1700px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.164);
+  border-radius: 12px;
+}
+
+.buttona-r {
+  display: flex;
+  align-items: center;
+  /* padding: auto auto; */
+  margin: auto auto;
+}
+
+
