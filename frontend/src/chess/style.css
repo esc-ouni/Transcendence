@@ -1,0 +1,207 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    overflow: hidden;
+}
+
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+
+/* e.g., in style.css or another stylesheet */
+.yy {
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+    
+    /* Optional: if you want them vertically stacked with some spacing: */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.text-wrapper {
+    text-align: center;
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    height: 33px;
+    /* left: 0; */
+    letter-spacing: 0;
+    line-height: normal;
+    /* position: absolute; */
+    /* top: 0; */
+}
+
+  /* Container pinned top-left of the screen */
+.lktaba {
+    position: absolute;
+    top: 30px;         /* adjust spacing from top */
+    left: 30px;        /* adjust spacing from left */
+    color: #fff;       /* white text */
+    max-width: 600px;  /* limit paragraph width if you like */
+    font-family: "Arial", sans-serif; /* or "Inter", etc. */
+  }
+
+  .lktaba1 {
+    /* position: absolute;*/
+    top: 30px;         /*adjust spacing from top */
+    left: 90px;        /* adjust spacing from left */
+    color: #fff;       /* white text */
+    max-width: 900px;  /* limit paragraph width if you like */
+    /* font-family: "Arial", sans-serif;  */
+
+  
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 48px;
+    font-weight: 600;
+    height: 120px;
+    /* left: 0; */
+    letter-spacing: 0;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+  }
+
+  .lktaba2 {
+    /* position: absolute;*/
+    top: 30px;         /*adjust spacing from top */
+    left: 90px;        /* adjust spacing from left */
+    margin-left: 30px;
+    color: #fff;       /* white text */
+    max-width: 900px;  /* limit paragraph width if you like */
+    /* font-family: "Arial", sans-serif;  */
+    
+    
+    color: #ffffff;
+    font-family: "Inter", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    height: 50px;
+    /* left: 0; */
+    letter-spacing: 0;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+}
+
+.lktaba3 {
+    /* position: absolute;*/
+    margin-left: 30px;
+    /* line-height: normal; */
+    /* position: absolute; */
+    /* top: 0; */
+  }
+
+
+  /* Title + arrow row */
+  .title-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  /* Back arrow image */
+  .back-arrow {
+    width: 40px;       /* size of the arrow */
+    height: 40px;      /* can let it auto-size, or fix both w/h */
+    margin-right: 12px; /* space between arrow and text */
+    cursor: pointer;   /* looks clickable */
+  }
+  
+  .back-arrow:hover {
+    opacity: 0.7;
+  }
+  
+
+  /* Main title (Ping Pong Game) */
+  .main-title {
+    font-size: 48px;
+    font-weight: 700;  /* bold */
+    margin: 0;         /* remove default H1 margin */
+  }
+  
+  /* Subheading (GAME DESCRIPTION :) */
+  .description-heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0 10px 0; /* top/bottom/left/right */
+  }
+  
+  /* Paragraph text */
+  .description-text {
+    font-size: 16px;
+    line-height: 1.6;      /* comfortable spacing */
+    margin: 0;             /* remove default <p> margin, or set as you like */
+  }
+  
+
+
+  .full-screen-image {
+    /* fill the entire browser viewport */
+    position: fixed;  
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1; /* put behind other content if needed */
+  }
+  
+  .full-screen-image img {
+    /* make the image cover the full container dimensions */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    /* "cover" ensures the image fills, preserving aspect ratio, cropping if needed */
+  }
+  
+
+  .button {
+    position: fixed;  /* Fixed positioning relative to viewport */
+    bottom: 20px;     /* 20px from bottom */
+    right: 20px;      /* 20px from right */
+    z-index: 1000;    
+    cursor: pointer;
+  
+    width: 220px;
+    height: 50px;
+  
+    padding: 12px 17px;
+    border: 0;
+    border-radius: 7px;
+  
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    background: radial-gradient(
+      ellipse at bottom,
+      rgba(71, 81, 92, 1) 0%,
+      rgba(11, 21, 30, 1) 45%
+    );
+  
+    color: rgb(255, 255, 255, 0.66);
+  
+    transition: all 1s cubic-bezier(0.15, 0.83, 0.66, 1);
+  }
+  
+  .button::before {
+    content: "";
+    width: 70%;
+    height: 1px;
+  
+    position: absolute;
+    bottom: 0;
+  
