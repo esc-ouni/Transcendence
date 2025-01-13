@@ -16,6 +16,8 @@ import MultiplayerGame from './game/Multiplayer.jsx';
 import ChessLobby from './chess/LobbyChess.jsx';
 import LocalChessGame from './chess/LocalSceneChess.jsx';
 import ChessGameBack from './chess/ChessBack.jsx';
+import ChessPreRemote from './chess/remote/ChessPreRemote.jsx';
+import ChessRemoteGame from './chess/remote/ChessRemoteScene.jsx';
 
   function App() {
     return (
@@ -37,6 +39,10 @@ import ChessGameBack from './chess/ChessBack.jsx';
 
             <Route path='/Chess_Lobby' element={<ChessLobby />}/>
             <Route path='/ChessLocally' element={<LocalChessGame />}/>
+            <Route path='/ChessPreRemote' element={<ChessPreRemote />}/>
+            <Route path='/ChessRemote' element={<ChessRemoteGame />}/>
+
+
 
           </Routes>
         </MatchProvider>
