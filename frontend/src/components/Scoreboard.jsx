@@ -14,10 +14,10 @@ const scoreboardStyle = {
   zIndex: 100
 };
 
-export default function Scoreboard({ playerScore, aiScore }) {
+export default function Scoreboard({ player1, playerScore, player2, aiScore }) {
   return (
     <div style={scoreboardStyle}>
-      {`Player: ${playerScore} - AI_bot: ${aiScore}`}
+      {`${player1}: ${playerScore} - ${player2}: ${aiScore}`}
     </div>
   );
 }

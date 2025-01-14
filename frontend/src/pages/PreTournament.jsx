@@ -26,7 +26,9 @@ const PreTournament = () => {
       p3: player3Name,
       p4: player4Name,
     };
-
+    localStorage.removeItem('Matches_data');
+    localStorage.removeItem('Matches_history');
+    localStorage.removeItem("matchId")
     localStorage.setItem('tournamentPlayers', JSON.stringify(playersData));
 
     navigate('/Tournament');

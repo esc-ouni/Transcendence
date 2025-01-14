@@ -24,6 +24,8 @@ const LocalGame = () => {
     const [aiScore, setAiScore] = useState(0);
 
     const [loading, setLoading] = useState(true);
+    const [match, setMatch] = useState(JSON.parse(localStorage.getItem('Matches_data')));
+    const [matchId, setMatchId] = useState(localStorage.getItem('matchId'))
 
     useEffect(() => {
 
@@ -686,39 +688,44 @@ const LocalGame = () => {
                 p2: aiScore
               };
               // #region Update the match history with the final score
-              // get the matchId, matches, matches, matches_history from localStorage
+            //   get the matchId, matches, matches, matches_history from localStorage
               let Matches= JSON.parse(localStorage.getItem('Matches_data'));
-              const matchId = localStorage.getItem('matchId');
+            //   const matchId = localStorage.getItem('matchId');
               let Matches_history = JSON.parse(localStorage.getItem('Matches_history'));
               // Update the score of the match
-              Matches_history[matchId].Score1 = playerScore;
-              Matches_history[matchId].Score2 = aiScore;
-              Matches_history[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
-              // Update the winner of the match
-              Matches[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
-              // Update the next match (Final)
-              if (matchId != 'Final') {
-                if (Matches['Final'].player1 === null) {
-                  Matches['Final'].player1 = Matches[matchId].winner;
+              if (matchId && Matches_history && Matches)
+              {
+                Matches_history[matchId].Score1 = playerScore;
+                Matches_history[matchId].Score2 = aiScore;
+                Matches_history[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                // Update the winner of the match
+                Matches[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                // Update the next match (Final)
+                if (matchId != 'Final') {
+                    if (Matches['Final'].player1 === null) {
+                    Matches['Final'].player1 = Matches[matchId].winner;
+                    }
+                    else {
+                    Matches['Final'].player2 = Matches[matchId].winner;
+                    }
                 }
-                else {
-                  Matches['Final'].player2 = Matches[matchId].winner;
-                }
-              }
-              // set the updated matches and matches_history to localStorage
-                localStorage.setItem('Matches_data', JSON.stringify(Matches));
-                localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
-              console.log(Matches, Matches_history, matchId);
-              navigate('/Tournament')
+                // set the updated matches and matches_history to localStorage
+                    localStorage.setItem('Matches_data', JSON.stringify(Matches));
+                    localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
+                console.log(Matches, Matches_history, matchId);
+            }
+            navigate('/Tournament')
         }
       }, [playerScore, aiScore]);
 
+    console.log(matchId, match)
+    console.log(match ? (match[matchId] ? match[matchId] : "TESTING NULL MATCH[MATCHID] ?") : "TESTING MATCHOID == NULL ? ")
     return (
         <>
             <LoadingScreen show={loading} />
             <canvas ref={canvasRef}></canvas>
             <Hud/>
-            <Scoreboard playerScore={playerScore} aiScore={aiScore}/>
+            <Scoreboard player1={(matchId && match && match[matchId]) ? match[matchId].player1 : "PL1"} playerScore={playerScore} player2={matchId && match && match[matchId] ? match[matchId].player2 : "PL2"} aiScore={aiScore}/>
         </>
     )
 };

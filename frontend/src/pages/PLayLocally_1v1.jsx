@@ -47,7 +47,15 @@ const PlayLocally_1v1 = () => {
                 text="Launch Game"
                 default_icon='/bottouns/default_offline.svg'
                 hovered_icon='/bottouns/hovered_offline.svg'
-                onClick={() => {navigate('/LocalGame')}}
+                onClick={() => {
+                  let match = {
+                    "FINALY": {"player1": player1Name, "player2": player2Name},
+                  }
+                  localStorage.setItem("Matches_data", JSON.stringify(match))
+                  localStorage.setItem("matchId", JSON.stringify("FINALY"))
+
+                  navigate('/LocalGame')
+                }}
             />
         </div>
 
