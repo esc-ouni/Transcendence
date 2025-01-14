@@ -4,13 +4,20 @@ import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayerInput from '../components/PlayerInput';
+import { use } from "react";
 
 const PlayLocally_1v1 = () => {
   const [player1Name, setPlayer1Name] = useState('Haskitwy');
   const [player2Name, setPlayer2Name] = useState('Haskitwy');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // CLEAR LOCAL SRORAGE
+    localStorage.removeItem('Matches_data');
+    localStorage.removeItem("matchId")
+  }, []);
 
   return (
     <>
@@ -49,10 +56,10 @@ const PlayLocally_1v1 = () => {
                 hovered_icon='/bottouns/hovered_offline.svg'
                 onClick={() => {
                   let match = {
-                    "FINALY": {"player1": player1Name, "player2": player2Name},
+                    FINALY: {"player1": player1Name, "player2": player2Name},
                   }
                   localStorage.setItem("Matches_data", JSON.stringify(match))
-                  localStorage.setItem("matchId", JSON.stringify("FINALY"))
+                  localStorage.setItem("matchId", "FINALY")
 
                   navigate('/LocalGame')
                 }}

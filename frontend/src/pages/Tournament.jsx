@@ -14,7 +14,7 @@ function Tournament({ src }) {
 
   const storedPlayers = localStorage.getItem('tournamentPlayers');
   const players = storedPlayers ? JSON.parse(storedPlayers) : null;
-  
+  const [reload , setReload] = useState(0)
   const [Matches, setMatches] = useState( {
     "Semi_Final_1": { "player1": "PL1", "player2": "PL2", "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": false },
     "Semi_Final_2": { "player1": "PL3", "player2": "PL4", "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
@@ -91,94 +91,94 @@ function Tournament({ src }) {
   // #region Get our LocalStorage item if it exists
   useEffect(() => {
     // in case where we ? have empty info
-    console.lo
+    // console.lo
+    setReload(reload+1)
+    console.log(reload)
     if (!storedPlayers || !players)
     {
+        // if we don't have players data, we should go back to the PreTournament page
         navigate("/PreTournament")
-        return <></>;
-    }
-    // const 
-    const matches = {
-      "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": false },
-      "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
-      "Final"       : { "player1": null      , "player2": null      , "winner": null, "isReadyF1": false, "isReadyF2": false, "thier_Turn": false }
-    }
-
-    
-    const matches_his =  {
-      "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "Score1": 0, "Score2": 0, "winner": null },
-      "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "Score1": 0, "Score2": 0, "winner": null},
-      "Final"       : { "player1": null      , "player2": null      , "Score1": 0, "Score2": 0, "winner": null }
-    }
-    const data = localStorage.getItem('Matches_data');
-    const history = localStorage.getItem('Matches_history');
-    if (data) {
-      setMatches(JSON.parse(data));
     }
     else
-      localStorage.setItem('Matches_data', JSON.stringify(matches));
-  if (history) {
-    setMatches_history(JSON.parse(history));
-  }
-  else
-    localStorage.setItem('Matches_history', JSON.stringify(matches_his));
-console.log("hmm ", Matches, Matches_history);
+    {
+      // const 
+      const matches = {
+        "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": false },
+        "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
+        "Final"       : { "player1": null      , "player2": null      , "winner": null, "isReadyF1": false, "isReadyF2": false, "thier_Turn": false }
+      }
 
-setRounds([
-  {
-    title: 'Semi Finals',
-    seeds: [
+      
+      const matches_his =  {
+        "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "Score1": 0, "Score2": 0, "winner": null },
+        "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "Score1": 0, "Score2": 0, "winner": null},
+        "Final"       : { "player1": null      , "player2": null      , "Score1": 0, "Score2": 0, "winner": null }
+      }
+      const data = localStorage.getItem('Matches_data');
+      const history = localStorage.getItem('Matches_history');
+      if (data) {
+        setMatches(JSON.parse(data));
+      }
+      else
+        localStorage.setItem('Matches_data', JSON.stringify(matches));
+      if (history) {
+        setMatches_history(JSON.parse(history));
+      }
+      else
+        localStorage.setItem('Matches_history', JSON.stringify(matches_his));
+      console.log("hmm ", Matches, Matches_history);
+
+      setRounds([
       {
-        id: 1,
-        date: new Date().toDateString(),
-        teams: [
-          { name: Matches.Semi_Final_1?.player1 || 'TBD' },
-          { name: Matches.Semi_Final_1?.player2 || 'TBD' },
+        title: 'Semi Finals',
+        seeds: [
+          {
+            id: 1,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Semi_Final_1?.player1 || 'TBD' },
+              { name: matches.Semi_Final_1?.player2 || 'TBD' },
+            ],
+          },
+          {
+            id: 2,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Semi_Final_2?.player1 || 'TBD' },
+              { name: matches.Semi_Final_2?.player2 || 'TBD' },
+            ],
+          },
         ],
       },
       {
-        id: 2,
-        date: new Date().toDateString(),
-        teams: [
-          { name: Matches.Semi_Final_2?.player1 || 'TBD' },
-          { name: Matches.Semi_Final_2?.player2 || 'TBD' },
+        title: 'Final',
+        seeds: [
+          {
+            id: 3,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Final?.player1 || 'TBD' },
+              { name: matches.Final?.player2 || 'TBD' },
+            ],
+          },
         ],
       },
-    ],
-  },
-  {
-    title: 'Final',
-    seeds: [
-      {
-        id: 3,
-        date: new Date().toDateString(),
-        teams: [
-          { name: Matches.Final?.player1 || 'TBD' },
-          { name: Matches.Final?.player2 || 'TBD' },
-        ],
-      },
-    ],
-  },
-])
+      ])
 
-  // this must be seted somehow base idea will be using local storage
-  setMatches_history(
-    matches
-  )
-
-  setMatches(
-    matches_his
-  )
-    
+      // this must be seted somehow base idea will be using local storage
+      setMatches_history(
+        matches_his
+      )
+      
+      setMatches(
+        matches
+      )
+    }
   }, []);
 
   // #region Update our LocalStorage item whenever it changes
-  console.log("hmm ", Matches);
+  console.log("hmm ", Matches, Matches_history);
 
-
-
-  /////
-  
   return (
     <>
       <div className="background-wrapper-r">
@@ -221,7 +221,7 @@ setRounds([
             </div>
             <div className="vertical-line"></div>
             {
-              // #region  MatchCard 
+              // #region  MatchCard
             }
             <div className='Stocker'>
               <h1 className='White'>MATCHES QUEUE</h1>

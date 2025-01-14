@@ -710,11 +710,24 @@ const LocalGame = () => {
                     }
                 }
                 // set the updated matches and matches_history to localStorage
-                    localStorage.setItem('Matches_data', JSON.stringify(Matches));
-                    localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
+                localStorage.setItem('Matches_data', JSON.stringify(Matches));
+                localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
                 console.log(Matches, Matches_history, matchId);
+              }
+            if (matchId && matchId === "FINALY") {
+                console.log('Winner is called\n')
+                navigate('/Winner');
             }
-            navigate('/Tournament')
+            else if (matchId && (matchId === 'Semi_Final_1' || matchId === 'Semi_Final_2' || matchId === 'Final'))
+            {
+                console.log("Tournament is called : ", matchId)
+                navigate('/Tournament')
+            }
+            else
+            {
+                console.log("matchId", matchId)
+                navigate('/')
+            }
         }
       }, [playerScore, aiScore]);
 

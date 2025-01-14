@@ -16,7 +16,8 @@ const ChessPreRemote = () => {
     
     // Create WebSocket connection
     // const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket-chess/');
-    const socket = new WebSocket('ws://10.11.5.2:8000/ws/server-endpoint-socket/');
+    const socket = new WebSocket('ws://localhost:8000/ws/server-endpoint-socket-chess/');
+    // const socket = new WebSocket('ws://10.11.5.2:8000/ws/server-endpoint-socket/');
     
     socket.onopen = () => {
       console.log("Matchmaking WebSocket Connected");
