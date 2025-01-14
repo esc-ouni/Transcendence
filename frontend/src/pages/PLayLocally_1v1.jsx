@@ -56,7 +56,7 @@ const PlayLocally_1v1 = () => {
                 hovered_icon='/bottouns/hovered_offline.svg'
                 onClick={() => {
                   let match = {
-                    FINALY: {"player1": player1Name, "player2": player2Name},
+                    FINALY: {"player1": player1Name, "player2": player2Name, "winner": null, "Score1": 0, "Score2": 0},
                   }
                   localStorage.setItem("Matches_data", JSON.stringify(match))
                   localStorage.setItem("matchId", "FINALY")

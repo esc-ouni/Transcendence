@@ -127,3 +127,20 @@
 .hidden{
     display: none;
 }
+
+.max-width-full{
+    max-width: 100%;
+}
+
+.rotating-image {
+    animation: rotate_him 5s linear infinite;
+}
+
+@keyframes rotate_him {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}

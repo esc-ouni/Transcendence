@@ -716,6 +716,11 @@ const LocalGame = () => {
               }
             if (matchId && matchId === "FINALY") {
                 console.log('Winner is called\n')
+                const matchData = JSON.parse(localStorage.getItem('Matches_data'));
+                matchData[matchId].Score1 = playerScore;
+                matchData[matchId].Score2 = aiScore;
+                matchData[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                localStorage.setItem('Matches_data', JSON.stringify(matchData));
                 navigate('/Winner');
             }
             else if (matchId && (matchId === 'Semi_Final_1' || matchId === 'Semi_Final_2' || matchId === 'Final'))
