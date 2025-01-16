@@ -4,6 +4,7 @@ import { Frame } from "../../components/Frame";
 import { useNavigate } from "react-router-dom";
 import { useMatchContext } from '../../game/MatchContext';
 import ChessGameBack from '../ChessBack';
+import { color } from 'three/webgpu';
 
 const ChessPreRemote = () => {
   const navigate = useNavigate();
@@ -28,14 +29,16 @@ const ChessPreRemote = () => {
       if (data['type'] === 'match_found') {
         console.log("=> Match Found:");
         console.log("   => room_name   :", data['room_name']);
-        console.log("   => my_id    :", data['my_id']);
+        console.log("   => my_id       :", data['my_id']);
         console.log("   => opponent_id :", data['opponent_id']);
+        console.log("   => color       :", data['color']);
         
         // Update match context
         setMatchData({
           roomName: data['room_name'],
           myId: data['my_id'],
           opponentId: data['opponent_id'],
+          color: data['color']
         });
         
         // Close the socket and navigate to RemoteGame

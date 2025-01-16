@@ -40,7 +40,7 @@ import ChessRemoteGame from './chess/remote/ChessRemoteScene.jsx';
             <Route path='/Chess_Lobby' element={<ChessLobby />}/>
             <Route path='/ChessLocally' element={<LocalChessGame />}/>
             <Route path='/ChessPreRemote' element={<ChessPreRemote />}/>
-            <Route path='/ChessRemote' element={<ChessRemoteGame />}/>
+            <Route path='/ChessRemoteGame' element={<ChessRemoteGame />}/>
 
 
 

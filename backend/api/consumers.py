@@ -36,14 +36,14 @@ class ApiConsumer(WebsocketConsumer):
                 'type': 'match_found',
                 'my_id': p1_id,
                 'room_name': room_name,
-                'opponent_id': p2_id
+                'opponent_id': p2_id,
             }))
 
             p2_consumer.send(json.dumps({
                 'type': 'match_found',
                 'my_id': p2_id,
                 'room_name': room_name,
-                'opponent_id': p1_id
+                'opponent_id': p1_id,
             }))
 
             Gconnected_users.clear()
@@ -177,14 +177,16 @@ class ApiChessConsumer(WebsocketConsumer):
                 'type': 'match_found',
                 'my_id': p1_id,
                 'room_name': room_name,
-                'opponent_id': p2_id
+                'opponent_id': p2_id,
+                'color':'white'
             }))
 
             p2_consumer.send(json.dumps({
                 'type': 'match_found',
                 'my_id': p2_id,
                 'room_name': room_name,
-                'opponent_id': p1_id
+                'opponent_id': p1_id,
+                'color':'black'
             }))
 
             Chess_Gconnected_users.clear()

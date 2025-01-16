@@ -1,5 +1,6 @@
 // MatchContext.jsx
 import React, { createContext, useState, useContext } from 'react';
+import { color } from 'three/webgpu';
 
 // 1) Create the context
 const MatchContext = createContext(null);
@@ -10,6 +11,7 @@ export function MatchProvider({ children }) {
     roomName: null,
     myId: null,
     opponentId: null,
+    color: ''
   });
 
   return (

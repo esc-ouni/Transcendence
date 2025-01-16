@@ -129,19 +129,19 @@ const LocalChessGame = () => {
         //GLTF Loading
         const GLTFLoaderr = new GLTFLoader(loadingManager);
         
-        GLTFLoaderr.load(
-            '/chess-assets/models/round_wooden_table_01_4k.gltf/round_wooden_table_01_4k.gltf',
-            function ( gltf ) {
-                gltf.scene.children[0].position.y = 0;
-                // gui.add(gltf.scene.children[0].position, 'y', -50, 1).step(1);
-                scene.add( gltf.scene.children[0] ); //Jilali Table
-            }
-        );
+        // GLTFLoaderr.load(
+        //     '/chess-assets/models/round_wooden_table_01_4k.gltf/round_wooden_table_01_4k.gltf',
+        //     function ( gltf ) {
+        //         gltf.scene.children[0].position.y = 0;
+        //         // gui.add(gltf.scene.children[0].position, 'y', -50, 1).step(1);
+        //         scene.add( gltf.scene.children[0] ); //Jilali Table
+        //     }
+        // );
         
         
         
         GLTFLoaderr.load(
-            '/chess-assets/models/chess_set_4k.gltf/chess_set_4k.gltf',
+            '/chess-assets/models/chess_set_4k.gltf/untitled.gltf',
             function ( gltf ) {
                 let item;
         
@@ -160,7 +160,6 @@ const LocalChessGame = () => {
             }
         );
         
-        let dragg = false
         let controls2; 
         
         
@@ -396,11 +395,6 @@ const LocalChessGame = () => {
         
         const tick = () =>
         {
-            if (objects.length && dragg === false){
-                hit_sound.play();
-                dragg = true;
-                // console.log('Drag activated !');
-            }
         
             const elapsedTime = clock.getElapsedTime()
             const deltaTime = elapsedTime - previousTime
