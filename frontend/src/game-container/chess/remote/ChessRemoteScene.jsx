@@ -76,8 +76,6 @@ const ChessRemoteGame = () => {
 
         };        
 
-
-
 ////=>////
         const loadingManager = new THREE.LoadingManager();
 
@@ -323,6 +321,30 @@ const ChessRemoteGame = () => {
             return columns[columnIndex] + rowNumber;
         }
         ///
+        function convertNotationToCoordinates(notation) {
+            // Validate input
+            if (!notation || notation.length < 2 || notation.length > 3) {
+                return null;
+            }
+            
+            // Extract column and row from notation
+            const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            const column = notation[0].toLowerCase();
+            const row = parseInt(notation.slice(1));
+            
+            // Validate column and row
+            const columnIndex = columns.indexOf(column) + 1; // +1
+            if (columnIndex === -1 || row < 1 || row > 8) {
+                return null;
+            }
+            
+            // Convert to coordinate system
+            const x = columnIndex <= 4 ? columnIndex - 5: columnIndex - 4;
+            const y = row <= 4 ? row - 5: row - 4;
+            
+            return [x, y];
+        }
+        ///
         
         ///Capturing
         function findCapturedPiece(name, squareNotation) {
@@ -438,36 +460,13 @@ const ChessRemoteGame = () => {
             }
             const affectedPiece = findaffectedPiece(name)
             let cords = convertNotationToCoordinates(to)
+            console.log("=> THE EXECUTOR CORDS; x: ", cords[0], ", y : ", cords[1]);
             // move_sound.play();
             affectedPiece.position.x =  -((cords[0] > 0 ? cords[0] - 1: cords[0]) * SQUARE_DIAMETER) - SQUARE_RADIUS;
             affectedPiece.position.z =   ((cords[1] > 0 ? cords[1] - 1: cords[1]) * SQUARE_DIAMETER) + SQUARE_RADIUS;
             console.log("=> move executed remotely!!!");
         }
         ///
-        ///
-        function convertNotationToCoordinates(notation) {
-            // Validate input
-            if (!notation || notation.length < 2 || notation.length > 3) {
-                return null;
-            }
-        
-            // Extract column and row from notation
-            const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-            const column = notation[0].toLowerCase();
-            const row = parseInt(notation.slice(1));
-        
-            // Validate column and row
-            const columnIndex = columns.indexOf(column);
-            if (columnIndex === -1 || row < 1 || row > 8) {
-                return null;
-            }
-        
-            // Convert to coordinate system
-            const x = columnIndex - 3;
-            const y = row - 4;
-        
-            return [x, y];
-        }
         
         // Example usage:
         // console.log(convertNotationToCoordinates('e4')); // Should return { x: 1, y: 0 }
