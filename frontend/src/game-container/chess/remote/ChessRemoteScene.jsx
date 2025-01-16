@@ -360,7 +360,7 @@ const ChessRemoteGame = () => {
         ///
         
         ///Send Updates
-        const sendGameUpdate = (is_capture, name, t_from, t_to) => {
+        const sendGameUpdate = (name, t_from, t_to) => {
             // console.log("=======>", Objects.length);
             const message = {
                 type      : 'game_update',
@@ -400,9 +400,9 @@ const ChessRemoteGame = () => {
                 console.log('==> Game judgemet : ', result);
                 if (result){
                     //Sending Packing
-                    
+                    sendGameUpdate(name, fromNotation, toNotation);
+
                     console.log('Valid Move !')
-                    sendGameUpdate(result.captured, name, fromNotation, toNotation);
         
                     ///Capturing
                     if (result.captured){
@@ -450,7 +450,7 @@ const ChessRemoteGame = () => {
         function Executor(name, from, to){
             let result = engine_validator.move({from : from, to: to});
             if (result.captured){
-                const capturedPiece = findCapturedPiece(name, toNotation);
+                const capturedPiece = findCapturedPiece(name, to);
                 if (capturedPiece) {
                     console.log("Cptured Piece Found : ", capturedPiece.name);
                     scene.remove(capturedPiece);
