@@ -5,8 +5,10 @@
     transform: translate(-50%, -50%); /* Add this */
     display: flex;
     justify-content: space-between;
-    gap: 200px;
-    align-items: center;
+    /* gap: 200px;
+     */
+     gap: 20vw;
+     align-items: center;
 }
 
 .team {
@@ -15,8 +17,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(12px);
     border-radius: 12px;
-    width : 300px;
-    height: 300px;
+    width : 350px;
+    height: 350px;
     cursor: pointer;
   }
 

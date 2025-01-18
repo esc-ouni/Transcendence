@@ -38,7 +38,7 @@ function ChessLobby(){
                     text="Play Locally"
                     default_icon='/bottouns/default_chess.svg'
                     hovered_icon='/bottouns/hovered_chess.svg'
-                    onClick={() => {navigate('/ChessLocally')}}
+                    onClick={() => {navigate('/ChessPreLocal')}}
                 />
                 <Frame
                     text="Play Online"

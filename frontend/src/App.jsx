@@ -19,6 +19,8 @@ import ChessGameBack from './game-container/chess/ChessBack.jsx';
 import ChessPreRemote from './game-container/chess/remote/ChessPreRemote.jsx';
 import ChessRemoteGame from './game-container/chess/remote/ChessRemoteScene.jsx';
 import MainGamePage from './game-container/pages/MainGamePage.jsx';
+import ChessPreLocal from './game-container/chess/ChessPreLocal.jsx';
+import ChessWinner from './game-container/chess/ChessWinner.jsx';
 
   function App() {
     return (
@@ -41,9 +43,13 @@ import MainGamePage from './game-container/pages/MainGamePage.jsx';
 
             <Route path='/Chess_Lobby' element={<ChessLobby />}/>
             <Route path='/ChessLocally' element={<LocalChessGame />}/>
+            <Route path='/ChessPreLocal' element={<ChessPreLocal />}/>
             <Route path='/ChessPreRemote' element={<ChessPreRemote />}/>
             <Route path='/ChessRemoteGame' element={<ChessRemoteGame />}/>
+            <Route path='/ChessWinner' element={<ChessWinner />}/>
 
+
+            
 
           </Routes>
         </MatchProvider>
