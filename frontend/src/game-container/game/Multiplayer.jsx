@@ -762,6 +762,7 @@ const MultiplayerGame = () => {
             if (BallCreator.cameraFixed){
 
                 checkCollision();
+
                 
                 if ( Chained_Keys.w === 1) {
                     RED_P1.y += BallCreator.PADDLE_SPEED;
@@ -874,8 +875,13 @@ const MultiplayerGame = () => {
                     BLUE_P1.y = Math.max(BLUE_P1.y, -1);
                 }
 
+                // cameras[0].updateProjectionMatrix();
+                // cameras[1].updateProjectionMatrix();
+                // cameras[2].updateProjectionMatrix();
+                // cameras[3].updateProjectionMatrix();
                 //UPPER PART
                     ///RIGHT RED P1
+             
                     cameras[1].position.x = 0;
                     cameras[1].position.y = 7.8;
                     cameras[1].position.z = 12.8;
@@ -1004,6 +1010,11 @@ const MultiplayerGame = () => {
 
             // topControls.update()
             // bottomControls.update()
+
+            controls[0].update();
+            controls[1].update();
+            controls[2].update();
+            controls[3].update();
         
             //renderer
             renderer.setScissorTest(true);
@@ -1059,6 +1070,11 @@ const MultiplayerGame = () => {
                 const child = scene.children[0];
                 scene.remove(child);
             }
+
+            controls[0].dispose();
+            controls[1].dispose();
+            controls[2].dispose();
+            controls[3].dispose();
 
             hit_sound.pause();
             hit_sound.src = "";
