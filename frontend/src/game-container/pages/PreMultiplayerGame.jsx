@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import "./GameOptions2.css";
 import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
 import PlayerInput from '../components/PlayerInput';
+import "./PreMultiplayerGame.css";
+
 
 const PreMultiplayerGame = () => {
   const [blueTeamPlayers, setBlueTeamPlayers] = useState({
@@ -18,19 +19,19 @@ const PreMultiplayerGame = () => {
 
   return (
     <>
-      <div className="background-wrapper">
+      <div className="mbackground-wrapper">
         <PingPongBack />
       </div>
-      <div className="game-options-container">
-        <div className="game-options-header">
+      <div className="mgame-options-container">
+        <div className="mgame-options-header">
           <h1>GAME OPTIONS</h1>
           <p>TAP ON THE NAME OR AVATAR TO CHANGE IT.</p>
         </div>
         
-        <div className="teams-container">
-          <div className="team blue-team">
-            <div className="team-header">BLUE TEAM</div>
-            <div className="team-players">
+        <div className="mteams-container">
+          <div className="mteam blue-team">
+            <div className="mteam-header">BLUE TEAM</div>
+            <div className="mteam-players">
               <PlayerInput
                 playerId={1}
                 initialName={blueTeamPlayers.player1}
@@ -48,9 +49,9 @@ const PreMultiplayerGame = () => {
             </div>
           </div>
 
-          <div className="team red-team">
-            <div className="team-header">RED TEAM</div>
-            <div className="team-players">
+          <div className="mteam red-team">
+            <div className="mteam-header">RED TEAM</div>
+            <div className="mteam-players">
               <PlayerInput
                 playerId={2}
                 initialName={redTeamPlayers.player2}
@@ -69,7 +70,7 @@ const PreMultiplayerGame = () => {
           </div>
         </div>
 
-        <div className="buttona">
+        <div className="mbuttona">
           <Frame
             text="Launch The Game"
             default_icon='/bottouns/default_offline.svg'
