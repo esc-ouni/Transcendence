@@ -118,10 +118,13 @@ const MultiplayerGame = () => {
         ];
 
         
-        cameras[0].position.set(0, 5, 5);
-        cameras[1].position.set(0, -5, 5);
-        cameras[2].position.set(5, 0, 5);
-        cameras[3].position.set(-5, 0, 5);
+        //BLUE TEAM FR
+        cameras[1].position.set(-5, 8, -12);
+        cameras[0].position.set(5, 8, -12);
+        
+        //BLUE RED FR
+        cameras[3].position.set(5,  8, 12);
+        cameras[2].position.set(-5, 8, 12);
 
         // const topCamera = new THREE.PerspectiveCamera(75, sizes.width / (sizes.height / 2), 0.1, 100)
         // topCamera.position.set(-15, 4, 0)
@@ -168,8 +171,11 @@ const MultiplayerGame = () => {
             scene.add(model);
         })
         
+        //Blue Team
         let paddle = null;
         let paddleAi = null;
+        
+        //Red Team
         let paddle2 = null;
         let paddleAi2 = null;
         
@@ -333,52 +339,163 @@ const MultiplayerGame = () => {
             window.addEventListener('mousemove', handleMouseMove
         )
         
+        
+        ///KEYS
         // keyboard event listener
-        const keyboard = new THREE.Vector2();
+        const RED_P1 = new THREE.Vector2();
+        const RED_P2 = new THREE.Vector2();
+        
+        const BLUE_P1 = new THREE.Vector2();
+        const BLUE_P2 = new THREE.Vector2();
+
         let Chained_Keys = [
             {w:0},
             {d:0},
             {s:0},
             {a:0},
+
+            {i:0},
+            {l:0},
+            {k:0},
+            {j:0},
+
+            {ArrowUp   :0},
+            {ArrowRight:0},
+            {ArrowDown :0},
+            {ArrowLeft :0},
+
+
+            {g :0},
+            {n :0},
+            {b :0},
+            {v :0},
         ]
-        
 
         const handleKeyDown = (event) => {
             const keyName = event.key;
-          
-              if ( keyName === "w") {
-                  Chained_Keys.w = 1;
-              }
-              if (keyName === "s"){
-                  Chained_Keys.s = 1;
-              }
-              if (keyName === "d"){
-                  Chained_Keys.d = 1;
-              }
-              if (keyName === "a"){
-                  Chained_Keys.a = 1;
-              }
-              if (keyName === "r"){
-                  BallCreator.createBall()
-              }}
-        ;
-        
-        
-        const handleKeyUp = (event) => {
-            const keyName = event.key;
-      
-          if ( keyName === "w") {
-              Chained_Keys.w = 0;
+            
+            if (keyName === "r"){
+                BallCreator.createBall()
+            }
+
+            if ( keyName === "w") {
+                Chained_Keys.w = 1;
             }
             if (keyName === "s"){
-              Chained_Keys.s = 0;
+                Chained_Keys.s = 1;
             }
-          if (keyName === "d"){
-              Chained_Keys.d = 0;
+            if (keyName === "d"){
+                Chained_Keys.d = 1;
             }
             if (keyName === "a"){
-              Chained_Keys.a = 0;
-          }}
+                Chained_Keys.a = 1;
+            }
+
+
+            if ( keyName === "i") {
+                Chained_Keys.i = 1;
+            }
+            if (keyName === "l"){
+                Chained_Keys.l = 1;
+            }
+            if (keyName === "k"){
+                Chained_Keys.k = 1;
+            }
+            if (keyName === "j"){
+                Chained_Keys.j = 1;
+            }
+
+
+            if ( keyName === "ArrowUp") {
+                Chained_Keys.ArrowUp = 1;
+            }
+            if (keyName === "ArrowRight"){
+                Chained_Keys.ArrowRight = 1;
+            }
+            if (keyName === "ArrowDown"){
+                Chained_Keys.ArrowDown = 1;
+            }
+            if (keyName === "ArrowLeft"){
+                Chained_Keys.ArrowLeft = 1;
+            }
+
+
+            if ( keyName === "g") {
+                Chained_Keys.g = 1;
+            }
+            if (keyName === "n"){
+                Chained_Keys.n = 1;
+            }
+            if (keyName === "b"){
+                Chained_Keys.b = 1;
+            }
+            if (keyName === "v"){
+                Chained_Keys.v = 1;
+            }
+
+        };
+
+
+        const handleKeyUp = (event) => {
+            const keyName = event.key;
+
+        if ( keyName === "w") {
+            Chained_Keys.w = 0;
+            }
+            if (keyName === "s"){
+            Chained_Keys.s = 0;
+            }
+        if (keyName === "d"){
+            Chained_Keys.d = 0;
+            }
+            if (keyName === "a"){
+            Chained_Keys.a = 0;
+        }
+
+
+        if ( keyName === "i") {
+            Chained_Keys.i = 0;
+            }
+            if (keyName === "l"){
+                Chained_Keys.l = 0;
+            }
+            if (keyName === "k"){
+                Chained_Keys.k = 0;
+            }
+            if (keyName === "j"){
+                Chained_Keys.j = 0;
+            }
+
+
+            if ( keyName === "ArrowUp") {
+                Chained_Keys.ArrowUp = 0;
+            }
+            if (keyName === "ArrowRight"){
+                Chained_Keys.ArrowRight = 0;
+            }
+            if (keyName === "ArrowDown"){
+                Chained_Keys.ArrowDown = 0;
+            }
+            if (keyName === "ArrowLeft"){
+                Chained_Keys.ArrowLeft = 0;
+            }
+
+
+            if ( keyName === "g") {
+                Chained_Keys.g = 0;
+            }
+            if (keyName === "n"){
+                Chained_Keys.n = 0;
+            }
+            if (keyName === "b"){
+                Chained_Keys.b = 0;
+            }
+            if (keyName === "v"){
+                Chained_Keys.v = 0;
+            }
+        }
+
+///
           
 
         document.addEventListener(
@@ -428,97 +545,97 @@ const MultiplayerGame = () => {
             NetBoundingBox.setFromObject(Net)
             TableBoundingBox.setFromObject(Table)
             
-            if (PaddleBoundingBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z > 0) {
+            // if (PaddleBoundingBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z > 0) {
                 
 
-                // console.log('paddle and ball!');
-                let intensity = Math.max((3 - (Math.abs(paddle.position.x))), 0);
-                if ((paddle.position.x > 2) && (mouseDirection < 0)){
-                    intensity = (Math.abs(paddle.position.x) * 0.5) ;
-                }
-                if ((paddle.position.x < -2) && (mouseDirection > 0)){
-                    intensity = (Math.abs(paddle.position.x) * 0.5);
-                }    
-                let forceX = (intensity * mouseDirection)
+            //     // console.log('paddle and ball!');
+            //     let intensity = Math.max((3 - (Math.abs(paddle.position.x))), 0);
+            //     if ((paddle.position.x > 2) && (mouseDirection < 0)){
+            //         intensity = (Math.abs(paddle.position.x) * 0.5) ;
+            //     }
+            //     if ((paddle.position.x < -2) && (mouseDirection > 0)){
+            //         intensity = (Math.abs(paddle.position.x) * 0.5);
+            //     }    
+            //     let forceX = (intensity * mouseDirection)
 
-                // console.log(forceX > 0 ? "right" : "left");
+            //     // console.log(forceX > 0 ? "right" : "left");
 
-                //for push Sumilation
-                gsap.to(paddle.rotation, {
-                    x: paddle.rotation.x - 0.5,
-                    duration: 0.1,
-                    ease: "power3.out"
-                })
-                Pong_Ball_colide(0.54);
+            //     //for push Sumilation
+            //     gsap.to(paddle.rotation, {
+            //         x: paddle.rotation.x - 0.5,
+            //         duration: 0.1,
+            //         ease: "power3.out"
+            //     })
+            //     Pong_Ball_colide(0.54);
                 
-                Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
-                                                        BallCreator.hit_y,        
-                                                        -BallCreator.hit_z
-                )
-            }
-            else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
+            //     Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
+            //                                             BallCreator.hit_y,        
+            //                                             -BallCreator.hit_z
+            //     )
+            // }
+            // else if (PaddleBoundingAiBox.intersectsBox(BallBoundingBox) && Objects[Objects.length - 1].velocity.z < 0){
                 
-                // console.log('paddleAi and ball!');
-                // let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
-                let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
-                if ((paddleAi.position.x > 2) && (mouseDirection > 0)){
-                    intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
-                }
-                if ((paddleAi.position.x < -2) && (mouseDirection < 0)){
-                    intensity = (Math.abs(paddleAi.position.x) * 0.5);
-                }    
-                let forceX = -(intensity * mouseDirection)
+            //     // console.log('paddleAi and ball!');
+            //     // let Aidecision = (Math.random() - 0.5) > 0 ? 1:-1;                   
+            //     let intensity = Math.max((3 - (Math.abs(paddleAi.position.x))), 0);
+            //     if ((paddleAi.position.x > 2) && (mouseDirection > 0)){
+            //         intensity = (Math.abs(paddleAi.position.x) * 0.5) ;
+            //     }
+            //     if ((paddleAi.position.x < -2) && (mouseDirection < 0)){
+            //         intensity = (Math.abs(paddleAi.position.x) * 0.5);
+            //     }    
+            //     let forceX = -(intensity * mouseDirection)
 
-                //for push Sumilation
-                gsap.to(paddleAi.rotation, {
-                    x: paddleAi.rotation.x + 0.5,
-                    duration: 0.1,
-                    ease: "power3.out"
-                })
-                Pong_Ball_colide(0.54);
+            //     //for push Sumilation
+            //     gsap.to(paddleAi.rotation, {
+            //         x: paddleAi.rotation.x + 0.5,
+            //         duration: 0.1,
+            //         ease: "power3.out"
+            //     })
+            //     Pong_Ball_colide(0.54);
                 
-                Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
-                                                        BallCreator.hit_y,        
-                                                        BallCreator.hit_z
-                )
-            }
+            //     Objects[Objects.length - 1].velocity.set( forceX,//BallCreator.hit_x,        
+            //                                             BallCreator.hit_y,        
+            //                                             BallCreator.hit_z
+            //     )
+            // }
             
-            else if (NetBoundingBox.intersectsBox(BallBoundingBox)) {
-                // console.log('ball collided with the Net!');
-                // Objects[Objects.length - 1].sphereBody.velocity.z = -(Objects[Objects.length - 1].sphereBody.velocity.z) * 0.5; //Good !
-                // Good just need to get the best velocity values
+            // else if (NetBoundingBox.intersectsBox(BallBoundingBox)) {
+            //     // console.log('ball collided with the Net!');
+            //     // Objects[Objects.length - 1].sphereBody.velocity.z = -(Objects[Objects.length - 1].sphereBody.velocity.z) * 0.5; //Good !
+            //     // Good just need to get the best velocity values
 
-                // const normalVelocity = Objects[Objects.length - 1].velocity.dot(new THREE.Vector3(0, 0, 1)); // Extract velocity along the normal
-                // Objects[Objects.length - 1].velocity.z = ((Objects[Objects.length - 1].velocity.y) > 0 ? 1 : -1 ) * restitution;
+            //     // const normalVelocity = Objects[Objects.length - 1].velocity.dot(new THREE.Vector3(0, 0, 1)); // Extract velocity along the normal
+            //     // Objects[Objects.length - 1].velocity.z = ((Objects[Objects.length - 1].velocity.y) > 0 ? 1 : -1 ) * restitution;
 
-                // // Apply friction to X and Y velocity components
-                // Objects[Objects.length - 1].velocity.x *= friction;
-                // Objects[Objects.length - 1].velocity.y *= friction;
+            //     // // Apply friction to X and Y velocity components
+            //     // Objects[Objects.length - 1].velocity.x *= friction;
+            //     // Objects[Objects.length - 1].velocity.y *= friction;
 
-                // // Prevent sinking into the net by repositioning the ball
-                // const ballDepth = BallBoundingBox.max.z - BallBoundingBox.min.z;
-                // if (Objects[Objects.length - 1].sphere.position.z > NetBoundingBox.max.z) {
-                //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.max.z + ballDepth / 2; // Ball is on one side of the net
-                // } else {
-                //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.min.z - ballDepth / 2; // Ball is on the other side of the net
-                // }
-            }
-            else if (TableBoundingBox.intersectsBox(BallBoundingBox)) {
-                // console.log('ball collided with the Table!');
-                // Collision with the table (restitution + friction) tobeadded
-                Pong_Ball_colide(0.85);
+            //     // // Prevent sinking into the net by repositioning the ball
+            //     // const ballDepth = BallBoundingBox.max.z - BallBoundingBox.min.z;
+            //     // if (Objects[Objects.length - 1].sphere.position.z > NetBoundingBox.max.z) {
+            //     //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.max.z + ballDepth / 2; // Ball is on one side of the net
+            //     // } else {
+            //     //     Objects[Objects.length - 1].sphere.position.z = NetBoundingBox.min.z - ballDepth / 2; // Ball is on the other side of the net
+            //     // }
+            // }
+            // else if (TableBoundingBox.intersectsBox(BallBoundingBox)) {
+            //     // console.log('ball collided with the Table!');
+            //     // Collision with the table (restitution + friction) tobeadded
+            //     Pong_Ball_colide(0.85);
                 
-                // Apply friction to X and Z velocity components
-                Objects[Objects.length - 1].velocity.x *= friction;
-                Objects[Objects.length - 1].velocity.z *= friction;
+            //     // Apply friction to X and Z velocity components
+            //     Objects[Objects.length - 1].velocity.x *= friction;
+            //     Objects[Objects.length - 1].velocity.z *= friction;
 
-                // Reverse the Y velocity for bounce and apply restitution
-                Objects[Objects.length - 1].velocity.y *= -restitution;
+            //     // Reverse the Y velocity for bounce and apply restitution
+            //     Objects[Objects.length - 1].velocity.y *= -restitution;
 
-                // Prevent sinking into the table by repositioning the ball
-                const ballHeight = BallBoundingBox.max.y - BallBoundingBox.min.y;
-                Objects[Objects.length - 1].sphere.position.y = TableBoundingBox.max.y + ballHeight / 2; // Place the ball on the table
-            }
+            //     // Prevent sinking into the table by repositioning the ball
+            //     const ballHeight = BallBoundingBox.max.y - BallBoundingBox.min.y;
+            //     Objects[Objects.length - 1].sphere.position.y = TableBoundingBox.max.y + ballHeight / 2; // Place the ball on the table
+            // }
         }
     }
 //
@@ -577,97 +694,207 @@ const MultiplayerGame = () => {
         
             if (BallCreator.cameraFixed){
 
-                cameras[0].position.set(2, 9,  12);
-                cameras[1].position.set(-2, 9, 12);
-                cameras[2].position.set(2, 9,  -12);
-                cameras[3].position.set(-2, 9, -12);
+                // cameras[0].position.set(2, 9,  12);
+                // cameras[1].position.set(-2, 9, 12);
+                // cameras[2].position.set(2, 9,  -12);
+                // cameras[3].position.set(-2, 9, -12);
 
                 checkCollision();
                 
                 if ( Chained_Keys.w === 1) {
-                    keyboard.y += BallCreator.PADDLE_SPEED;
+                    RED_P1.y += BallCreator.PADDLE_SPEED;
                 }
                 if (Chained_Keys.s === 1){
-                    keyboard.y -= BallCreator.PADDLE_SPEED;
+                    RED_P1.y -= BallCreator.PADDLE_SPEED;
                 }
                 if (Chained_Keys.d === 1){
-                    keyboard.x -= BallCreator.PADDLE_SPEED;
+                    RED_P1.x -= BallCreator.PADDLE_SPEED;
                 }
                 if (Chained_Keys.a === 1){
-                    keyboard.x += BallCreator.PADDLE_SPEED; 
+                    RED_P1.x += BallCreator.PADDLE_SPEED; 
                 }
+
+                if (RED_P1.x > 0){
+                    RED_P1.x = Math.min(RED_P1.x, 1);
+                }
+                if (RED_P1.x < 0){
+                    RED_P1.x = Math.max(RED_P1.x, -1);
+                }
+                if (RED_P1.y > 0){
+                    RED_P1.y = Math.min(RED_P1.y, 1);
+                }
+                if (RED_P1.y < 0){
+                    RED_P1.y = Math.max(RED_P1.y, -1);
+                }
+
+
+
+
+                if ( Chained_Keys.g === 1) {
+                    RED_P2.y += BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.b === 1){
+                    RED_P2.y -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.n === 1){
+                    RED_P2.x -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.v === 1){
+                    RED_P2.x += BallCreator.PADDLE_SPEED; 
+                }
+
+                if (RED_P2.x > 0){
+                    RED_P2.x = Math.min(RED_P2.x, 1);
+                }
+                if (RED_P2.x < 0){
+                    RED_P2.x = Math.max(RED_P2.x, -1);
+                }
+                if (RED_P2.y > 0){
+                    RED_P2.y = Math.min(RED_P2.y, 1);
+                }
+                if (RED_P2.y < 0){
+                    RED_P2.y = Math.max(RED_P2.y, -1);
+                }
+
+
+
+
+                if ( Chained_Keys.i === 1) {
+                    BLUE_P2.y += BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.k === 1){
+                    BLUE_P2.y -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.l === 1){
+                    BLUE_P2.x -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.j === 1){
+                    BLUE_P2.x += BallCreator.PADDLE_SPEED; 
+                }
+
+                if (BLUE_P2.x > 0){
+                    BLUE_P2.x = Math.min(BLUE_P2.x, 1);
+                }
+                if (BLUE_P2.x < 0){
+                    BLUE_P2.x = Math.max(BLUE_P2.x, -1);
+                }
+                if (BLUE_P2.y > 0){
+                    BLUE_P2.y = Math.min(BLUE_P2.y, 1);
+                }
+                if (BLUE_P2.y < 0){
+                    BLUE_P2.y = Math.max(BLUE_P2.y, -1);
+                }
+
+
+                if ( Chained_Keys.ArrowUp === 1) {
+                    BLUE_P1.y += BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.ArrowDown === 1){
+                    BLUE_P1.y -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.ArrowRight === 1){
+                    BLUE_P1.x -= BallCreator.PADDLE_SPEED;
+                }
+                if (Chained_Keys.ArrowLeft === 1){
+                    BLUE_P1.x += BallCreator.PADDLE_SPEED; 
+                }
+
+                if (BLUE_P1.x > 0){
+                    BLUE_P1.x = Math.min(BLUE_P1.x, 1);
+                }
+                if (BLUE_P1.x < 0){
+                    BLUE_P1.x = Math.max(BLUE_P1.x, -1);
+                }
+                if (BLUE_P1.y > 0){
+                    BLUE_P1.y = Math.min(BLUE_P1.y, 1);
+                }
+                if (BLUE_P1.y < 0){
+                    BLUE_P1.y = Math.max(BLUE_P1.y, -1);
+                }
+
+                //UPPER PART
+                    ///RIGHT RED P1
+                    cameras[1].position.x = 0;
+                    cameras[1].position.y = 7.8;
+                    cameras[1].position.z = 12.8;
+                    cameras[1].position.x = -(4 * BLUE_P1.x);
+                    cameras[1].position.y = 6.8 + ( 1 * BLUE_P1.y);
+                    
+                    paddle2.position.x = -(5.5 * BLUE_P1.x);
+                    paddle2.position.y = 5.03 + (2 * BLUE_P1.y);
+                    
+                    
+                    ///LEFT RED P2
+                    cameras[0].position.x = 0;
+                    cameras[0].position.y = 7.8;
+                    cameras[0].position.z = 12.8;
+                    cameras[0].position.x = -(4 * BLUE_P2.x);
+                    cameras[0].position.y = 6.8 + ( 1 * BLUE_P2.y);
+                    
+                    paddle.position.x = -(5.5 * BLUE_P2.x);
+                    paddle.position.y = 5.03 + (2 * BLUE_P2.y);
+
+                
+                // cameras[3].position.x = 0;
+                // cameras[3].position.y = 7.8;
+                // cameras[3].position.z = -12.9;
+                // cameras[3].position.x = 5.5 * RED_P1.x;
+                // cameras[3].position.y = 6.8 + ( 1 * RED_P1.y);
+                
+                // paddle2.position.x = 5.5 * RED_P1.x;
+                // paddle2.position.y = 5.03 + (2 * RED_P1.y);
+
+
+                // cameras[2].position.x = 0;
+                // cameras[2].position.y = 7.8;
+                // cameras[2].position.z = -12.8;
+                // cameras[2].position.x = 5.5 * BLUE_P2.x;
+                // cameras[2].position.y = 6.8 + ( 1 * BLUE_P2.y);
         
-                if (keyboard.x > 0){
-                    keyboard.x = Math.min(keyboard.x, 1);
-                }
-                if (keyboard.x < 0){
-                    keyboard.x = Math.max(keyboard.x, -1);
-                }
-                if (keyboard.y > 0){
-                    keyboard.y = Math.min(keyboard.y, 1);
-                }
-                if (keyboard.y < 0){
-                    keyboard.y = Math.max(keyboard.y, -1);
-                }
-        
-                // Cameras[0].position.x = 0;
-                // Cameras[0].position.y = 7.8;
-                // Cameras[0].position.z = 12.8;
-                // Cameras[0].position.x = 4 * mouse.x;
-                // Cameras[0].position.y = 6.8 + ( 1 * mouse.y);
+                // paddleAi2.position.x = 5.5 * BLUE_P2.x;
+                // paddleAi2.position.y = 5.03 + (2 * BLUE_P2.y);
         
         
-                // Cameras[1].position.x = 0;
-                // Cameras[1].position.y = 7.8;
-                // Cameras[1].position.z = -12.8;
-                // Cameras[1].position.x = 5.5 * keyboard.x;
-                // Cameras[1].position.y = 6.8 + ( 1 * keyboard.y);
+
         
-                paddle.position.x = 5.5 * mouse.x;
-                paddle.position.z = 11 - Math.abs((2 * mouse.x));
-                paddle.position.y = 5.03 + (2 * mouse.y);
+
+                // if (paddle.position.x >0){
+                //     gsap.to(paddle.rotation, {
+                //         x: 2.81,
+                //         y: 2.96,
+                //         z: 2.81,
+                //         duration: 0.095,
+                //         ease: "power2.inOut",
+                //     });
+                // }
+                // else{
+                //     gsap.to(paddle.rotation, {
+                //         x: 2.81,
+                //         y: 6.28,
+                //         z: 2.81,
+                //         duration: 0.095,
+                //         ease: "power2.inOut",
+                //     });
+                // }
         
-                paddleAi.position.x = 5.5 * keyboard.x;
-                paddleAi.position.z = -( 11 - Math.abs((2 * keyboard.x)));
-                paddleAi.position.y = 5.03 + (2 * keyboard.y);
-        
-                if (paddle.position.x >0){
-                    gsap.to(paddle.rotation, {
-                        x: 2.81,
-                        y: 2.96,
-                        z: 2.81,
-                        duration: 0.095,
-                        ease: "power2.inOut",
-                    });
-                }
-                else{
-                    gsap.to(paddle.rotation, {
-                        x: 2.81,
-                        y: 6.28,
-                        z: 2.81,
-                        duration: 0.095,
-                        ease: "power2.inOut",
-                    });
-                }
-        
-                if (paddleAi.position.x > 0){
-                    gsap.to(paddleAi.rotation, {
-                        x: 3.25,
-                        y: 2.96,
-                        z: 2.81,
-                        duration: 0.095,
-                        ease: "power2.inOut",
-                    });
-                }
-                else{
-                    gsap.to(paddleAi.rotation, {
-                        x: 3.25,
-                        y: 6.28,
-                        z: 2.81,
-                        duration: 0.095,
-                        ease: "power2.inOut",
-                    });
-                }
+                // if (paddleAi.position.x > 0){
+                //     gsap.to(paddleAi.rotation, {
+                //         x: 3.25,
+                //         y: 2.96,
+                //         z: 2.81,
+                //         duration: 0.095,
+                //         ease: "power2.inOut",
+                //     });
+                // }
+                // else{
+                //     gsap.to(paddleAi.rotation, {
+                //         x: 3.25,
+                //         y: 6.28,
+                //         z: 2.81,
+                //         duration: 0.095,
+                //         ease: "power2.inOut",
+                //     });
+                // }
                 
             }
             
@@ -732,8 +959,8 @@ const MultiplayerGame = () => {
             }
 
 
-            topControls.dispose();
-            bottomControls.dispose()
+            // topControls.dispose();
+            // bottomControls.dispose()
 
             hit_sound.pause();
             hit_sound.src = "";
