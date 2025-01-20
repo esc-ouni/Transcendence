@@ -715,7 +715,12 @@ const MultiplayerGame = () => {
         let previousTime = 0
         
         const tick = () =>
-            {
+        {
+//tbr
+            if (paddleAi && paddle){
+                setTimeout(()=> {BallCreator.cameraFixed = true} , 3800)
+            }
+
             const elapsedTime = clock.getElapsedTime()
             const deltaTime = elapsedTime - previousTime
             previousTime = elapsedTime

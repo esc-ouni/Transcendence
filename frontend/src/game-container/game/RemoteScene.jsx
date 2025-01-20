@@ -593,6 +593,7 @@ const RemoteGame = () => {
         
         const tick = () =>
         {
+            //tbr
             if (paddleAi && paddle){
                 setTimeout(()=> {BallCreator.cameraFixed = true} , 3800)
             }
