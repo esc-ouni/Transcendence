@@ -1,12 +1,15 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ChessGameBack from '../chess/ChessBack';
 import PingPongBack from './PingPongBack';
+import ModelPreview from './ModelPreview';
+import '../pages/MainGamePage.css'
 
 // import ChessB
 
 function Backgrounds() {
   const location = useLocation();
+  const navigate = useNavigate();
   
   const OnChessRoute = [
     '/Chess_Lobby',
@@ -26,6 +29,12 @@ function Backgrounds() {
     '/Winner'
   ].includes(location.pathname)
 
+  const show = location.pathname === '/';
+  
+  // If not on "/", hide everything (but keep mounted)
+  // if (!show) {
+  //   return null;
+  // }
   return (
     <>
        {console.log(location.pathname, OnChessRoute, OnPongRoute)}
@@ -33,18 +42,28 @@ function Backgrounds() {
 
       <PingPongBack style={{ display: OnPongRoute ? 'block' : 'none'}} /> */}
 
-
-    {/* <div style={{ position: 'relative' }}> */}
-      {/* Keep them in memory, but hide/unhide */}
-      <div className={OnChessRoute ? 'visible' : 'hidden'}>
+      <div className={OnChessRoute ? "visible" : "hidden"}>
         <ChessGameBack />
       </div>
-      <div className={OnPongRoute ? 'visible' : 'hidden'}>
+      <div className={OnPongRoute ? "visible" : "hidden"}>
         <PingPongBack />
       </div>
-    {/* </div> */}
+
+  
+      <div className={show ? "teams-container visible" : "hidden"} >
+        <div className="team" onClick={() => {navigate('/Chess_Lobby')}}>
+            <ModelPreview modelPath="/chess-assets/models/horse_statue_01_2k.gltf/horse_statue_01_2k.gltf" Scale={10} />
+        </div>
+        <div className="team" onClick={() => {navigate('/PingPong_Lobby')}}>
+            <ModelPreview modelPath="/chess-assets/models/yellow_onion_2k.gltf/yellow_onion_2k.gltf" Scale={25} />
+        </div>
+      </div>
+
     </>
   );
 }
 
 export default Backgrounds;
+
+
+
