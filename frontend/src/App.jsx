@@ -22,6 +22,7 @@ import MainGamePage from './game-container/pages/MainGamePage.jsx';
 import ChessPreLocal from './game-container/chess/ChessPreLocal.jsx';
 import ChessWinner from './game-container/chess/ChessWinner.jsx';
 import Backgrounds from './game-container/components/Backgounds.jsx';
+import DefaultBack from './game-container/components/DefaultBack.jsx';
 
   function App() {
     return (

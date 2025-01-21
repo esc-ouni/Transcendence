@@ -4,8 +4,8 @@ import ChessGameBack from '../chess/ChessBack';
 import PingPongBack from './PingPongBack';
 import ModelPreview from './ModelPreview';
 import '../pages/MainGamePage.css'
+import DefaultBack from './DefaultBack';
 
-// import ChessB
 
 function Backgrounds() {
   const location = useLocation();
@@ -19,7 +19,6 @@ function Backgrounds() {
   ].includes(location.pathname)
 
   const OnPongRoute = [
-    '/',
     '/PingPong_Lobby',
     '/Tournament',
     '/PlayLocally_1v1',
@@ -28,20 +27,13 @@ function Backgrounds() {
     '/PreRemote',
     '/Winner'
   ].includes(location.pathname)
+  
 
   const show = location.pathname === '/';
   
-  // If not on "/", hide everything (but keep mounted)
-  // if (!show) {
-  //   return null;
-  // }
+
   return (
     <>
-       {console.log(location.pathname, OnChessRoute, OnPongRoute)}
-      {/* <ChessGameBack style={{ display: OnChessRoute ? 'block' : 'none' }} />
-
-      <PingPongBack style={{ display: OnPongRoute ? 'block' : 'none'}} /> */}
-
       <div className={OnChessRoute ? "visible" : "hidden"}>
         <ChessGameBack />
       </div>
@@ -49,8 +41,12 @@ function Backgrounds() {
         <PingPongBack />
       </div>
 
+      <div className={show ? "visible" : "hidden"}>
+        <DefaultBack />
+      </div>
+
   
-      <div className={show ? "teams-container visible" : "hidden"} >
+      <div className={show ? "visible teams-container" : "hidden"} >
         <div className="team" onClick={() => {navigate('/Chess_Lobby')}}>
             <ModelPreview modelPath="/chess-assets/models/horse_statue_01_2k.gltf/horse_statue_01_2k.gltf" Scale={10} />
         </div>
