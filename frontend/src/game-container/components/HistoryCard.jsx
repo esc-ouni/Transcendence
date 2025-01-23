@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './HistoryCard.css';
-import '../hsaktiwy_css/help.css';
+import '../help_css/help.css';
 function HistoryCard({
   matchId,
   matchData: { player1, player2, Score1, Score2 },

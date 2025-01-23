@@ -1,9 +1,19 @@
 
 import React, { useState } from 'react';
 import './style.css'
+<<<<<<< HEAD
 import MatchCard from '../components/MatchCard';
 import { useNavigate } from 'react-router-dom';
 
+=======
+import '../help_css/help.css'
+import MatchCard from '../components/MatchCard';
+import { useNavigate } from 'react-router-dom';
+import PingPongBack from "../components/PingPongBack";
+import '../help_css/tournament.css'
+import HistoryCard from '../components/HistoryCard';
+import { Bracket } from 'react-brackets';
+>>>>>>> e80da713... INTEGRATION
 
 function Tournament({ src }) {
   const navigate = useNavigate();

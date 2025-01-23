@@ -1,7 +1,11 @@
 
 import React from 'react';
 import './MatchCard.css';
+<<<<<<< HEAD
 
+=======
+import '../help_css/help.css';
+>>>>>>> e80da713... INTEGRATION
 function MatchCard({
   matchId,
   matchData: { player1, player2, isReadyP1, isReadyP2 },

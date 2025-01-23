@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 import React, { useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
+<<<<<<< HEAD
+=======
+import '../help_css/help.css';
+>>>>>>> e80da713... INTEGRATION
 
 const PreTournament = () => {
   const [player1Name, setPlayer1Name] = useState('');
