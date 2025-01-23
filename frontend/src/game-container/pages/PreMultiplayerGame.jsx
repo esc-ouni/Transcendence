@@ -19,9 +19,9 @@ const PreMultiplayerGame = () => {
 
   return (
     <>
-      <div className="mbackground-wrapper">
-        <PingPongBack />
-      </div>
+
+      {/* <PingPongBack /> */}
+
       <div className="mgame-options-container">
         <div className="mgame-options-header">
           <h1>GAME OPTIONS</h1>

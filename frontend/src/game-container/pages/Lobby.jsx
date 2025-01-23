@@ -11,7 +11,7 @@ function Lobby(){
     return(
         <>
 
-            <PingPongBack/>
+            {/* <PingPongBack/> */}
 
             <div className="lktaba">
                 <div className="lktaba1">Ping Pong Game</div>

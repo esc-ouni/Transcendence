@@ -12,9 +12,9 @@ const ChessWinner = () => {
 
   return (
     <>
-      {/* <div className="background-wrapper-w"> */}
-        <ChessGameBack/>
-      {/* </div> */}
+
+      {/* <ChessGameBack/> */}
+
       <div className="game-options-container-w">
         <div className="game-options-header-w">
           <h1>Winner</h1>

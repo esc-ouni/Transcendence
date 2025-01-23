@@ -11,7 +11,7 @@ function MainGamePage(){
 
     return(
         <>
-            <PingPongBack/>
+            {/* <PingPongBack/> */}
 
             <div className="lktaba">
                 <div className="lktaba1">THE PLATFORM</div>

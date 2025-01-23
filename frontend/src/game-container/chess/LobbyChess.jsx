@@ -11,7 +11,7 @@ function ChessLobby(){
     const navigate = useNavigate();
     return(
         <>
-            <ChessGameBack/>
+            {/* <ChessGameBack/> */}
 
             <div className="lktaba">
                 <div className="lktaba1">Chess Platform Game</div>

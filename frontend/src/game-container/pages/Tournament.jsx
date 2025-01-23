@@ -86,6 +86,7 @@ function Tournament({ src }) {
   return (
     <>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="tournament-container">
         {/* For each match, render a card */}
         <MatchCard 
@@ -110,6 +111,11 @@ function Tournament({ src }) {
       <div className="background-wrapper-r">
         <PingPongBack />
       </div>
+=======
+
+      {/* <PingPongBack /> */}
+
+>>>>>>> cfd8826a... PAGES
       <div className="center width-full">
         <div className="tournament-container width-90">
 

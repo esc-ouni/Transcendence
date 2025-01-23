@@ -177,7 +177,7 @@ const ChessGameBack = () => {
             camera.position.z = Math.sin(cameraAngle) * (cameraRadius - cameraHeight);
             camera.position.y = cameraHeight;
             
-            if (cameraHeight > 3) cameraHeight = 0.9;
+            if (cameraHeight > 2.3) cameraHeight = 0.9;
     
             camera.lookAt(0, 0, 0);
         
@@ -216,7 +216,6 @@ const ChessGameBack = () => {
   
     return (
         <>
-
             <LoadingScreen show={loading} />
             <div className="blur-wrapper">
                 <canvas ref={canvasRef}></canvas>

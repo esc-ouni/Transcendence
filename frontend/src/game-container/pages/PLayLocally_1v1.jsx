@@ -15,9 +15,8 @@ const PlayLocally_1v1 = () => {
   return (
     <>
 
-      <div className="background-wrapper">
-        <PingPongBack />
-      </div>
+      {/* <PingPongBack /> */}
+
       <div className="game-options-container">
         <div className="game-options-header">
           <h1>GAME OPTIONS</h1>

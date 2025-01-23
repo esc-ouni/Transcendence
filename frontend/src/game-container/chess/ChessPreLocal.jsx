@@ -20,9 +20,7 @@ const ChessPreLocal = () => {
   return (
     <>
 
-      <div className="background-wrapper">
-        <ChessGameBack />
-      </div>
+      {/* <ChessGameBack /> */}
       <div className="game-options-container">
         <div className="game-options-header">
           <h1>GAME OPTIONS</h1>

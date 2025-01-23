@@ -78,9 +78,9 @@ const ChessPreRemote = () => {
 
   return (
     <>
-      <div className="background-wrapper-r">
-        <ChessGameBack/>
-      </div>
+
+      {/* <ChessGameBack/> */}
+
       <div className="game-options-container-r">
         <div className="game-options-header-r">
           <h1>GAME OPTIONS</h1>
