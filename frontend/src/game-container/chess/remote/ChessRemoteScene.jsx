@@ -15,23 +15,6 @@ import { Frame } from '../../components/Frame';
 import { useMatchContext } from './../../game/MatchContext';
 
 
-const sendGameUpdate = (is_capture, name, from, to) => {
-    // console.log("=======>", Objects.length);
-    const message = {
-        type      : 'game_update',
-        my_id     : matchData.myId,
-        move      : {
-            from  : from,
-            to    : to,      
-        },
-        name      : name,
-        is_capture: is_capture,
-    };
-    if (gameSocket.readyState === 1)
-        gameSocket.send(JSON.stringify(message));
-};
-
-
 const ChessRemoteGame = () => {
     const navigate = useNavigate();
     const canvasRef = useRef(null);
@@ -44,7 +27,10 @@ const ChessRemoteGame = () => {
         
     // console.log(matchData.roomName);
     // console.log(matchData.myId);
-    if (!matchData.roomName || !matchData.myId || !matchData.color) return;
+    if (!matchData.roomName || !matchData.myId || !matchData.color){
+        useNavigate('/ChessPreRemote');
+    };
+    
     let cinm = true;
     // console.log(matchData.color);
 
@@ -55,15 +41,6 @@ const ChessRemoteGame = () => {
     else{
         z = 0.4220
     }
-
-    // Remote LOgic
-    
-    let from ;
-    let to   ;
-
-
-
-
 
     useEffect(() => {
 
@@ -87,7 +64,11 @@ const ChessRemoteGame = () => {
                 console.log("   => Says        :", data['message'], '\n');
             }
             if (data['type'] == 'game_update'){
-                Executor(data['is_capture'], data['name'], data['from'], data['to'])
+                console.log("Recived => ");
+                console.log("          : ", data['name']);
+                console.log("          : ", data['from']);
+                console.log("          : ", data['to']);
+                Executor(data['name'], data['from'], data['to']);
 
 
             };
@@ -356,14 +337,28 @@ const ChessRemoteGame = () => {
         }
         ///
         
+        ///Send Updates
+        const sendGameUpdate = (is_capture, name, t_from, t_to) => {
+            // console.log("=======>", Objects.length);
+            const message = {
+                type      : 'game_update',
+                my_id     : matchData.myId,
+                from      : t_from,
+                to        : t_to,      
+                name      : name,
+            };
+            if (gameSocket.readyState === 1)
+                gameSocket.send(JSON.stringify(message));
+        };
+
         ///Validator
         function Validator(name, pos) {
             let words = WorldToMatrix(init_pos_x, init_pos_y);
             let cords = WorldToMatrix(pos.x, pos.z);
         
         
-            const fromNotation = convertCoordinatesToNotation(words[0], words[1]);
-            const toNotation   = convertCoordinatesToNotation(cords[0], cords[1]);
+            let fromNotation = convertCoordinatesToNotation(words[0], words[1]);
+            let toNotation   = convertCoordinatesToNotation(cords[0], cords[1]);
         
             console.log('before cordinnates : ', words[0], words[1]);
             console.log('from : ', fromNotation);
@@ -383,9 +378,9 @@ const ChessRemoteGame = () => {
                 console.log('==> Game judgemet : ', result);
                 if (result){
                     //Sending Packing
-                    sendGameUpdate(result.captured, name, fromNotation, toNotation);
-
+                    
                     console.log('Valid Move !')
+                    sendGameUpdate(result.captured, name, fromNotation, toNotation);
         
                     ///Capturing
                     if (result.captured){
@@ -418,76 +413,21 @@ const ChessRemoteGame = () => {
         }
 
         /////
-        function convertNotationToCoordinates(notation) {
-            const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-            
-            // Basic validation on the input
-            if (!notation || notation.length < 2) {
-                return null;
+
+        
+        function findaffectedPiece(name) {
+            for (const piece of objects) {
+                if (name === piece.name){
+                    console.log(piece.name, " Affected FOund !");
+                    return piece;
+                }
             }
-        
-            // Extract column letter (e.g., 'a' from 'a4') and row number (e.g., '4' from 'a4')
-            const col = notation[0];
-            const rowStr = notation.substring(1);
-            const row = parseInt(rowStr, 10);
-        
-            // Validate row is an integer
-            if (isNaN(row)) {
-                return null;
-            }
-        
-            // Find the column index in [0..7], corresponding to [a..h]
-            const columnIndex = columns.indexOf(col);
-            if (columnIndex === -1) {
-                return null;
-            }
-        
-            // Reverse the logic from your original convertCoordinatesToNotation
-        
-            // Original:
-            //   if (x < 0) columnIndex = x + 4
-            //   else if (x > 0) columnIndex = x + 3
-            //
-            // So to invert:
-            //   if (columnIndex < 4) x = columnIndex - 4
-            //   else x = columnIndex - 3
-            let x;
-            if (columnIndex < 4) {
-                x = columnIndex - 4;
-            } else {
-                x = columnIndex - 3;
-            }
-        
-            // Original:
-            //   if (y > 0) rowNumber = y + 4
-            //   else rowNumber = y + 5
-            //
-            // So to invert:
-            //   if (row >= 5) y = row - 4
-            //   else y = row - 5
-            let y;
-            if (row >= 5) {
-                y = row - 4;
-            } else {
-                y = row - 5;
-            }
-        
-            // If x=0 was invalid in your original function, handle that:
-            if (x === 0) {
-                return null;
-            }
-        
-            // Check if the computed coordinates remain within expected bounds 
-            // (optional, depending on if you want to enforce the same validity checks)
-            if (row < 1 || row > 8) {
-                return null;
-            }
-        
-            return { x, y };
+            return null;
         }
-        
-        function Executor(is_capture, name, from, to){
-            if (is_capture){
+
+        function Executor(name, from, to){
+            let result = engine_validator.move({from : from, to: to});
+            if (result.captured){
                 const capturedPiece = findCapturedPiece(name, toNotation);
                 if (capturedPiece) {
                     console.log("Cptured Piece Found : ", capturedPiece.name);
@@ -496,11 +436,43 @@ const ChessRemoteGame = () => {
                     capture_sound.play(); // Sound for capture
                 }
             }
-            cords = convertNotationToCoordinates({from, to})
-            move_sound.play();
-            pos.x =  -((cords[0] > 0 ? cords[0] - 1: cords[0]) * SQUARE_DIAMETER) - SQUARE_RADIUS;
-            pos.z =   ((cords[1] > 0 ? cords[1] - 1: cords[1]) * SQUARE_DIAMETER) + SQUARE_RADIUS;
+            const affectedPiece = findaffectedPiece(name)
+            let cords = convertNotationToCoordinates(to)
+            // move_sound.play();
+            affectedPiece.position.x =  -((cords[0] > 0 ? cords[0] - 1: cords[0]) * SQUARE_DIAMETER) - SQUARE_RADIUS;
+            affectedPiece.position.z =   ((cords[1] > 0 ? cords[1] - 1: cords[1]) * SQUARE_DIAMETER) + SQUARE_RADIUS;
+            console.log("=> move executed remotely!!!");
         }
+        ///
+        ///
+        function convertNotationToCoordinates(notation) {
+            // Validate input
+            if (!notation || notation.length < 2 || notation.length > 3) {
+                return null;
+            }
+        
+            // Extract column and row from notation
+            const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            const column = notation[0].toLowerCase();
+            const row = parseInt(notation.slice(1));
+        
+            // Validate column and row
+            const columnIndex = columns.indexOf(column);
+            if (columnIndex === -1 || row < 1 || row > 8) {
+                return null;
+            }
+        
+            // Convert to coordinate system
+            const x = columnIndex - 3;
+            const y = row - 4;
+        
+            return [x, y];
+        }
+        
+        // Example usage:
+        // console.log(convertNotationToCoordinates('e4')); // Should return { x: 1, y: 0 }
+        // console.log(convertNotationToCoordinates('a1')); // Should return { x: -3, y: -3 }
+        // console.log(convertNotationToCoordinates('h8')); // Should return { x: 4, y: 4 }
         ///
         
         
@@ -554,7 +526,7 @@ const ChessRemoteGame = () => {
         return() => {
 
             window.removeEventListener('resize', handleResize)
-            document.removeEventListener("keydown", handleKeyDown)
+            // document.removeEventListener("keydown", handleKeyDown)
             controls.dispose();
             if (controls2){
                 controls2.removeEventListener('drag', handleDrag);

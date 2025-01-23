@@ -1,0 +1,146 @@
+.width-full{
+    min-width: 100%;
+}
+
+.width-90{
+    min-width: 90%;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.vertical-line{
+    border-left: 1px solid white;
+    min-height: 100%;
+}
+
+.green-boundary{
+    border: 1px solid green;
+}
+
+.background-transparent{
+    background-color: transparent;
+}
+
+.gap-1{
+    gap: 1rem;
+}
+
+.navy-blue{
+    color: #000080;
+}
+
+.round-25{
+    border-radius: 25px !important;
+}
+
+.round-10{
+    border-radius: 7px !important;
+}
+
+
+.dark-chocolate{
+    background-color: #3d1f00;
+}
+
+.up-down-1-border{
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+.padding-x-1{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.font_1{
+    font-family: "Lucida Console";
+}
+
+.fit-content{
+    min-width: fit-content;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.White{
+    color: white;
+}
+
+.max-height-35{
+    max-height: 35vh;
+}
+
+.min-height-35{
+    min-height: 35vh;
+}
+
+.min-height-40{
+    min-height: 40vh;
+}
+
+.Challenger{
+
+    font-size: medium;
+    font-weight: 500;
+    width: 10%;
+    padding: 0.5rem;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.center-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.border-1-white{
+    border: 1px solid white;
+}
+
+.border-1-grey{
+    border: 1px solid grey;
+}
+
+.ultra-space-between{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    min-height: 35vh;
+}
+
+.yellow{
+    color: yellow;
+}
+.red{
+    color: red;
+}
+
+.hidden{
+    display: none;
+}
+
+.max-width-full{
+    max-width: 100%;
+}
+
+.rotating-image {
+    animation: rotate_him 5s linear infinite;
+}
+
+@keyframes rotate_him {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
