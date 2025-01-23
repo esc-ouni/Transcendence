@@ -92,15 +92,15 @@ const ChessPreRemote = () => {
               {!isSearching ? (
                 <Frame
                   text="Find An Opponent"
-                  default_icon='/bottouns/default_offline.svg'
-                  hovered_icon='/bottouns/hovered_offline.svg'
+                  default_icon='/GamePub/bottouns/default_offline.svg'
+                  hovered_icon='/GamePub/bottouns/hovered_offline.svg'
                   onClick={startMatchmaking}
                 />
               ) : (
                 <Frame
                   text="Searching... (Cancel)"
-                  default_icon='/bottouns/default_offline.svg'
-                  hovered_icon='/bottouns/hovered_offline.svg'
+                  default_icon='/GamePub/bottouns/default_offline.svg'
+                  hovered_icon='/GamePub/bottouns/hovered_offline.svg'
                   onClick={cancelMatchmaking}
                 />
               )}

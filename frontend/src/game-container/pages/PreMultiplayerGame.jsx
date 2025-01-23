@@ -35,14 +35,14 @@ const PreMultiplayerGame = () => {
               <PlayerInput
                 playerId={1}
                 initialName={blueTeamPlayers.player1}
-                avatarSrc="/bottouns/omar.jpg"
+                avatarSrc="/GamePub/bottouns/omar.jpg"
                 onNameChange={(name) => setBlueTeamPlayers({...blueTeamPlayers, player1: name})}
                 position='left'
               />
               <PlayerInput
                 playerId={3}
                 initialName={blueTeamPlayers.player3}
-                avatarSrc="/bottouns/omar.jpg"
+                avatarSrc="/GamePub/bottouns/omar.jpg"
                 onNameChange={(name) => setBlueTeamPlayers({...blueTeamPlayers, player3: name})}
                 position='left'
               />
@@ -55,14 +55,14 @@ const PreMultiplayerGame = () => {
               <PlayerInput
                 playerId={2}
                 initialName={redTeamPlayers.player2}
-                avatarSrc="/bottouns/le7ya.jpg"
+                avatarSrc="/GamePub/bottouns/le7ya.jpg"
                 onNameChange={(name) => setRedTeamPlayers({...redTeamPlayers, player2: name})}
                 position='right'
               />
               <PlayerInput
                 playerId={4}
                 initialName={redTeamPlayers.player4}
-                avatarSrc="/bottouns/le7ya.jpg"
+                avatarSrc="/GamePub/bottouns/le7ya.jpg"
                 onNameChange={(name) => setRedTeamPlayers({...redTeamPlayers, player4: name})}
                 position='right'
               />
@@ -73,8 +73,8 @@ const PreMultiplayerGame = () => {
         <div className="mbuttona">
           <Frame
             text="Launch The Game"
-            default_icon='/bottouns/default_offline.svg'
-            hovered_icon='/bottouns/hovered_offline.svg'
+            default_icon='/GamePub/bottouns/default_offline.svg'
+            hovered_icon='/GamePub/bottouns/hovered_offline.svg'
             onClick={() => {navigate('/Game/Multiplayer')}}
           />
         </div>

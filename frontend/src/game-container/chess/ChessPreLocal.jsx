@@ -31,7 +31,7 @@ const ChessPreLocal = () => {
           <PlayerInput
             playerId={1}
             initialName={player1Name}
-            avatarSrc="/bottouns/omar.jpg"
+            avatarSrc="/GamePub/bottouns/omar.jpg"
             onNameChange={setPlayer1Name}
             position='left'
             />
@@ -39,7 +39,7 @@ const ChessPreLocal = () => {
           <PlayerInput
             playerId={2}
             initialName={player2Name}
-            avatarSrc="/bottouns/le7ya.jpg"
+            avatarSrc="/GamePub/bottouns/le7ya.jpg"
             onNameChange={setPlayer2Name}
             position='right'
             />
@@ -48,8 +48,8 @@ const ChessPreLocal = () => {
         <div className="buttona">
             <Frame
                 text="Launch Game"
-                default_icon='/bottouns/default_offline.svg'
-                hovered_icon='/bottouns/hovered_offline.svg'
+                default_icon='/GamePub/bottouns/default_offline.svg'
+                hovered_icon='/GamePub/bottouns/hovered_offline.svg'
                 onClick={() => {
                   let match = {
                     FINALY: {"player1": player1Name, "player2": player2Name, "winner": null, "Score1": 0, "Score2": 0},

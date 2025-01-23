@@ -101,10 +101,10 @@ const ChessRemoteGame = () => {
         
         const scene = new THREE.Scene()
        
-        const hit_sound     = new Audio('/chess-assets/sounds/passion.mp3');
-        const move_sound    = new Audio('/chess-assets/sounds/move.mp3');
-        const illegal_sound = new Audio('/chess-assets/sounds/illegal.mp3');
-        const capture_sound = new Audio('/chess-assets/sounds/capture.mp3');
+        const hit_sound     = new Audio('/GamePub/chess-assets/sounds/passion.mp3');
+        const move_sound    = new Audio('/GamePub/chess-assets/sounds/move.mp3');
+        const illegal_sound = new Audio('/GamePub/chess-assets/sounds/illegal.mp3');
+        const capture_sound = new Audio('/GamePub/chess-assets/sounds/capture.mp3');
 
         const floor = new THREE.Mesh(
             new THREE.PlaneGeometry(10, 10),
@@ -183,7 +183,7 @@ const ChessRemoteGame = () => {
         const GLTFLoaderr = new GLTFLoader(loadingManager);
         
         // GLTFLoaderr.load(
-        //     '/chess-assets/models/round_wooden_table_01_4k.gltf/round_wooden_table_01_4k.gltf',
+        //     '/GamePub/chess-assets/models/round_wooden_table_01_4k.gltf/round_wooden_table_01_4k.gltf',
         //     function ( gltf ) {
         //         gltf.scene.children[0].position.y = 0;
         //         // gui.add(gltf.scene.children[0].position, 'y', -50, 1).step(1);
@@ -194,7 +194,7 @@ const ChessRemoteGame = () => {
         
         
         GLTFLoaderr.load(
-            '/chess-assets/models/chess_set_4k.gltf/untitled.gltf',
+            '/GamePub/chess-assets/models/chess_set_4k.gltf/untitled.gltf',
             function ( gltf ) {
                 let item;
         
@@ -220,7 +220,7 @@ const ChessRemoteGame = () => {
         //
         // //Enviroment Map
         // const rgbeLoader = new RGBELoader();
-        // rgbeLoader.load('/chess-assets/models/envmap/photo_studio_loft_hall_8k.pic', (enviroment_map) => {
+        // rgbeLoader.load('/GamePub/chess-assets/models/envmap/photo_studio_loft_hall_8k.pic', (enviroment_map) => {
         //     enviroment_map.mapping = THREE.EquirectangularReflectionMapping
         //     scene.background  = enviroment_map;
         //     scene.environment = enviroment_map;
@@ -228,7 +228,7 @@ const ChessRemoteGame = () => {
         
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);
-        rgbeLoader.load('/chess-assets/models/neon_photostudio_2k.hdr', (enviroment_map) => {
+        rgbeLoader.load('/GamePub/chess-assets/models/neon_photostudio_2k.hdr', (enviroment_map) => {
             enviroment_map.mapping = THREE.EquirectangularReflectionMapping
             scene.background  = enviroment_map;
             scene.environment = enviroment_map;

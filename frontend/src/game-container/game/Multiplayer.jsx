@@ -155,7 +155,7 @@ const MultiplayerGame = () => {
         const controls = cameras.map(camera => new OrbitControls(camera, canvas));
         
         const GLTFLoaderr = new GLTFLoader(loadingManager); 
-        GLTFLoaderr.load('/models/chinese_tea_table_4k.gltf/tabla_v2.gltf', function (gltf){
+        GLTFLoaderr.load('/GamePub/models/chinese_tea_table_4k.gltf/tabla_v2.gltf', function (gltf){
             const model = gltf.scene;
             model.scale.set(1.5, 1.5, 1.5)
             model.position.y += 1.7;
@@ -179,7 +179,7 @@ const MultiplayerGame = () => {
         let paddle2 = null;
         let paddleAi2 = null;
         
-        GLTFLoaderr.load('/models/chinese_tea_table_4k.gltf/paddle_test.gltf', function (gltf){
+        GLTFLoaderr.load('/GamePub/models/chinese_tea_table_4k.gltf/paddle_test.gltf', function (gltf){
             const model = gltf.scene;
             paddle = model;
             model.scale.set(2.1, 2.1, 2.1)
@@ -215,7 +215,7 @@ const MultiplayerGame = () => {
         })
         
         
-        const hit_sound = new Audio("/sounds/ping_pong.mp3");
+        const hit_sound = new Audio("/GamePub/sounds/ping_pong.mp3");
         
         const Pong_Ball_colide = (impact) => {
             hit_sound.volume = Math.min(impact, 1);
@@ -224,7 +224,7 @@ const MultiplayerGame = () => {
         }
         
         const TextureLoader = new THREE.TextureLoader(loadingManager);
-        const Texture = TextureLoader.load("/textures/Models/ball.jpeg");
+        const Texture = TextureLoader.load("/GamePub/textures/Models/ball.jpeg");
         
         let Objects  = [];
         
@@ -511,7 +511,7 @@ const MultiplayerGame = () => {
         document.addEventListener("keyup", handleKeyUp)
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);
-        rgbeLoader.load('/models/neon_photostudio_2k.hdr', (enviroment_map) => {
+        rgbeLoader.load('/GamePub/models/neon_photostudio_2k.hdr', (enviroment_map) => {
             enviroment_map.mapping = THREE.EquirectangularReflectionMapping
             scene.background  = enviroment_map;
             scene.environment = enviroment_map;

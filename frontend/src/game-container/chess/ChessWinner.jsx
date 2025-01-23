@@ -30,8 +30,8 @@ const ChessWinner = () => {
         <div className="button-container-w">
           <Frame
             text="Main Game Page"
-            default_icon='/bottouns/default_offline.svg'
-            hovered_icon='/bottouns/hovered_offline.svg'
+            default_icon='/GamePub/bottouns/default_offline.svg'
+            hovered_icon='/GamePub/bottouns/hovered_offline.svg'
             onClick={() => {
             //   localStorage.removeItem('Matches_data');
             //   localStorage.removeItem('Matches_history');
@@ -41,8 +41,8 @@ const ChessWinner = () => {
           />
           {/* <Frame
             text="Re-Match"
-            default_icon='/bottouns/default_offline.svg'
-            hovered_icon='/bottouns/hovered_offline.svg'
+            default_icon='/GamePub/bottouns/default_offline.svg'
+            hovered_icon='/GamePub/bottouns/hovered_offline.svg'
             onClick={() => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');

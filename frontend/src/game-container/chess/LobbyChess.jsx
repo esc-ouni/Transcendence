@@ -36,20 +36,20 @@ function ChessLobby(){
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Locally"
-                    default_icon='/bottouns/default_chess.svg'
-                    hovered_icon='/bottouns/hovered_chess.svg'
+                    default_icon='/GamePub/bottouns/default_chess.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_chess.svg'
                     onClick={() => {navigate('/Game/ChessPreLocal')}}
                 />
                 <Frame
                     text="Play Online"
-                    default_icon='/bottouns/default_online.svg'
-                    hovered_icon='/bottouns/hovered_online.svg'
+                    default_icon='/GamePub/bottouns/default_online.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_online.svg'
                     onClick={() => {navigate('/Game/ChessPreRemote')}}
                 />
                 <Frame
                     text="Vs Ai"
-                    default_icon='/bottouns/default_ai.svg'
-                    hovered_icon='/bottouns/hovered_ai.svg'
+                    default_icon='/GamePub/bottouns/default_ai.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_ai.svg'
                     onClick={() => {navigate('/Game/ChessLocally')}}
                 />
             </div>

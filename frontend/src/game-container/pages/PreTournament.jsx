@@ -57,7 +57,7 @@ const PreTournament = () => {
                 <PlayerInput
                     playerId={1}
                     initialName={player1Name}
-                    avatarSrc="/bottouns/omar.jpg"
+                    avatarSrc="/GamePub/bottouns/omar.jpg"
                     onNameChange={setPlayer1Name}
                     position='left'
                     />
@@ -65,7 +65,7 @@ const PreTournament = () => {
                 <PlayerInput
                     playerId={2}
                     initialName={player2Name}
-                    avatarSrc="/bottouns/omar.jpg"
+                    avatarSrc="/GamePub/bottouns/omar.jpg"
                     onNameChange={setPlayer2Name}
                     position='left'
                     />
@@ -74,7 +74,7 @@ const PreTournament = () => {
                 <PlayerInput
                     playerId={3}
                     initialName={player3Name}
-                    avatarSrc="/bottouns/le7ya.jpg"
+                    avatarSrc="/GamePub/bottouns/le7ya.jpg"
                     onNameChange={setPlayer3Name}
                     position='right'
                     />
@@ -82,7 +82,7 @@ const PreTournament = () => {
                 <PlayerInput
                     playerId={4}
                     initialName={player4Name}
-                    avatarSrc="/bottouns/le7ya.jpg"
+                    avatarSrc="/GamePub/bottouns/le7ya.jpg"
                     onNameChange={setPlayer4Name}
                     position='right'
                     />
@@ -92,8 +92,8 @@ const PreTournament = () => {
         <div className="buttona">
             <Frame
                 text="Launch The Game"
-                default_icon='/bottouns/default_offline.svg'
-                hovered_icon='/bottouns/hovered_offline.svg'
+                default_icon='/GamePub/bottouns/default_offline.svg'
+                hovered_icon='/GamePub/bottouns/hovered_offline.svg'
                 onClick={handleLaunch}
             />
         </div>

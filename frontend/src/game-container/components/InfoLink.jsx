@@ -6,7 +6,7 @@ export default function InfoLink() {
     <div className="info-container">
       <img
         className="info-icon"
-        src="/bottouns/info.png"
+        src="/GamePub/bottouns/info.png"
         alt="information icon"
         onClick={() => {alert('Dserti 3lya ajmii !')}}
       />

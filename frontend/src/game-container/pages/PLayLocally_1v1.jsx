@@ -27,7 +27,7 @@ const PlayLocally_1v1 = () => {
           <PlayerInput
             playerId={1}
             initialName={player1Name}
-            avatarSrc="/bottouns/omar.jpg"
+            avatarSrc="/GamePub/bottouns/omar.jpg"
             onNameChange={setPlayer1Name}
             position='left'
             />
@@ -35,7 +35,7 @@ const PlayLocally_1v1 = () => {
           <PlayerInput
             playerId={2}
             initialName={player2Name}
-            avatarSrc="/bottouns/le7ya.jpg"
+            avatarSrc="/GamePub/bottouns/le7ya.jpg"
             onNameChange={setPlayer2Name}
             position='right'
             />
@@ -44,11 +44,16 @@ const PlayLocally_1v1 = () => {
         <div className="buttona">
             <Frame
                 text="Launch Game"
+<<<<<<< HEAD
                 default_icon='/bottouns/default_offline.svg'
                 hovered_icon='/bottouns/hovered_offline.svg'
 <<<<<<< HEAD
                 onClick={() => {navigate('/LocalGame')}}
 =======
+=======
+                default_icon='/GamePub/bottouns/default_offline.svg'
+                hovered_icon='/GamePub/bottouns/hovered_offline.svg'
+>>>>>>> 2d1b639c... INTEGRATION
                 onClick={() => {
                   let match = {
                     FINALY: {"player1": player1Name, "player2": player2Name, "winner": null, "Score1": 0, "Score2": 0},

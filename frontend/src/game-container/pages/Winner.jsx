@@ -27,11 +27,16 @@ const Winner = () => {
         <div className="button-container-w">
           <Frame
             text="Main Game Page"
+<<<<<<< HEAD
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
 <<<<<<< HEAD
             onClick={() => navigate('/')}
 =======
+=======
+            default_icon='/GamePub/bottouns/default_offline.svg'
+            hovered_icon='/GamePub/bottouns/hovered_offline.svg'
+>>>>>>> 2d1b639c... INTEGRATION
             onClick={() => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
@@ -42,11 +47,16 @@ const Winner = () => {
           />
           <Frame
             text="Re-Match"
+<<<<<<< HEAD
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
 <<<<<<< HEAD
             onClick={() => navigate('/LocalGame')}
 =======
+=======
+            default_icon='/GamePub/bottouns/default_offline.svg'
+            hovered_icon='/GamePub/bottouns/hovered_offline.svg'
+>>>>>>> 2d1b639c... INTEGRATION
             onClick={() => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');

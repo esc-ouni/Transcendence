@@ -39,32 +39,32 @@ function Lobby(){
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Locally"
-                    default_icon='/bottouns/default_offline.svg'
-                    hovered_icon='/bottouns/hovered_offline.svg'
+                    default_icon='/GamePub/bottouns/default_offline.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_offline.svg'
                     onClick={() => {navigate('/Game/PlayLocally_1v1')}}
                     />
                 <Frame
                     text="Play Online"
-                    default_icon='/bottouns/default_online.svg'
-                    hovered_icon='/bottouns/hovered_online.svg'
+                    default_icon='/GamePub/bottouns/default_online.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_online.svg'
                     onClick={() => {navigate('/Game/PreRemote')}}
                     />
                 <Frame
                     text="Multiplayer Game"
-                    default_icon='/bottouns/default_multiplayer.svg'
-                    hovered_icon='/bottouns/hovered_multiplayer.svg'
+                    default_icon='/GamePub/bottouns/default_multiplayer.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_multiplayer.svg'
                     onClick={() => {navigate('/Game/PreMultiplayer')}}
                     />
                 <Frame
                     text="Start Tournament"
-                    default_icon='/bottouns/default_tournament.svg'
-                    hovered_icon='/bottouns/hovered_tournament.svg'
+                    default_icon='/GamePub/bottouns/default_tournament.svg'
+                    hovered_icon='/GamePub/bottouns/hovered_tournament.svg'
                     onClick={() => {navigate('/Game/PreTournament')}}
                     />
                     {/* <Frame
                         text="Chess Game Test"
-                        default_icon='/bottouns/default_online.svg'
-                        hovered_icon='/bottouns/hovered_online.svg'
+                        default_icon='/GamePub/bottouns/default_online.svg'
+                        hovered_icon='/GamePub/bottouns/hovered_online.svg'
                         onClick={() => {navigate('/Game/Chess_Lobby')}}
                     /> */}
             </div>

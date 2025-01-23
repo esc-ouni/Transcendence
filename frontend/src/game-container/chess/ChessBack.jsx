@@ -39,7 +39,7 @@ const ChessGameBack = () => {
         
         const scene = new THREE.Scene()
        
-        const hit_sound     = new Audio('/chess-assets/sounds/passion.mp3');
+        const hit_sound     = new Audio('/GamePub/chess-assets/sounds/passion.mp3');
 
         
         // Lights
@@ -104,7 +104,7 @@ const ChessGameBack = () => {
         const GLTFLoaderr = new GLTFLoader(loadingManager);
         
         GLTFLoaderr.load(
-            '/chess-assets/models/round_wooden_table_01_2k.gltf/round_wooden_table_01_2k.gltf',
+            '/GamePub/chess-assets/models/round_wooden_table_01_2k.gltf/round_wooden_table_01_2k.gltf',
             function ( gltf ) {
                 gltf.scene.children[0].position.y = 0;
                 scene.add( gltf.scene.children[0] ); //Jilali Table
@@ -113,7 +113,7 @@ const ChessGameBack = () => {
         
         
         GLTFLoaderr.load(
-            '/chess-assets/models/chess_set_2k.gltf/chess_set_2k.gltf',
+            '/GamePub/chess-assets/models/chess_set_2k.gltf/chess_set_2k.gltf',
             function ( gltf ) {
                 let item;
         
@@ -135,7 +135,7 @@ const ChessGameBack = () => {
         //
         // //Enviroment Map
         // const rgbeLoader = new RGBELoader();
-        // rgbeLoader.load('/chess-assets/models/envmap/photo_studio_loft_hall_8k.pic', (enviroment_map) => {
+        // rgbeLoader.load('/GamePub/chess-assets/models/envmap/photo_studio_loft_hall_8k.pic', (enviroment_map) => {
         //     enviroment_map.mapping = THREE.EquirectangularReflectionMapping
         //     scene.background  = enviroment_map;
         //     scene.environment = enviroment_map;
@@ -143,7 +143,7 @@ const ChessGameBack = () => {
         
         // enviroment map
         const rgbeLoader = new RGBELoader(loadingManager);
-        rgbeLoader.load('/chess-assets/models/neon_photostudio_2k.hdr', (enviroment_map) => {
+        rgbeLoader.load('/GamePub/chess-assets/models/neon_photostudio_2k.hdr', (enviroment_map) => {
             enviroment_map.mapping = THREE.EquirectangularReflectionMapping
             scene.background  = enviroment_map;
             scene.environment = enviroment_map;

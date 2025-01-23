@@ -78,7 +78,7 @@ const DefaultBack = () => {
         
         //particles
         
-        const star_texture = TextureLoader.load("/Stars/star_06.png");
+        const star_texture = TextureLoader.load("/GamePub/Stars/star_06.png");
         
         // console.log(star_texture);
         
