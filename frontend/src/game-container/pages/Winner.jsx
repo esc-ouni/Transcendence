@@ -29,7 +29,16 @@ const Winner = () => {
             text="Main Game Page"
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
+<<<<<<< HEAD
             onClick={() => navigate('/')}
+=======
+            onClick={() => {
+              localStorage.removeItem('Matches_data');
+              localStorage.removeItem('Matches_history');
+              localStorage.removeItem("matchId")
+              navigate('/PingPong_Lobby')
+            }}
+>>>>>>> c61dcb11... PAGES
           />
           <Frame
             text="Re-Match"

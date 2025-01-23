@@ -18,15 +18,17 @@ import LocalChessGame from './game-container/chess/LocalSceneChess.jsx';
 import ChessGameBack from './game-container/chess/ChessBack.jsx';
 import ChessPreRemote from './game-container/chess/remote/ChessPreRemote.jsx';
 import ChessRemoteGame from './game-container/chess/remote/ChessRemoteScene.jsx';
+import MainGamePage from './game-container/pages/MainGamePage.jsx';
 
   function App() {
     return (
       <div className="App">
         <MatchProvider>
           <Routes>
-            <Route path='/' element={<Lobby />}/>
+            <Route path='/' element={<MainGamePage />}/>
+
+            <Route path='/PingPong_Lobby' element={<Lobby />}/>
             <Route path='/RemoteGame' element={<RemoteGame />}/>
-            {/* <Route path='/Matchmaking' element={<WebSocketComponent />}/> */}
             <Route path='/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
             <Route path='/LocalGame' element={<LocalGame />}/>
             <Route path='/Tournament' element={<Tournament />}/>
@@ -41,7 +43,6 @@ import ChessRemoteGame from './game-container/chess/remote/ChessRemoteScene.jsx'
             <Route path='/ChessLocally' element={<LocalChessGame />}/>
             <Route path='/ChessPreRemote' element={<ChessPreRemote />}/>
             <Route path='/ChessRemoteGame' element={<ChessRemoteGame />}/>
-
 
 
           </Routes>

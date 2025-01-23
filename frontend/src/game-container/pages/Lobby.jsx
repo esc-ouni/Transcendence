@@ -38,16 +38,16 @@ function Lobby(){
             <button onClick={() => {navigate('/Matchmaking')}} > <em>Matchmaking</em></button> */}
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
-                    text="Play Online"
-                    default_icon='/bottouns/default_online.svg'
-                    hovered_icon='/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/PreRemote')}}
-                    />
-                <Frame
                     text="Play Locally"
                     default_icon='/bottouns/default_offline.svg'
                     hovered_icon='/bottouns/hovered_offline.svg'
                     onClick={() => {navigate('/PlayLocally_1v1')}}
+                    />
+                <Frame
+                    text="Play Online"
+                    default_icon='/bottouns/default_online.svg'
+                    hovered_icon='/bottouns/hovered_online.svg'
+                    onClick={() => {navigate('/PreRemote')}}
                     />
                 <Frame
                     text="Multiplayer Game"
@@ -61,12 +61,12 @@ function Lobby(){
                     hovered_icon='/bottouns/hovered_tournament.svg'
                     onClick={() => {navigate('/PreTournament')}}
                     />
-                    <Frame
+                    {/* <Frame
                         text="Chess Game Test"
                         default_icon='/bottouns/default_online.svg'
                         hovered_icon='/bottouns/hovered_online.svg'
                         onClick={() => {navigate('/Chess_Lobby')}}
-                    />
+                    /> */}
             </div>
 
             <div>

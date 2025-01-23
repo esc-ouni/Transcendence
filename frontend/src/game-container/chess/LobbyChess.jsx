@@ -36,8 +36,8 @@ function ChessLobby(){
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Locally"
-                    default_icon='/bottouns/default_offline.svg'
-                    hovered_icon='/bottouns/hovered_offline.svg'
+                    default_icon='/bottouns/default_chess.svg'
+                    hovered_icon='/bottouns/hovered_chess.svg'
                     onClick={() => {navigate('/ChessLocally')}}
                 />
                 <Frame

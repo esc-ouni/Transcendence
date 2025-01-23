@@ -596,8 +596,8 @@ const PingPongBack = () => {
 
     return (
         <>
+            <LoadingScreen show={loading} />
             <div className="blur-wrapper">
-                <LoadingScreen show={loading} />
                 <canvas ref={canvasRef}></canvas>
                 {/* <Hud/>
                 <Scoreboard playerScore={playerScore} aiScore={aiScore}/> */}

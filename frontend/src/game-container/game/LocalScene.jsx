@@ -685,7 +685,56 @@ const LocalGame = () => {
                 p1: playerScore,
                 p2: aiScore
               };
+<<<<<<< HEAD
               navigate('/Tournament')
+=======
+              // #region Update the match history with the final score
+            //   get the matchId, matches, matches, matches_history from localStorage
+              let Matches= JSON.parse(localStorage.getItem('Matches_data'));
+            //   const matchId = localStorage.getItem('matchId');
+              let Matches_history = JSON.parse(localStorage.getItem('Matches_history'));
+              // Update the score of the match
+              if (matchId && Matches_history && Matches)
+              {
+                Matches_history[matchId].Score1 = playerScore;
+                Matches_history[matchId].Score2 = aiScore;
+                Matches_history[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                // Update the winner of the match
+                Matches[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                // Update the next match (Final)
+                if (matchId != 'Final') {
+                    if (Matches['Final'].player1 === null) {
+                    Matches['Final'].player1 = Matches[matchId].winner;
+                    }
+                    else {
+                    Matches['Final'].player2 = Matches[matchId].winner;
+                    }
+                }
+                // set the updated matches and matches_history to localStorage
+                localStorage.setItem('Matches_data', JSON.stringify(Matches));
+                localStorage.setItem('Matches_history', JSON.stringify(Matches_history));
+                console.log(Matches, Matches_history, matchId);
+              }
+            if (matchId && matchId === "FINALY") {
+                console.log('Winner is called\n')
+                const matchData = JSON.parse(localStorage.getItem('Matches_data'));
+                matchData[matchId].Score1 = playerScore;
+                matchData[matchId].Score2 = aiScore;
+                matchData[matchId].winner = (playerScore > aiScore) ? Matches[matchId].player1 : Matches[matchId].player2;
+                localStorage.setItem('Matches_data', JSON.stringify(matchData));
+                navigate('/Winner');
+            }
+            else if (matchId && (matchId === 'Semi_Final_1' || matchId === 'Semi_Final_2' || matchId === 'Final'))
+            {
+                console.log("Tournament is called : ", matchId)
+                navigate('/Tournament')
+            }
+            else
+            {
+                console.log("matchId", matchId)
+                navigate('/PingPong_Lobby')
+            }
+>>>>>>> c61dcb11... PAGES
         }
       }, [playerScore, aiScore]);
 
