@@ -80,7 +80,7 @@ const DefaultBack = () => {
         
         const star_texture = TextureLoader.load("/Stars/star_06.png");
         
-        console.log(star_texture);
+        // console.log(star_texture);
         
         let particles = null;
         let Paricle_Material = null;
@@ -186,14 +186,14 @@ const DefaultBack = () => {
 
             // window.removeEventListener('resize', handleResize)
 
-            // controls.dispose();
-            // renderer.dispose();
+            controls.dispose();
+            renderer.dispose();
 
             
-            // while (scene.children.length > 0) {
-            //     const child = scene.children[0];
-            //     scene.remove(child);
-            // }
+            while (scene.children.length > 0) {
+                const child = scene.children[0];
+                scene.remove(child);
+            }
 
             // hit_sound.pause();
             // hit_sound.src = "";

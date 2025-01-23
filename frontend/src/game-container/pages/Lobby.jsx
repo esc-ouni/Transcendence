@@ -34,38 +34,38 @@ function Lobby(){
 
             <div className="yy">
                 {/* <em>Lobby</em>
-                <button onClick={() => {navigate('/RemoteGame')}} > <em>Play Now</em></button>
-            <button onClick={() => {navigate('/Matchmaking')}} > <em>Matchmaking</em></button> */}
+                <button onClick={() => {navigate('/Game/RemoteGame')}} > <em>Play Now</em></button>
+            <button onClick={() => {navigate('/Game/Matchmaking')}} > <em>Matchmaking</em></button> */}
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Locally"
                     default_icon='/bottouns/default_offline.svg'
                     hovered_icon='/bottouns/hovered_offline.svg'
-                    onClick={() => {navigate('/PlayLocally_1v1')}}
+                    onClick={() => {navigate('/Game/PlayLocally_1v1')}}
                     />
                 <Frame
                     text="Play Online"
                     default_icon='/bottouns/default_online.svg'
                     hovered_icon='/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/PreRemote')}}
+                    onClick={() => {navigate('/Game/PreRemote')}}
                     />
                 <Frame
                     text="Multiplayer Game"
                     default_icon='/bottouns/default_multiplayer.svg'
                     hovered_icon='/bottouns/hovered_multiplayer.svg'
-                    onClick={() => {navigate('/PreMultiplayer')}}
+                    onClick={() => {navigate('/Game/PreMultiplayer')}}
                     />
                 <Frame
                     text="Start Tournament"
                     default_icon='/bottouns/default_tournament.svg'
                     hovered_icon='/bottouns/hovered_tournament.svg'
-                    onClick={() => {navigate('/PreTournament')}}
+                    onClick={() => {navigate('/Game/PreTournament')}}
                     />
                     {/* <Frame
                         text="Chess Game Test"
                         default_icon='/bottouns/default_online.svg'
                         hovered_icon='/bottouns/hovered_online.svg'
-                        onClick={() => {navigate('/Chess_Lobby')}}
+                        onClick={() => {navigate('/Game/Chess_Lobby')}}
                     /> */}
             </div>
 

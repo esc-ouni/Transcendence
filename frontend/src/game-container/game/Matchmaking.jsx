@@ -50,7 +50,7 @@ useEffect(() => {
         opponentId: data['opponent_id'],
       });
 
-      navigate('/RemoteGame');
+      navigate('/Game/RemoteGame');
 
     }
   };

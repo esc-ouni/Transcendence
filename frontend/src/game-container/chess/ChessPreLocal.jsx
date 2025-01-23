@@ -57,7 +57,7 @@ const ChessPreLocal = () => {
                   localStorage.setItem("Matches_data", JSON.stringify(match))
                   localStorage.setItem("matchId", "FINALY")
 
-                  navigate('/ChessLocally')
+                  navigate('/Game/ChessLocally')
                 }}
             />
         </div>

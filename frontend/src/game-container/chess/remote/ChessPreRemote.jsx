@@ -44,7 +44,7 @@ const ChessPreRemote = () => {
         // Close the socket and navigate to RemoteGame
         socket.close();
         setIsSearching(false);
-        navigate('/ChessRemoteGame');
+        navigate('/Game/ChessRemoteGame');
       }
     };
     

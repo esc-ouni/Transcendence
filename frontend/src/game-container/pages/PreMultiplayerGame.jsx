@@ -75,7 +75,7 @@ const PreMultiplayerGame = () => {
             text="Launch The Game"
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
-            onClick={() => {navigate('/Multiplayer')}}
+            onClick={() => {navigate('/Game/Multiplayer')}}
           />
         </div>
       </div>

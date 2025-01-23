@@ -36,7 +36,7 @@ const Winner = () => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
-              navigate('/PingPong_Lobby')
+              navigate('/Game/PingPong_Lobby')
             }}
 >>>>>>> c61dcb11... PAGES
           />
@@ -44,7 +44,16 @@ const Winner = () => {
             text="Re-Match"
             default_icon='/bottouns/default_offline.svg'
             hovered_icon='/bottouns/hovered_offline.svg'
+<<<<<<< HEAD
             onClick={() => navigate('/LocalGame')}
+=======
+            onClick={() => {
+              localStorage.removeItem('Matches_data');
+              localStorage.removeItem('Matches_history');
+              localStorage.removeItem("matchId")
+              navigate('/Game/LocalGame')
+            }}
+>>>>>>> 888d8b37... INTEGRATION
           />
         </div>
       </div>

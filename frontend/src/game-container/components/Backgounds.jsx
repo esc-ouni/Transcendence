@@ -12,24 +12,24 @@ function Backgrounds() {
   const navigate = useNavigate();
   
   const OnChessRoute = [
-    '/Chess_Lobby',
-    '/ChessPreLocal',
-    '/ChessPreRemote',
-    '/ChessWinner'
+    '/Game/Chess_Lobby',
+    '/Game/ChessPreLocal',
+    '/Game/ChessPreRemote',
+    '/Game/ChessWinner'
   ].includes(location.pathname)
 
   const OnPongRoute = [
-    '/PingPong_Lobby',
-    '/Tournament',
-    '/PlayLocally_1v1',
-    '/PreMultiplayer',
-    '/PreTournament',
-    '/PreRemote',
-    '/Winner'
+    '/Game/PingPong_Lobby',
+    '/Game/Tournament',
+    '/Game/PlayLocally_1v1',
+    '/Game/PreMultiplayer',
+    '/Game/PreTournament',
+    '/Game/PreRemote',
+    '/Game/Winner'
   ].includes(location.pathname)
   
 
-  const show = location.pathname === '/';
+  const show = (location.pathname ===  '/Game') || (location.pathname ===  '/Game/');
   
 
   return (
@@ -47,10 +47,10 @@ function Backgrounds() {
 
   
       <div className={show ? "visible teams-container" : "hidden"} >
-        <div className="team" onClick={() => {navigate('/Chess_Lobby')}}>
+        <div className="team" onClick={() => {navigate('/Game/Chess_Lobby')}}>
             <ModelPreview modelPath="/chess-assets/models/horse_statue_01_2k.gltf/horse_statue_01_2k.gltf" Scale={10} />
         </div>
-        <div className="team" onClick={() => {navigate('/PingPong_Lobby')}}>
+        <div className="team" onClick={() => {navigate('/Game/PingPong_Lobby')}}>
             <ModelPreview modelPath="/chess-assets/models/yellow_onion_2k.gltf/yellow_onion_2k.gltf" Scale={25} />
         </div>
       </div>

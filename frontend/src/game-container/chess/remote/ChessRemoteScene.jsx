@@ -28,7 +28,7 @@ const ChessRemoteGame = () => {
     // console.log(matchData.roomName);
     // console.log(matchData.myId);
     if (!matchData.roomName || !matchData.myId || !matchData.color){
-        useNavigate('/ChessPreRemote');
+        usenavigate('/Game/ChessPreRemote');
     };
     
     let cinm = true;

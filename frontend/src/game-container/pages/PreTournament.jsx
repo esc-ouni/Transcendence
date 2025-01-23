@@ -27,9 +27,14 @@ const PreTournament = () => {
       p4: player4Name,
     };
 
+<<<<<<< HEAD
     localStorage.setItem('tournamentPlayers', JSON.stringify(playersData));
 
     navigate('/Tournament');
+=======
+      navigate('/Game/Tournament');
+    }
+>>>>>>> 888d8b37... INTEGRATION
   };
 
   return (

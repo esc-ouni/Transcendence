@@ -35,7 +35,13 @@ function Tournament({ src }) {
 
   const handleStartMatch = (matchId) => {
     console.log(`Starting match: ${matchId}`);
+<<<<<<< HEAD
     navigate('/Localgame');
+=======
+    // localStorage.setItem("localGameType", "tournament");
+    localStorage.setItem("matchId", matchId);
+    navigate('/Game/Localgame');
+>>>>>>> 888d8b37... INTEGRATION
   };
 
   
