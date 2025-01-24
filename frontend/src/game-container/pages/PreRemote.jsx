@@ -77,6 +77,8 @@ const PreRemote = () => {
     <>
 
       {/* <PingPongBack /> */}
+      <div className="main-game-page-container">
+
 
       <div className="game-options-container-r">
         <div className="game-options-header-r">
@@ -105,6 +107,7 @@ const PreRemote = () => {
           </div>
         </center>
         
+      </div>
       </div>
     </>
   );

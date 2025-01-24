@@ -55,8 +55,10 @@ const PreTournament = () => {
     <>
 
       {/* <PingPongBack /> */}
+      <div className="main-game-page-container">
 
-      <div className="game-options-container">
+
+      {/* <div className="game-options-container">
         <div className="game-options-header">
           <h1>GAME OPTIONS</h1>
           <p>TAP ON THE NAME OR AVATAR TO CHANGE IT.</p>
@@ -108,6 +110,7 @@ const PreTournament = () => {
             />
         </div>
 
+      </div> */}
       </div>
     </>
   );

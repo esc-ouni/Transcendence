@@ -81,6 +81,8 @@ const ChessPreRemote = () => {
     <>
 
       {/* <ChessGameBack/> */}
+      <div className="main-game-page-container">
+
 
       <div className="game-options-container-r">
         <div className="game-options-header-r">
@@ -109,6 +111,7 @@ const ChessPreRemote = () => {
           </div>
         </center>
         
+      </div>
       </div>
     </>
   );

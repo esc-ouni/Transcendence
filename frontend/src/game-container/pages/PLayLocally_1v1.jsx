@@ -23,6 +23,8 @@ const PlayLocally_1v1 = () => {
     <>
 
       {/* <PingPongBack /> */}
+      <div className="main-game-page-container">
+
 
       <div className="game-options-container">
         <div className="game-options-header">
@@ -65,6 +67,7 @@ const PlayLocally_1v1 = () => {
             />
         </div>
 
+      </div>
       </div>
     </>
   );

@@ -21,6 +21,8 @@ const PreMultiplayerGame = () => {
     <>
 
       {/* <PingPongBack /> */}
+      <div className="main-game-page-container">
+
 
       <div className="mgame-options-container">
         <div className="mgame-options-header">
@@ -78,6 +80,7 @@ const PreMultiplayerGame = () => {
             onClick={() => {navigate('/game/Multiplayer')}}
           />
         </div>
+      </div>
       </div>
     </>
   );

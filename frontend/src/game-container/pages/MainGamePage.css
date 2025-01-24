@@ -9,17 +9,19 @@
      */
      gap: 20vw;
      align-items: center;
-}
-
-.team {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.164);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    width : 350px;
-    height: 350px;
-    cursor: pointer;
+     z-index: 1;
+    }
+    
+  .team {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.164);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      width : 350px;
+      height: 350px;
+      cursor: pointer;
+      z-index: 1;
   }
 
   .hidden-v{

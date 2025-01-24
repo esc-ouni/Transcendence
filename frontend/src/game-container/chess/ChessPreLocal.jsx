@@ -21,6 +21,8 @@ const ChessPreLocal = () => {
     <>
 
       {/* <ChessGameBack /> */}
+      <div className="main-game-page-container">
+
       <div className="game-options-container">
         <div className="game-options-header">
           <h1>GAME OPTIONS</h1>
@@ -62,6 +64,7 @@ const ChessPreLocal = () => {
             />
         </div>
 
+      </div>
       </div>
     </>
   );

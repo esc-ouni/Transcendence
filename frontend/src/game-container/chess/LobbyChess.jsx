@@ -12,6 +12,8 @@ function ChessLobby(){
     return(
         <>
             {/* <ChessGameBack/> */}
+            <div className="main-game-page-container">
+
 
             <div className="lktaba">
                 <div className="lktaba1">Chess Platform Game</div>
@@ -54,7 +56,6 @@ function ChessLobby(){
                 />
             </div>
 
-            <div>
                 <InfoLink />
             </div>
         </>

@@ -179,7 +179,10 @@ function Tournament({ src }) {
   // console.log("hmm ", Matches, Matches_history);
 
   return (
-<></>
+<>
+<div className="main-game-page-container">
+</div>
+</>
   );
 }
 

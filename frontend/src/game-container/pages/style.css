@@ -179,8 +179,9 @@ body
 
   .main-game-page-container {
     border: 5px solid white;
-    width: calc(100% - 50px); /* Reduce width by 50px */
+    width: calc(100% - 50px - 10px); /* Subtract 350px + 10px for borders */
     height: 100vh;
-    margin-left: 350px; /* Shift the entire container 50px to the right */
-    position: relative; /* Ensure proper positioning */
-}
+    margin-left: 50px;
+    position: relative;
+  }
+  

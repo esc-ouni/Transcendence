@@ -12,6 +12,8 @@ function Lobby(){
         <>
 
             {/* <PingPongBack/> */}
+            <div className="main-game-page-container">
+
 
             <div className="lktaba">
                 <div className="lktaba1">Ping Pong Game</div>
@@ -69,8 +71,8 @@ function Lobby(){
                     /> */}
             </div>
 
-            <div>
                 <InfoLink />
+            
             </div>
         </>
     )
