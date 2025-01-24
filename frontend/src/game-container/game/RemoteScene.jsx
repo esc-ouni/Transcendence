@@ -92,7 +92,7 @@ const RemoteGame = () => {
     
 
                 if (state === true && (Objects.length && Objects[Objects.length - 1].created_by_me === false)){
-                    navigate('/Game/Winner');
+                    navigate('/game/Winner');
                     // navigate()
                 }
 
@@ -757,7 +757,7 @@ const RemoteGame = () => {
         // sendPaddleUpdate(true);
         setPlayerScore(0);
         setAiScore(0);
-        navigate('/Game/Winner');
+        navigate('/game/Winner');
         // alert(`${playerScore === 7 ? 'Player' : 'Ai'} Wins!`);
     }
       }, [playerScore, aiScore]);

@@ -170,3 +170,17 @@ body
     /* "cover" ensures the image fills, preserving aspect ratio, cropping if needed */
   }
   
+
+
+
+
+
+
+
+  .main-game-page-container {
+    border: 5px solid white;
+    width: calc(100% - 50px); /* Reduce width by 50px */
+    height: 100vh;
+    margin-left: 350px; /* Shift the entire container 50px to the right */
+    position: relative; /* Ensure proper positioning */
+}

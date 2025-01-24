@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import React, { useEffect, useState } from 'react';
 import PlayerInput from '../components/PlayerInput';
-import '../help_css/help.css';
+import './PreTournament.css';
 
 const PreTournament = () => {
   const [player1Name, setPlayer1Name] = useState('');
@@ -14,44 +14,42 @@ const PreTournament = () => {
   const [player3Name, setPlayer3Name] = useState('');
   const [player4Name, setPlayer4Name] = useState('');
   const [reload, setReload] = useState(0);
-  const [hidden_mesage, setHidden_message] = useState(true);
   const navigate = useNavigate();
-  const max_length = 20;
 
 
-  useEffect(() => {
-    // CLEAR LOCAL SRORAGE
-    localStorage.removeItem('Matches_data');
-    localStorage.removeItem('Matches_history');
-    localStorage.removeItem("matchId")
-    localStorage.removeItem('tournamentPlayers');
-    console.log(hidden_mesage)
-  }, []);
+  // useEffect(() => {
+  //   // CLEAR LOCAL SRORAGE
+  //   localStorage.removeItem('Matches_data');
+  //   localStorage.removeItem('Matches_history');
+  //   localStorage.removeItem("matchId")
+  //   localStorage.removeItem('tournamentPlayers');
+  //   console.log(hidden_mesage)
+  // }, []);
 
-  const handleLaunch = () => {
-    // For demonstration, let's assume you actually have 4 distinct names:
-    // player1Name, player2Name, player3Name, player4Name.
-    // In your code snippet, you showed just two states, but let's generalize:
-    // localStorage can store an object of all 4 players.
-    const playersData = {
-      p1: player1Name,
-      p2: player2Name,
-      p3: player3Name,
-      p4: player4Name,
-    };
-    if (player1Name.length > max_length || player2Name.length > max_length || player3Name.length > max_length || player4Name.length > max_length) {
-      setHidden_message(false);
-    }
-    else
-    {
-      localStorage.removeItem('Matches_data');
-      localStorage.removeItem('Matches_history');
-      localStorage.removeItem("matchId")
-      localStorage.setItem('tournamentPlayers', JSON.stringify(playersData));
+  // const handleLaunch = () => {
+  //   // For demonstration, let's assume you actually have 4 distinct names:
+  //   // player1Name, player2Name, player3Name, player4Name.
+  //   // In your code snippet, you showed just two states, but let's generalize:
+  //   // localStorage can store an object of all 4 players.
+  //   const playersData = {
+  //     p1: player1Name,
+  //     p2: player2Name,
+  //     p3: player3Name,
+  //     p4: player4Name,
+  //   };
+  //   if (player1Name.length > max_length || player2Name.length > max_length || player3Name.length > max_length || player4Name.length > max_length) {
+  //     setHidden_message(false);
+  //   }
+  //   else
+  //   {
+  //     localStorage.removeItem('Matches_data');
+  //     localStorage.removeItem('Matches_history');
+  //     localStorage.removeItem("matchId")
+  //     localStorage.setItem('tournamentPlayers', JSON.stringify(playersData));
 
-      navigate('/Game/Tournament');
-    }
-  };
+  //     navigate('/game/Tournament');
+  //   }
+  // };
 
   return (
     <>
@@ -62,9 +60,6 @@ const PreTournament = () => {
         <div className="game-options-header">
           <h1>GAME OPTIONS</h1>
           <p>TAP ON THE NAME OR AVATAR TO CHANGE IT.</p>
-            <div className={hidden_mesage ? "hidden" : ""}>
-              <span className="red "> Keep names under {max_length} character length <span className="yellow">(Why ? lah O3lame chi blane o safy)</span>.</span>
-            </div>
         </div>
 
         <div className="players-container">

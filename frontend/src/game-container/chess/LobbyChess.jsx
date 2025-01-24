@@ -38,19 +38,19 @@ function ChessLobby(){
                     text="Play Locally"
                     default_icon='/GamePub/bottouns/default_chess.svg'
                     hovered_icon='/GamePub/bottouns/hovered_chess.svg'
-                    onClick={() => {navigate('/Game/ChessPreLocal')}}
+                    onClick={() => {navigate('/game/ChessPreLocal')}}
                 />
                 <Frame
                     text="Play Online"
                     default_icon='/GamePub/bottouns/default_online.svg'
                     hovered_icon='/GamePub/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/Game/ChessPreRemote')}}
+                    onClick={() => {navigate('/game/ChessPreRemote')}}
                 />
                 <Frame
                     text="Vs Ai"
                     default_icon='/GamePub/bottouns/default_ai.svg'
                     hovered_icon='/GamePub/bottouns/hovered_ai.svg'
-                    onClick={() => {navigate('/Game/ChessLocally')}}
+                    onClick={() => {navigate('/game/ChessLocally')}}
                 />
             </div>
 

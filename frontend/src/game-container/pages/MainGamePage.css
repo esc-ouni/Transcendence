@@ -22,3 +22,6 @@
     cursor: pointer;
   }
 
+  .hidden-v{
+    display: none;
+}

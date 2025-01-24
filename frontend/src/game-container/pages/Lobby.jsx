@@ -34,38 +34,38 @@ function Lobby(){
 
             <div className="yy">
                 {/* <em>Lobby</em>
-                <button onClick={() => {navigate('/Game/RemoteGame')}} > <em>Play Now</em></button>
-            <button onClick={() => {navigate('/Game/Matchmaking')}} > <em>Matchmaking</em></button> */}
+                <button onClick={() => {navigate('/game/RemoteGame')}} > <em>Play Now</em></button>
+            <button onClick={() => {navigate('/game/Matchmaking')}} > <em>Matchmaking</em></button> */}
                 <div className="text-wrapper">SELECT MODE</div>
                 <Frame
                     text="Play Locally"
                     default_icon='/GamePub/bottouns/default_offline.svg'
                     hovered_icon='/GamePub/bottouns/hovered_offline.svg'
-                    onClick={() => {navigate('/Game/PlayLocally_1v1')}}
+                    onClick={() => {navigate('/game/PlayLocally_1v1')}}
                     />
                 <Frame
                     text="Play Online"
                     default_icon='/GamePub/bottouns/default_online.svg'
                     hovered_icon='/GamePub/bottouns/hovered_online.svg'
-                    onClick={() => {navigate('/Game/PreRemote')}}
+                    onClick={() => {navigate('/game/PreRemote')}}
                     />
                 <Frame
                     text="Multiplayer Game"
                     default_icon='/GamePub/bottouns/default_multiplayer.svg'
                     hovered_icon='/GamePub/bottouns/hovered_multiplayer.svg'
-                    onClick={() => {navigate('/Game/PreMultiplayer')}}
+                    onClick={() => {navigate('/game/PreMultiplayer')}}
                     />
                 <Frame
                     text="Start Tournament"
                     default_icon='/GamePub/bottouns/default_tournament.svg'
                     hovered_icon='/GamePub/bottouns/hovered_tournament.svg'
-                    onClick={() => {navigate('/Game/PreTournament')}}
+                    onClick={() => {navigate('/game/PreTournament')}}
                     />
                     {/* <Frame
                         text="Chess Game Test"
                         default_icon='/GamePub/bottouns/default_online.svg'
                         hovered_icon='/GamePub/bottouns/hovered_online.svg'
-                        onClick={() => {navigate('/Game/Chess_Lobby')}}
+                        onClick={() => {navigate('/game/Chess_Lobby')}}
                     /> */}
             </div>
 

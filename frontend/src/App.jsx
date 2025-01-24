@@ -29,26 +29,26 @@ import Backgrounds from './game-container/components/Backgounds.jsx';
 
         <MatchProvider>
           <Routes>
-            <Route path='/Game' element={<MainGamePage />}/>
+            <Route path='/game' element={<MainGamePage />}/>
 
-            <Route path='/Game/PingPong_Lobby' element={<Lobby />}/>
-            <Route path='/Game/RemoteGame' element={<RemoteGame />}/>
-            <Route path='/Game/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
-            <Route path='/Game/LocalGame' element={<LocalGame />}/>
-            <Route path='/Game/Tournament' element={<Tournament />}/>
-            <Route path='/Game/PreMultiplayer' element={<PreMultiplayerGame />}/>
-            <Route path='/Game/Multiplayer' element={<MultiplayerGame />}/>
-            <Route path='/Game/PreTournament' element={<PreTournament />}/>
-            <Route path='/Game/PreRemote' element={<PreRemote />}/>
-            <Route path='/Game/Winner' element={<Winner />}/>
+            <Route path='/game/PingPong_Lobby' element={<Lobby />}/>
+            <Route path='/game/RemoteGame' element={<RemoteGame />}/>
+            <Route path='/game/PlayLocally_1v1' element={<PlayLocally_1v1 />}/>
+            <Route path='/game/LocalGame' element={<LocalGame />}/>
+            <Route path='/game/Tournament' element={<Tournament />}/>
+            <Route path='/game/PreMultiplayer' element={<PreMultiplayerGame />}/>
+            <Route path='/game/Multiplayer' element={<MultiplayerGame />}/>
+            <Route path='/game/PreTournament' element={<PreTournament />}/>
+            <Route path='/game/PreRemote' element={<PreRemote />}/>
+            <Route path='/game/Winner' element={<Winner />}/>
 
 
-            <Route path='/Game/Chess_Lobby' element={<ChessLobby />}/>
-            <Route path='/Game/ChessLocally' element={<LocalChessGame />}/>
-            <Route path='/Game/ChessPreLocal' element={<ChessPreLocal />}/>
-            <Route path='/Game/ChessPreRemote' element={<ChessPreRemote />}/>
-            <Route path='/Game/ChessRemoteGame' element={<ChessRemoteGame />}/>
-            <Route path='/Game/ChessWinner' element={<ChessWinner />}/>
+            <Route path='/game/Chess_Lobby' element={<ChessLobby />}/>
+            <Route path='/game/ChessLocally' element={<LocalChessGame />}/>
+            <Route path='/game/ChessPreLocal' element={<ChessPreLocal />}/>
+            <Route path='/game/ChessPreRemote' element={<ChessPreRemote />}/>
+            <Route path='/game/ChessRemoteGame' element={<ChessRemoteGame />}/>
+            <Route path='/game/ChessWinner' element={<ChessWinner />}/>
           </Routes>
         </MatchProvider>
       </div>

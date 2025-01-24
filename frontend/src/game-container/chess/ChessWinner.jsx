@@ -36,7 +36,7 @@ const ChessWinner = () => {
             //   localStorage.removeItem('Matches_data');
             //   localStorage.removeItem('Matches_history');
             //   localStorage.removeItem("matchId")
-              navigate('/Game/Chess_Lobby')
+              navigate('/game/Chess_Lobby')
             }}
           />
           {/* <Frame
@@ -47,7 +47,7 @@ const ChessWinner = () => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
-              navigate('/Game/LocalGame')
+              navigate('/game/LocalGame')
             }}
           /> */}
         </div>

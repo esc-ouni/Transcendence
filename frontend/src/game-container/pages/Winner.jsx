@@ -38,7 +38,7 @@ const Winner = () => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
-              navigate('/Game/PingPong_Lobby')
+              navigate('/game/PingPong_Lobby')
             }}
           />
           <Frame
@@ -49,7 +49,7 @@ const Winner = () => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
-              navigate('/Game/LocalGame')
+              navigate('/game/LocalGame')
             }}
           />
         </div>

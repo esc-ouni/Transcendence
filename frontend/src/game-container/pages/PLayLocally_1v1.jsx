@@ -60,7 +60,7 @@ const PlayLocally_1v1 = () => {
                   localStorage.setItem("Matches_data", JSON.stringify(match))
                   localStorage.setItem("matchId", "FINALY")
 
-                  navigate('/Game/LocalGame')
+                  navigate('/game/LocalGame')
                 }}
             />
         </div>
