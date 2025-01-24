@@ -24,6 +24,8 @@ const LocalGame = () => {
     const [aiScore, setAiScore] = useState(0);
 
     const [loading, setLoading] = useState(true);
+    const [match, setMatch] = useState(JSON.parse(localStorage.getItem('Matches_data')));
+    const [matchId, setMatchId] = useState(localStorage.getItem('matchId'))
 
     useEffect(() => {
 
@@ -689,9 +691,6 @@ const LocalGame = () => {
                 p1: playerScore,
                 p2: aiScore
               };
-<<<<<<< HEAD
-              navigate('/Tournament')
-=======
               // #region Update the match history with the final score
             //   get the matchId, matches, matches, matches_history from localStorage
               let Matches= JSON.parse(localStorage.getItem('Matches_data'));
@@ -738,16 +737,17 @@ const LocalGame = () => {
                 console.log("matchId", matchId)
                 navigate('/Game/PingPong_Lobby')
             }
->>>>>>> c61dcb11... PAGES
         }
       }, [playerScore, aiScore]);
 
+    console.log(matchId, match)
+    console.log(match ? (match[matchId] ? match[matchId] : "TESTING NULL MATCH[MATCHID] ?") : "TESTING MATCHOID == NULL ? ")
     return (
         <>
             <LoadingScreen show={loading} />
             <canvas ref={canvasRef}></canvas>
             <Hud/>
-            <Scoreboard playerScore={playerScore} aiScore={aiScore}/>
+            <Scoreboard player1={(matchId && match && match[matchId]) ? match[matchId].player1 : "PL1"} playerScore={playerScore} player2={matchId && match && match[matchId] ? match[matchId].player2 : "PL2"} aiScore={aiScore}/>
         </>
     )
 };

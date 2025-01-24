@@ -4,13 +4,20 @@ import PingPongBack from "../components/PingPongBack";
 import { Frame } from "../components/Frame";
 import { useNavigate } from "react-router-dom";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayerInput from '../components/PlayerInput';
+import { use } from "react";
 
 const PlayLocally_1v1 = () => {
   const [player1Name, setPlayer1Name] = useState('Haskitwy');
   const [player2Name, setPlayer2Name] = useState('Haskitwy');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // CLEAR LOCAL SRORAGE
+    localStorage.removeItem('Matches_data');
+    localStorage.removeItem("matchId")
+  }, []);
 
   return (
     <>
@@ -44,16 +51,8 @@ const PlayLocally_1v1 = () => {
         <div className="buttona">
             <Frame
                 text="Launch Game"
-<<<<<<< HEAD
-                default_icon='/bottouns/default_offline.svg'
-                hovered_icon='/bottouns/hovered_offline.svg'
-<<<<<<< HEAD
-                onClick={() => {navigate('/LocalGame')}}
-=======
-=======
                 default_icon='/GamePub/bottouns/default_offline.svg'
                 hovered_icon='/GamePub/bottouns/hovered_offline.svg'
->>>>>>> 2d1b639c... INTEGRATION
                 onClick={() => {
                   let match = {
                     FINALY: {"player1": player1Name, "player2": player2Name, "winner": null, "Score1": 0, "Score2": 0},
@@ -63,7 +62,6 @@ const PlayLocally_1v1 = () => {
 
                   navigate('/Game/LocalGame')
                 }}
->>>>>>> 888d8b37... INTEGRATION
             />
         </div>
 

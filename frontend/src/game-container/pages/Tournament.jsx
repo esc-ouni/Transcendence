@@ -1,11 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css'
-<<<<<<< HEAD
-import MatchCard from '../components/MatchCard';
-import { useNavigate } from 'react-router-dom';
-
-=======
 import '../help_css/help.css'
 import MatchCard from '../components/MatchCard';
 import { useNavigate } from 'react-router-dom';
@@ -13,21 +8,63 @@ import PingPongBack from "../components/PingPongBack";
 import '../help_css/tournament.css'
 import HistoryCard from '../components/HistoryCard';
 import { Bracket } from 'react-brackets';
->>>>>>> e80da713... INTEGRATION
 
 function Tournament({ src }) {
   const navigate = useNavigate();
 
   const storedPlayers = localStorage.getItem('tournamentPlayers');
   const players = storedPlayers ? JSON.parse(storedPlayers) : null;
-  
-  const [Matches, setMatches] = useState(
-    {
-      "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": true },
-      "Semi_Final_2": { "player1": players.p3, "player2": players.p3, "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
-      "Final"       : { "player1": null      , "player2": null      , "winner": null, "isReadyF1": false, "isReadyF2": false, "thier_Turn": false }
-    })
+  const [reload , setReload] = useState(0)
+  const [Matches, setMatches] = useState( {
+    "Semi_Final_1": { "player1": "PL1", "player2": "PL2", "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": false },
+    "Semi_Final_2": { "player1": "PL3", "player2": "PL4", "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
+    "Final"       : { "player1": null      , "player2": null      , "winner": null, "isReadyF1": false, "isReadyF2": false, "thier_Turn": false }
+  })
 
+  // this must be seted somehow base idea will be using local storage
+  const [Matches_history, setMatches_history] = useState( {
+    "Semi_Final_1": { "player1": "PL1", "player2": "PL2", "Score1": 0, "Score2": 0, "winner": null },
+    "Semi_Final_2": { "player1": "PL3", "player2": "PL4", "Score1": 0, "Score2": 0, "winner": null},
+    "Final"       : { "player1": null      , "player2": null      , "Score1": 0, "Score2": 0, "winner": null }
+  })
+
+  const [rounds, setRounds] = useState([
+      {
+        title: 'Semi Finals',
+        seeds: [
+          {
+            id: 1,
+            date: new Date().toDateString(),
+            teams: [
+              { name: 'TBD' },
+              { name: 'TBD' },
+            ],
+          },
+          {
+            id: 2,
+            date: new Date().toDateString(),
+            teams: [
+              { name: 'TBD' },
+              { name: 'TBD' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Final',
+        seeds: [
+          {
+            id: 3,
+            date: new Date().toDateString(),
+            teams: [
+              { name: 'TBD' },
+              { name: 'TBD' },
+            ],
+          },
+        ],
+      },
+    ])
+  
   const handleReady = (matchId, whichPlayer) => {
     setMatches((prev) => {
       const newMatch = { ...prev[matchId] };
@@ -44,94 +81,109 @@ function Tournament({ src }) {
   };
 
   const handleStartMatch = (matchId) => {
+    // #region Start the match with the given matchId
     console.log(`Starting match: ${matchId}`);
-<<<<<<< HEAD
-    navigate('/Localgame');
-=======
     // localStorage.setItem("localGameType", "tournament");
     localStorage.setItem("matchId", matchId);
     navigate('/Game/Localgame');
->>>>>>> 888d8b37... INTEGRATION
   };
 
-  
-
-  localStorage.setItem('Matches_data', JSON.stringify(Matches));
-
-
-
-  const rounds = [
+  // #region Get our LocalStorage item if it exists
+  useEffect(() => {
+    // in case where we ? have empty info
+    // console.lo
+    setReload(reload+1)
+    console.log(reload)
+    if (!storedPlayers || !players)
     {
-      title: 'Semi Finals',
-      seeds: [
-        {
-          id: 1,
-          date: new Date().toDateString(),
-          teams: [
-            { name: Matches.Semi_Final_1?.player1 || 'TBD' },
-            { name: Matches.Semi_Final_1?.player2 || 'TBD' },
-          ],
-        },
-        {
-          id: 2,
-          date: new Date().toDateString(),
-          teams: [
-            { name: Matches.Semi_Final_2?.player1 || 'TBD' },
-            { name: Matches.Semi_Final_2?.player2 || 'TBD' },
-          ],
-        },
-      ],
-    },
+        // if we don't have players data, we should go back to the PreTournament page
+        navigate("/PreTournament")
+    }
+    else
     {
-      title: 'Final',
-      seeds: [
-        {
-          id: 3,
-          date: new Date().toDateString(),
-          teams: [
-            { name: Matches.Final?.player1 || 'TBD' },
-            { name: Matches.Final?.player2 || 'TBD' },
-          ],
-        },
-      ],
-    },
-  ];
-  
-  /////
+      // const 
+      const matches = {
+        "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "winner": null, "isReadyP1": false, "isReadyP2": false, "thier_Turn": false },
+        "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "winner": null, "isReadyP3": false, "isReadyP4": false, "thier_Turn": false },
+        "Final"       : { "player1": null      , "player2": null      , "winner": null, "isReadyF1": false, "isReadyF2": false, "thier_Turn": false }
+      }
+
+      
+      const matches_his =  {
+        "Semi_Final_1": { "player1": players.p1, "player2": players.p2, "Score1": 0, "Score2": 0, "winner": null },
+        "Semi_Final_2": { "player1": players.p3, "player2": players.p4, "Score1": 0, "Score2": 0, "winner": null},
+        "Final"       : { "player1": null      , "player2": null      , "Score1": 0, "Score2": 0, "winner": null }
+      }
+      const data = localStorage.getItem('Matches_data');
+      const history = localStorage.getItem('Matches_history');
+      if (data) {
+        setMatches(JSON.parse(data));
+      }
+      else
+        localStorage.setItem('Matches_data', JSON.stringify(matches));
+      if (history) {
+        setMatches_history(JSON.parse(history));
+      }
+      else
+        localStorage.setItem('Matches_history', JSON.stringify(matches_his));
+      console.log("hmm ", Matches, Matches_history);
+
+      setRounds([
+      {
+        title: 'Semi Finals',
+        seeds: [
+          {
+            id: 1,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Semi_Final_1?.player1 || 'TBD' },
+              { name: matches.Semi_Final_1?.player2 || 'TBD' },
+            ],
+          },
+          {
+            id: 2,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Semi_Final_2?.player1 || 'TBD' },
+              { name: matches.Semi_Final_2?.player2 || 'TBD' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Final',
+        seeds: [
+          {
+            id: 3,
+            date: new Date().toDateString(),
+            teams: [
+              { name: matches.Final?.player1 || 'TBD' },
+              { name: matches.Final?.player2 || 'TBD' },
+            ],
+          },
+        ],
+      },
+      ])
+
+      // this must be seted somehow base idea will be using local storage
+      setMatches_history(
+        matches_his
+      )
+      
+      setMatches(
+        matches
+      )
+    }
+  }, []);
+
+  // #region Update our LocalStorage item whenever it changes
+  console.log("hmm ", Matches, Matches_history);
 
   return (
     <>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <div className="tournament-container">
-        {/* For each match, render a card */}
-        <MatchCard 
-          matchId="Semi_Final_1"
-          matchData={Matches.Semi_Final_1}
-          onReady={handleReady}
-          onStartMatch={handleStartMatch}
-        />
-        <MatchCard 
-          matchId="Semi_Final_2"
-          matchData={Matches.Semi_Final_2}
-          onReady={handleReady}
-          onStartMatch={handleStartMatch}
-        />
-        <MatchCard 
-          matchId="Final"
-          matchData={Matches.Final}
-          onReady={handleReady}
-          onStartMatch={handleStartMatch}
-        />
-=======
-      <div className="background-wrapper-r">
-        <PingPongBack />
-      </div>
-=======
 
       {/* <PingPongBack /> */}
 
->>>>>>> cfd8826a... PAGES
       <div className="center width-full">
         <div className="tournament-container width-90">
 
@@ -169,7 +221,7 @@ function Tournament({ src }) {
             </div>
             <div className="vertical-line"></div>
             {
-              // #region  MatchCard 
+              // #region  MatchCard
             }
             <div className='Stocker'>
               <h1 className='White'>MATCHES QUEUE</h1>
@@ -194,7 +246,6 @@ function Tournament({ src }) {
             </div>
           </div>
         </div>
->>>>>>> a42b1265... Tournament
       </div>
     </>
   );

@@ -1101,7 +1101,7 @@ const MultiplayerGame = () => {
             <LoadingScreen show={loading} />
             <canvas ref={canvasRef}></canvas>
             <Hud/>
-            <Scoreboard playerScore={playerScore} aiScore={aiScore}/>
+            <Scoreboard player1={"RED"} playerScore={playerScore} player2="BLUE" aiScore={aiScore}/>
         </>
     )
 };

@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const Winner = () => {
   const navigate = useNavigate();
-
+  const matchId = localStorage.getItem("matchId");
+  const matchData = JSON.parse(localStorage.getItem("Matches_data"));
+  const winner = matchData[matchId].winner;
   return (
     <>
 
@@ -22,48 +24,33 @@ const Winner = () => {
         
         <div className="players-container-w">
           {/* Add your game content here */}
+          <div className="flex center-column max-width-full ">
+            <img src="bottouns/crown.png" width="50%" height="50%"/>
+            <h1 className="yellow">{winner}</h1>
+          </div>
         </div>
-
         <div className="button-container-w">
           <Frame
             text="Main Game Page"
-<<<<<<< HEAD
-            default_icon='/bottouns/default_offline.svg'
-            hovered_icon='/bottouns/hovered_offline.svg'
-<<<<<<< HEAD
-            onClick={() => navigate('/')}
-=======
-=======
             default_icon='/GamePub/bottouns/default_offline.svg'
             hovered_icon='/GamePub/bottouns/hovered_offline.svg'
->>>>>>> 2d1b639c... INTEGRATION
             onClick={() => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
               navigate('/Game/PingPong_Lobby')
             }}
->>>>>>> c61dcb11... PAGES
           />
           <Frame
             text="Re-Match"
-<<<<<<< HEAD
-            default_icon='/bottouns/default_offline.svg'
-            hovered_icon='/bottouns/hovered_offline.svg'
-<<<<<<< HEAD
-            onClick={() => navigate('/LocalGame')}
-=======
-=======
             default_icon='/GamePub/bottouns/default_offline.svg'
             hovered_icon='/GamePub/bottouns/hovered_offline.svg'
->>>>>>> 2d1b639c... INTEGRATION
             onClick={() => {
               localStorage.removeItem('Matches_data');
               localStorage.removeItem('Matches_history');
               localStorage.removeItem("matchId")
               navigate('/Game/LocalGame')
             }}
->>>>>>> 888d8b37... INTEGRATION
           />
         </div>
       </div>
